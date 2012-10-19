@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <O2TI_Moip>
+            <active>true</active><!-- this is an active module -->
+            <codePool>local</codePool><!-- this module will be located in app/code/local code pool -->
+            <depends><!-- specify dependencies for correct module loading order -->
+                <Mage_Payment />
+            </depends>
+            <version>1.0</version><!-- declare module's version information for database updates -->
+        </O2TI_Moip>
+    </modules>
+</config>

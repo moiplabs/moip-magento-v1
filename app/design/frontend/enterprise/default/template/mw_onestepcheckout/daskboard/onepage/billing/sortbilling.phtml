@@ -1,0 +1,176 @@
+<?php 
+$name='';$company='';$email='';$street='';$city='';$state='';$zipcode='';$country='';$telephone='';$fax='';
+$name=$this->getLayout()->createBlock('customer/widget_name')->setTemplate('mw_onestepcheckout/name.phtml')->setObject($this->getAddress())->setFieldIdFormat('billing:%s')->setFieldNameFormat('billing[%s]')->toHtml();
+
+
+if(version_compare(Mage::getVersion(),'1.4.0.1','>=')){
+					$company='<div class="field">
+									<label for="billing:company" class="required"><em>'.$this->isstar('company').'</em>'.$this->__('Company').'</label>
+										<div class="input-box">
+											<input type="text" id="billing:company" name="billing[company]" value="'.$this->htmlEscape($this->getAddress()->getCompany()).'" title="'.$this->__('Company').'" class="input-text inputtext '.$this->isrequired('company').'" />
+										</div>
+							</div>';
+		$email="";
+		if(!$this->isCustomerLoggedIn()){
+					$email='<div class="field">
+							<label for="billing:email" class="required"><em>'.$this->isstar('email').'</em>'.$this->__('Email Address').'</label>
+								<div class="input-box">
+									<input type="text" name="billing[email]" id="billing:email" value="'.$this->htmlEscape($this->getAddress()->getEmail()).'" title="'.$this->__('Email Address').'" class="input-text inputtext validate-email  '.$this->isrequired('email').'" />
+								</div>
+							</div>';
+		}
+					$street='<div>
+								<ul>
+										<li class="wide">
+											<label for="billing:street1" class="required"><em>'.$this->isstar('street').'</em>'.$this->__('Address').'</label>
+											<div class="input-box">
+												<input type="text" title="'.$this->__('Street Address').'" name="billing[street][]" id="billing:street1" value="'.$this->htmlEscape($this->getAddress()->getStreet(1)).'" class="input-text inputtext  '.$this->isrequired('street').'" />
+											</div>
+										</li>';
+					for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++){
+							$street=$street.'<li class="wide">
+											<div class="input-box">
+												<input type="text" title="'.$this->__('Street Address %s', $_i).'" name="billing[street][]" id="billing:street'.$_i.'" value="'.$this->htmlEscape($this->getAddress()->getStreet($_i)).'" class="input-text inputtext" />
+											</div>
+										</li>';
+							}
+					$street=$street.'</ul></div>';
+					
+					$city='<div class="field">
+								<label for="billing:city" class="required"><em>'.$this->isstar('city').'</em>'.$this->__('City').'</label>
+								<div class="input-box">
+									<input type="text" title="'.$this->__('City').'" name="billing[city]" value="'.$this->htmlEscape($this->getAddress()->getCity()).'" class="input-text inputtext  '.$this->isrequired('city').'" id="billing:city" />
+								</div>
+							</div>';
+					
+					$state=	'<div class="field">
+								<label for="billing:region_id" class="required"><em>'.$this->isstar('state').'</em>'.$this->__('State/Province').'</label>
+								<div class="input-box">
+									<select id="billing:region_id" name="billing[region_id]" title="'.$this->__('State/Province').'" class="validate-select" style="display:none;">
+										<option value="">'.$this->__('Please select region, state or province').'</option>
+									</select>
+									<script type="text/javascript">
+									//<![CDATA[
+										$("billing:region_id").setAttribute("defaultValue",  "'.$this->getAddress()->getRegionId().'");
+									//]]>
+									</script>
+									<input type="text" id="billing:region" name="billing[region]" value="'.$this->htmlEscape($this->getAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="input-text inputtext  '.$this->isrequired('state').'" style="display:none;" />
+								</div>
+							</div>';
+					
+					$zipcode='<div class="field">
+									<label for="billing:postcode" class="required"><em>'.$this->isstar('zip').'</em>'.$this->__('Zip/Postal Code').'</label>
+									<div class="input-box">
+										<input type="text" title="'.$this->__('Zip/Postal Code').'" name="billing[postcode]" id="billing:postcode" value="'.$this->htmlEscape($this->getAddress()->getPostcode()).'" class="input-text inputtext validate-zip-international  '.$this->isrequired('zip').'" />
+									</div>
+								</div>';
+					$country='<div class="field">
+									<label for="billing:country_id" class="required"><em>*</em>'.$this->__('Country').'</label>
+									<div class="input-box">
+										'.$this->getCountryHtmlSelect('billing').'
+									</div>
+								</div>	'	;
+							
+					$telephone=	'<div class="field">
+									<label for="billing:telephone" class="required"><em>'.$this->isstar('telephone').'</em>'.$this->__('Telephone').'</label>
+									<div class="input-box">
+										<input type="text" name="billing[telephone]" value="'.$this->htmlEscape($this->getAddress()->getTelephone()).'" title="'.$this->__('Telephone').'" class="input-text inputtext  '.$this->isrequired('telephone').'" id="billing:telephone" />
+									</div>
+								</div>';
+					$fax=	'<div class="field">
+									<label for="billing:fax" class="required"><em>'.$this->isstar('fax').'</em>'.$this->__('Fax').'</label>
+									<div class="input-box">
+										<input type="text" name="billing[fax]" value="'.$this->htmlEscape($this->getAddress()->getFax()).'" title="'.$this->__('Fax').'" class="input-text inputtext  '.$this->isrequired('fax').'" id="billing:fax" />
+									</div>
+							</div>';
+}
+
+else{	//for magento 1.3x
+					$company='<div class="input-box"><label for="billing:company">'.$this->__('Company').'<span class="required">'.$this->isstar('company').'</span></label><br /><input type="text" id="billing:company" name="billing[company]" value="'.$this->htmlEscape($this->getAddress()->getCompany()).'" title="'.$this->__('Company').'" class="input-text  '.$this->isrequired('company').'" /></div>';
+					$email="";
+					if(!$this->isCustomerLoggedIn()){
+						$email='<div class="input-box"><label for="billing:email">'.$this->__('Email Address').'<span class="required">'.$this->isstar('email').'</span></label><br /><input type="text" name="billing[email]" id="billing:email" value="'.$this->htmlEscape($this->getAddress()->getEmail()).'" title="'.$this->__('Email Address').'" class="validate-email input-text  '.$this->isrequired('email').'" /></div>';
+					}
+					$street='<div><ul><li><label for="billing:street1">'.$this->__('Address').'<span class="required">'.$this->isstar('street').'</span></label><br /><input type="text" title="'.$this->__('Street Address').'" name="billing[street][]" id="billing:street1" value="'.$this->htmlEscape($this->getAddress()->getStreet(1)).'" class="input-text  '.$this->isrequired('street').'" /></li>';
+					for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++){
+						$street=$street.'<li><input type="text" title="'.$this->__('Street Address '.$_i).'" name="billing[street][]" id="billing:street'.$_i.'" value="'.$this->htmlEscape($this->getAddress()->getStreet($_i)).'" class="input-text" /></li>';
+					}
+					$street=$street.'</ul></div>';
+					$city='<div class="input-box"><label for="billing:city">'.$this->__('City').'<em>'.$this->isstar('city').'</em></label><br /><input type="text" title="'.$this->__('City').'" name="billing[city]" value="'.$this->htmlEscape($this->getAddress()->getCity()).'" class="input-text  '.$this->isrequired('city').'" id="billing:city " /></div>';
+					$state='<div class="input-box"><label for="billing:region">'.$this->__('State/Province').'<span class="required">*</span><em>'.$this->isstar('state').'</em></label><br/><select id="billing:region_id" name="billing[region_id]" title="'.$this->__('State/Province').'" class="validate-select" style="display:none"><option value="">'.$this->__('Please select region, state or province').'</option></select><script type="text/javascript">$("billing:region_id").setAttribute("defaultValue",  "'.$this->getAddress()->getRegionId().'");</script><input type="text" id="billing:region" name="billing[region]" value="'.$this->htmlEscape($this->getAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="input-text  '.$this->isrequired('state').'" style="display:none" /></div>';
+					$zipcode='<div class="input-box"><label for="billing:postcode">'.$this->__('Zip/Postal Code').'<span class="required">'.$this->isstar('zip').'</span></label><br /><input type="text" title="'.$this->__('Zip/Postal Code').'" name="billing[postcode]" id="billing:postcode" value="'.$this->htmlEscape($this->getAddress()->getPostcode()).'" class="validate-zip-international input-text  '.$this->isrequired('zip').'" /></div>';
+					$country='<div class="input-box"><label for="billing:country_id">'.$this->__('Country').'<span class="required">*</span></label><br />'.$this->getCountryHtmlSelect('billing').'</div>';
+					$telephone='<div class="input-box"><label for="billing:telephone">'.$this->__('Telephone').'<span class="required">'.$this->isstar('telephone').'</span></label><br/><input type="text" name="billing[telephone]" value="'.$this->htmlEscape($this->getAddress()->getTelephone()).'" title="'.$this->__('Telephone').'" class="input-text  '.$this->isrequired('telephone').'" id="billing:telephone" /></div>';
+					$fax='<div class="input-box"><label for="billing:fax">'.$this->__('Fax').'<span class="required">'.$this->isstar('fax').'</span></label><br/><input type="text" name="billing[fax]" value="'.$this->htmlEscape($this->getAddress()->getFax()).'" title="'.$this->__('Fax').'" class="input-text  '.$this->isrequired('fax').'" id="billing:fax" /></div>';
+}
+
+$type_address=array('name','company','email','street','city','state','zip','country','telephone','fax');
+
+$block=array("","","","","","","","","","");
+
+//var_dump($block);die();
+$temp=array();
+$notdisable=array();
+$filter=array();
+foreach($type_address as $nametype){
+	if(!$this->isdisable($nametype))
+		$notdisable[]=$nametype;
+}
+foreach($notdisable as $namevalid){
+	$filter[]=Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$namevalid);
+	//$filter=array(Mage::getStoreConfig('onestepcheckout/options_sort/sort_name'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_company'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_email'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_street'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_city'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_state'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_zip'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_country'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_telephone'),Mage::getStoreConfig('onestepcheckout/options_sort/sort_fax'));
+}
+for($i=0;$i<count($filter);$i++){
+	for($j=$i+1;$j<count($filter);$j++){
+		if($filter[$i]==$filter[$j]){
+			$temp[]=$filter[$i];
+			break;
+		}
+	}
+}
+$temp[]=Mage::getStoreConfig('onestepcheckout/options_sort/sort_name');
+//$temp[]=Mage::getStoreConfig('onestepcheckout/options_sort/sort_street');
+//var_dump($temp);die();
+$nameinputs=array(
+		'name'=>$name,
+		'company'=>$company,
+		'email'=>$email,
+		'street'=>$street,
+		'city'=>$city,
+		'state'=>$state,
+		'zip'=>$zipcode,
+		'country'=>$country,
+		'telephone'=>$telephone,
+		'fax'=>$fax
+);
+	foreach($nameinputs as $nameadd =>$blockitem){
+		if(!in_array($nameadd,$notdisable)){	//neu input da bi disable trong configuration
+			continue;
+		}
+		
+		if(!in_array(Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd),$temp)){
+				$block[Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd)]='<div class="widthfull">'.$block[Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd)].$blockitem.'</div>';
+		}
+		else{
+				//$temp[]=  Mage::getStoreConfig('onestepcheckout/options_sort/sort_name');
+				$block[Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd)]=$block[Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd)].$blockitem;
+		}		
+	}
+
+$str='';
+//var_dump($street);die();
+foreach($block as $blockitem){
+	if($blockitem ==""){
+		continue;
+	}
+	if(version_compare(Mage::getVersion(),'1.4.0.1','>=')){
+	$str=$str.'<li class="fields">'.$blockitem.'</li>';
+	}
+	else{
+	$str=$str.'<li>'.$blockitem.'</li>';	
+		
+	}
+}
+if($this->isdisable($nametype))
+	$str=$str.'<div style="display:none;"><select id="billing:region_id" name="billing[region_id]" ></select></div>';
+echo $str;

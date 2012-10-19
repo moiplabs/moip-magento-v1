@@ -1,0 +1,109 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * One page checkout payment methods
+ *
+ * @see Mage_Checkout_Block_Onepage_Payment_Methods
+ */
+?>
+
+
+<dl class="sp-methods" id="checkout-payment-method-load">
+<?php foreach ($this->getMethods() as $_method): $_code = $_method->getCode() ?>
+<?php /*
+					foreach($this->getMethods() as $_method)  //duyet tung` info cua? moi~ method 
+					$this->getMethods() as $_method  //tra ve` array cac thong tin cua method payment
+					$_code = $_method->getCode()  //chi? lay' ma code cua? method
+					$_code ~array('checkmo','ccsave')
+*/?>
+    <dt>
+
+    <?php if( sizeof($this->getMethods()) > 1 ): ?>
+        <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if($this->getSelectedMethodCode()==$_code): ?> checked="checked"<?php endif; ?> class="radio payment_method_handle" />
+    <?php else: ?>
+        <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio payment_method_handle" /></span>
+    <?php endif; ?>
+
+        <label for="p_method_<?php echo $_code ?>"><?php echo $_method->getTitle() ?> <?php echo $this->getMethodLabelAfterHtml($_method) ?></label>
+    </dt>
+
+    
+	<?php if(version_compare(Mage::getVersion(),'1.4.0.1','>=')):?>
+		<?php if ($html = $this->getPaymentMethodFormHtml($_method)): ?>
+			<dd>
+				<?php echo $html; ?>
+			</dd>
+		<?php endif; ?>
+	<?php else:?>
+		<?php if($html = $this->getChildHtml('payment.method.'.$_code)): //mage1.3?>	
+			<dd>
+				<?php echo $html; ?>
+			</dd>
+		<?php endif; ?>
+	<?php endif;?>
+<?php endforeach; ?>
+<?php /*
+<dt><div class="validation-advice" id="advice-required-entry_payment" style="display:none;"><?php echo $this->__('Please click select one any button radio on payment method!')?></div></dt>
+	*/
+	?>
+</dl>
+<script type="text/javascript">
+//<![CDATA[
+<?php echo $this->getChildChildHtml('scripts'); ?>
+payment.init();
+//]]>
+</script>
+<script type="text/javascript">
+	var payment_method_changed = -1;
+	if(payment_load()){
+		$MW_Onestepcheckout(".payment_method_handle").click(function(){
+				if(this.value != payment_method_changed){
+					updatePaymentMethod(this.value);	
+					payment_method_changed = this.value;
+				}
+		});
+	}
+	//dua vao dashboart nhu updateshippingmethod()
+	// function updatePaymentMethod(value)
+	// {
+		// //msg = "Loadding ...";
+		// //$MW_Onestepcheckout('#checkout-review-load').html(msg);	// #checkout-review-load: id cua? bang? tong? tie`n, lenh .html(msg) cho phep gi lai. noi dung cua id voi'noi dung chua' trong bien $msg
+		// $MW_Onestepcheckout('#loading-mask').css('display','block');
+		// $MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+		// $MW_Onestepcheckout.ajax({
+		   // type: "POST",
+		   // url: "<?php echo Mage::getUrl('onestepcheckout/index/updatepaymentmethod')?>",
+		   // data: "payment%5Bmethod%5D="+value,
+		   // success: function(msg){
+			// $MW_Onestepcheckout('#checkout-review-load').html(msg);
+			// $MW_Onestepcheckout('#loading-mask').css('display','none');
+			// $MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+		   // }
+		 // });
+	// }
+</script>

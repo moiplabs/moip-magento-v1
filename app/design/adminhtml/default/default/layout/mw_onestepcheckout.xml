@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <onestepcheckout_adminhtml_onestepcheckout_index>
+        <reference name="content">
+            <block type="onestepcheckout/adminhtml_onestepcheckout" name="onestepcheckout" />
+        </reference>
+    </onestepcheckout_adminhtml_onestepcheckout_index>
+	
+	<adminhtml_sales_order_view>
+	 
+			<reference name="order_tab_info">
+				<action method="setTemplate"><template>mw_onestepcheckout/sales/order/view/tab/info.phtml</template></action>
+				<block type="onestepcheckout/adminhtml_onestepcheckout_sales_order_view_tab_info_customermessages" name="customer_messages" template="mw_onestepcheckout/sales/order/view/tab/info/customermessages.phtml"></block>
+				<block type="onestepcheckout/adminhtml_onestepcheckout_sales_order_view_tab_info_deliverydate" name="deliverydate" template="mw_onestepcheckout/sales/order/view/tab/info/deliverydate.phtml"></block>
+			</reference>
+		
+	</adminhtml_sales_order_view>
+<!--	
+	<adminhtml_system_config_edit>
+		
+			<reference name="head">
+			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery-1.4.2.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery-ui-1.8.custom.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery-ui-timepicker-addon.min.js</name></action>
+			
+			
+			
+			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/admin_js.js</name></action>
+			
+			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/noConflict.js</name></action>
+			<action method="addCss"><stylesheet>mw_onestepcheckout/css/jquery-ui-1.8.custom.css</stylesheet></action>	
+
+			</reference>
+	</adminhtml_system_config_edit>
+-->	
+</layout>

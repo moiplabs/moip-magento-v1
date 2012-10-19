@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <checkout_onepage_index>
+		<!--<update handle="checkout_onepage"/>-->
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+		<reference name="head">
+		
+		<block type="onestepcheckout/checkout_top" name="onestepcheckout.head" template="mw_onestepcheckout/top.phtml"/>
+		<!-- moved top.phtml
+		<action method="addCss"><stylesheet>mw_onestepcheckout/css/jquery.fancybox-1.3.1.css</stylesheet></action>
+		<action method="addItem"><type>skin_js</type><name>js/opcheckout.js</name></action>	
+		<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery.js</name></action>		
+		<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/js.js</name></action>
+		<action method="addCss"><stylesheet>mw_onestepcheckout/css/onestepcheckout.css</stylesheet></action>
+		<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery.fancybox-1.3.1.js</name></action>
+		<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/noConflict.js</name></action>
+		-->
+		<!--<action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
+		<action method="addItem"><type>skin_js</type><name>js/opcheckout.js</name></action>	-->
+		</reference>
+		<reference name="checkout.onepage">
+		    	<action method="setTemplate">
+         		 	<template>mw_onestepcheckout/onepage.phtml</template>
+      			</action>
+		</reference>		
+        <reference name="content">
+			<!--<remove name="checkout.onepage"/>-->
+			<block type="core/template" name="onestepcheckout.daskboard" as="daskboard" template="mw_onestepcheckout/daskboard.phtml">
+				<block type="checkout/onepage_login" name="checkout.onepage.login" as="login" template="mw_onestepcheckout/daskboard/onepage/login.phtml"/>
+				<block type="customer/account_forgotpassword" name="checkout.onepage.forgotpassword" as="forgotpassword" template="mw_onestepcheckout/daskboard/onepage/forgotpassword.phtml"/>
+				<block type="onestepcheckout/checkout_onepage_billing" name="checkout.onepage.billing" as="billing" template="mw_onestepcheckout/daskboard/onepage/billing.phtml">
+					<block type="onestepcheckout/checkout_onepage_billing_sortbilling" name="checkout.onepage.billing.sortbilling" as="sortbilling" template="mw_onestepcheckout/daskboard/onepage/billing/sortbilling.phtml"/>
+					<block type="onestepcheckout/checkout_onepage_billing_sortbilling" name="checkout.onepage.billing.disablesortbilling" as="disablesortbilling" template="mw_onestepcheckout/daskboard/onepage/billing/disablesortbilling.phtml"/>
+				</block>
+				<block type="checkout/onepage_shipping" name="checkout.onepage.shipping" as="shipping" template="mw_onestepcheckout/daskboard/onepage/shipping.phtml">
+					<block type="onestepcheckout/checkout_onepage_shipping_sortshipping" name="checkout.onepage.shipping.sortshipping" as="sortshipping" template="mw_onestepcheckout/daskboard/onepage/shipping/sortshipping.phtml"/>
+					<block type="onestepcheckout/checkout_onepage_shipping_sortshipping" name="checkout.onepage.shipping.disablesortshipping" as="disablesortshipping" template="mw_onestepcheckout/daskboard/onepage/shipping/disablesortshipping.phtml"/>
+				</block>
+				<block type="checkout/onepage_shipping_method" name="onestepcheckout.onepage.shipping_method" as="shipping_method" template="mw_onestepcheckout/daskboard/onepage/shipping_method.phtml">
+					<block type="checkout/onepage_shipping_method_available" name="onestepcheckout.onepage.shipping_method.available" as="available" template="mw_onestepcheckout/daskboard/onepage/shipping_method/available.phtml"/>
+					<block type="onestepcheckout/checkout_onepage_shippingmethod_deliverydate" name="onestepcheckout.onepage.shippingmethod.deliverydate" as="deliverydate" template="mw_onestepcheckout/daskboard/onepage/shipping_method/deliverydate.phtml"/>			
+				</block>
+				
+				
+				<block type="checkout/onepage_payment" name="onestepcheckout.onepage.payment" as="payment" template="mw_onestepcheckout/daskboard/onepage/payment.phtml">
+					<block type="checkout/onepage_payment_methods" name="onestepcheckout.onepage.payment.methods" as="methods" template="mw_onestepcheckout/daskboard/onepage/payment/methods.phtml"/>
+				</block>
+				<!--
+				    <block type="checkout/onepage_payment" name="checkout.onepage.payment" as="payment" template="checkout/onepage/payment.phtml">
+                    <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="methods" template="checkout/onepage/payment/methods.phtml">
+                        <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+                    </block>
+					</block>-->
+				
+				<block type="checkout/onepage_review" name="checkout.onepage.review" as="review" template="mw_onestepcheckout/daskboard/onepage/review.phtml">
+						<block type="checkout/onepage_review_info" name="info"  template="mw_onestepcheckout/daskboard/onepage/review/info.phtml">
+							<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+							<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+							<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+							<action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+							<block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="mw_onestepcheckout/daskboard/onepage/review/totals.phtml"/>
+							<block type="core/text_list" name="checkout.onepage.review.info.items.before" as="items_before"/>
+						</block>
+						<block type="onestepcheckout/checkout_onepage_review_options" name="checkout.onepage.review.options" as="options" template="mw_onestepcheckout/daskboard/onepage/review/options.phtml">
+							<block type="checkout/onepage_shipping_method_additional" name="onestepcheckout.onepage.shipping_method.additional" as="additional" template="mw_onestepcheckout/daskboard/onepage/review/options/additional.phtml"/>
+							<block type="checkout/cart_coupon" name="checkout.onepage.coupon" as="coupon" template="mw_onestepcheckout/daskboard/onepage/coupon.phtml"/>
+						</block>
+						<block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="mw_onestepcheckout/daskboard/onepage/agreements.phtml"/>
+                </block>
+				
+			</block>
+        </reference>
+    </checkout_onepage_index>
+
+	<onestepcheckout_index_updateshippingmethod>
+		<reference name="root">
+			<action method="setTemplate"><template>mw_onestepcheckout/emptyupdate.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="checkout/onepage_review_info" name="info"  template="mw_onestepcheckout/daskboard/onepage/review/info.phtml">
+				<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="mw_onestepcheckout/daskboard/onepage/review/totals.phtml"/>
+				<block type="core/text_list" name="checkout.onepage.review.info.items.before" as="items_before"/>
+			</block>
+		</reference>		
+		
+	</onestepcheckout_index_updateshippingmethod>
+	
+	<onestepcheckout_index_updatepaymentmethod>
+		<reference name="root">
+			<action method="setTemplate"><template>mw_onestepcheckout/emptyupdate.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="checkout/onepage_review_info" name="info"  template="mw_onestepcheckout/daskboard/onepage/review/info.phtml">
+				<action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>mw_onestepcheckout/daskboard/onepage/review/item.phtml</template></action>
+				<block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="mw_onestepcheckout/daskboard/onepage/review/totals.phtml"/>
+				<block type="core/text_list" name="checkout.onepage.review.info.items.before" as="items_before"/>
+			</block>
+		</reference>	
+	</onestepcheckout_index_updatepaymentmethod>
+
+	<onestepcheckout_index_updateshippingtype>
+		<reference name="root">
+			<action method="setTemplate"><template>mw_onestepcheckout/emptyupdate.phtml</template></action>
+		</reference>
+	<!-- <reference name="head">
+		<action method="addJs"><script>mw_onestepcheckout/jquery.js</script></action>
+    	<action method="addJs"><script>mw_onestepcheckout/noConflict.js</script></action>
+		<action method="addJs"><script>mw_onestepcheckout/js.js</script></action>
+		<action method="addJs"><script>varien/form.js</script></action>
+		<action method="addJs"><script>prototype/prototype.js</script></action>
+		<action method="addJs"><script>mage/centinel.js</script></action>
+		<action method="addJs"><script>varien/accordion.js</script></action>
+		<action method="addJs"><script>../skin/frontend/base/default/js/opcheckout.js</script></action>
+		</reference>
+	 -->	
+		<reference name="content">
+				<block type="checkout/onepage_shipping_method_available" name="root" template="mw_onestepcheckout/daskboard/onepage/shipping_method/available.phtml"/>
+		</reference>	
+	</onestepcheckout_index_updateshippingtype>
+	<onestepcheckout_index_updatepaymenttype>
+		<reference name="root">
+			<action method="setTemplate"><template>mw_onestepcheckout/emptyupdate.phtml</template></action>
+		</reference>
+		<reference name="content">
+				<block type="checkout/onepage_payment_methods" name="root" template="mw_onestepcheckout/daskboard/onepage/payment/methods.phtml"/>
+		</reference>	
+	</onestepcheckout_index_updatepaymenttype>	
+	<sales_order_view>
+		<reference name="my.account.wrapper">
+			<block name="onestepcheckout.test" type="core/template" template="mw_onestepcheckout/test.phtml" />
+		</reference>
+		<reference name="sales.order.info">
+			<action method="setTemplate"><template>mw_onestepcheckout/sales/order/info.phtml</template></action>
+			<block type="onestepcheckout/sales_info_deliverydate" name="deliverydate" as="deliverydate" template="mw_onestepcheckout/sales/order/info/deliverydate.phtml"></block>
+			<block type="onestepcheckout/sales_info_customermessages" name="customer_messages" as="customer_messages" template="mw_onestepcheckout/sales/order/info/customermessages.phtml"></block>
+		</reference>
+	</sales_order_view>
+
+</layout> 

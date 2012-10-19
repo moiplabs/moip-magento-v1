@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<config>
+  <sections>
+    <payment translate="label" module="payment"><!-- payment tab -->
+      <groups>
+        <o2ti_moip_standard translate="label"><!-- fieldset -->
+          <label><![CDATA[MoIP Transparente - O2ti]]>
+          </label><!-- will have title 'New Module' -->
+          <sort_order>420</sort_order><!-- position between other payment methods -->
+          <show_in_default>1</show_in_default><!-- do not show this configuration options in store scope -->
+          <show_in_website>1</show_in_website>
+          <show_in_store>0</show_in_store>
+          <fields>
+            <active translate="label"><!-- is this payment method active for the website? -->
+              <label>Enabled</label><!-- label for the field -->
+              <frontend_type>select</frontend_type><!-- input type for configuration value -->
+              <source_model>adminhtml/system_config_source_yesno</source_model><!-- model to take the option values from -->
+              <sort_order>1</sort_order><!-- field position -->
+              <show_in_default>1</show_in_default><!-- do not show this field in store scope -->
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </active>
+
+            <title translate="label">
+              <label>Título</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>2</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </title>
+
+            <order_status translate="label">
+              <label>Status dos novos pedidos</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_order_status_new</source_model>
+              <sort_order>3</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </order_status>
+
+
+            <conta_moip translate="label">
+              <label>Login MoIP</label>
+<comment>
+                <![CDATA[<br /><div class="custom-options"><div class="box" style="width:243px;">
+                    <p>Não utilize o email e sim o login.</p>
+                </div></div>]]>
+              </comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>4</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </conta_moip>
+
+            <apelido translate="label">
+              <label>Nome Fantasia da Loja</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>5</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </apelido>
+
+
+
+            <pagamento_direto translate="label">
+              <label>Usar Transparente</label>
+              <comment><![CDATA[<br /><div class="custom-options"><div class="box" style="width:243px;">
+                    <p>Esta opção já está habilitada.</p>
+                </div></div>]]>
+              </comment>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>6</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </pagamento_direto>
+
+            <formas_pagamento translate="label">
+              <label>Formas de Pagamento</label>
+              <frontend_type>multiselect</frontend_type>
+              <source_model>O2TI_Moip_Model_Source_FormasPagamento</source_model>
+              <sort_order>7</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </formas_pagamento>
+
+            <parcelamento translate="label">
+              <label>Ativar parcelamento?</label>
+              <frontend_type>select</frontend_type>
+              <source_model>adminhtml/system_config_source_yesno</source_model>
+              <sort_order>8</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </parcelamento>
+
+            <parcelamento_de1 translate="label">
+              <label>1° - Parcelas de:</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>10</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </parcelamento_de1>
+
+            <parcelamento_ate1 translate="label">
+              <label>1° - Parcelas até:</label>
+              <frontend_type>text</frontend_type>
+              <sort_order>11</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </parcelamento_ate1>
+
+            <parcelamento_juros1 translate="label">
+              <label>1° - Juros de (%):</label>
+              <comment><![CDATA[<br /><div class="custom-options"><div class="box" style="width:243px;">
+                    <p>Faixas de parcelamento com cartão de crédito. (somente para Transparente)</p>
+                </div></div>]]>
+              </comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>12</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </parcelamento_juros1>
+
+          
+<parcelamento_de2 translate="label">
+              <label>Desconto para boleto:</label>
+<comment><![CDATA[<br /><div class="custom-options"><div class="box" style="width:243px;">
+                    <p>Aqui você pode oferecer desconto para pagamentos por boleto</p>
+                </div></div>]]>
+              </comment>
+              <frontend_type>text</frontend_type>
+              <sort_order>13</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </parcelamento_de2>
+
+            <ambiente translate="label">
+              <label>Ambiente</label>
+              <frontend_type>select</frontend_type>
+              <source_model>O2TI_Moip_Model_Source_Ambiente</source_model>
+              <sort_order>19</sort_order>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>0</show_in_store>
+            </ambiente>
+
+            <allowspecific translate="label">
+              <label>Pagamento a partir de países aplicáveis</label>
+              <frontend_type>allowspecific</frontend_type>
+              <sort_order>20</sort_order>
+              <source_model>adminhtml/system_config_source_payment_allspecificcountries</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </allowspecific>
+
+            <specificcountry translate="label">
+              <label>Pagamento a partir de determinados países</label>
+              <frontend_type>multiselect</frontend_type>
+              <sort_order>21</sort_order>
+              <source_model>adminhtml/system_config_source_country</source_model>
+              <show_in_default>1</show_in_default>
+              <show_in_website>1</show_in_website>
+              <show_in_store>1</show_in_store>
+            </specificcountry>
+          </fields>
+        </o2ti_moip_standard>
+      </groups>
+    </payment>
+  </sections>
+</config>

@@ -1,0 +1,96 @@
+	<div class="shipping-option">
+		<p>--------------</p>
+		<p style="font-weight:bold;"><?php echo $this->__('Delivery Time');?></p>
+		<ul>
+			<li style="margin-bottom:10px;">
+				<label>
+					<input type="radio" name="deliverydate" value="now" checked style="margin-right:5px;"><span><?php echo $this->__('As soon as possible');?></span>
+				</label>
+			</li>
+			<li>
+				<label style="margin-right:5px;"><!--float:left;-->
+					<input type="radio" name="deliverydate" value="late" style="margin-right:5px;"><span>Later</span>
+				</label>
+				<div id="deliveryshow"> <!--  background-color:rgb(181,182,154);">-->
+					<div id="datex">
+						<div class="blockdate">
+							<span><?php echo $this->__('Date:');?> </span>
+							
+							<span id="date" style="text-align:left;">
+								<?php 
+									//$listweekendDays=Mage::getStoreConfig("onestepcheckout/deliverydate/weekend");
+									//$weekendDays=explode(",",$listweekendDays);
+									//$nationalDays=
+									//$mydate="";
+									$mytime=date('h:i a', Mage::getModel('core/date')->timestamp(time()));			
+									//$now = date("d-m-Y", Mage::getModel('core/date')->timestamp(time()));
+									//$a = date("D");//now ==week
+									//$a = date("w");
+									//if($weekendDays.join(" ").indexOf($a)<0)
+										//if($a.)
+									//echo $a;die();
+									//if($a==6){
+										//$mydate= date('m/d/Y', strtotime('+1 day', time()));
+									//}
+									//else{
+										//$mydate= date("m/d/Y", Mage::getModel('core/date')->timestamp(time()));
+									//}	
+									//echo $mydate;					
+								?>
+							</span>
+						</div>
+						<input type="hidden" name="onestepcheckout_date" id="onestepcheckout_date" value=""/>
+						<input type="hidden" name="onestepcheckout_offset" id="onestepcheckout_offset" value=""/>
+					</div>
+					<div id="timex">
+						
+						<div id="changedate">
+							<div class="blockdate">
+								<span><?php echo $this->__('Time:');?> </span>
+								<span id="clock" ><?php echo $mytime?></span>
+							</div>
+							<input type="hidden" name="onestepcheckout_time" id="onestepcheckout_time" value="<?php echo $mytime ?>"/>
+						</div>
+						<?php if(Mage::getStoreConfig("onestepcheckout/deliverydate/timerange")):?>
+							<?php 
+									$time=Mage::getStoreConfig('onestepcheckout/deliverydate/addtimerange');	//kq:  string(85) "a:1:{s:18:"_1289468104191_191";a:2:{s:6:"regexp";s:4:"6:20";s:5:"value";s:4:"8:20";}}" 
+									if($time){
+										$arraytime=unserialize($time);
+										$slotime = array();
+										foreach($arraytime as $time=>$timerange){
+											$slotime[] = implode("-",$timerange);
+										}
+									}
+									//var_dump($slotime);die();
+								?>
+								<div style="width:95px;margin-left:5px;float:left;">
+									<select id="delivery-timerange" size="1" name="delivery-timerange" >
+												<option value=""><?php echo $this->__('Time Range');?></option>
+										<?php foreach($slotime as $slot):?>
+											<?php if($slot):?>
+												<option value="<?php echo $slot?>"><?php echo $slot?></option>
+											<?php endif?>
+										<?php endforeach?>
+									</select>
+								</div>
+						<?php endif?>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+			</li>
+		</ul>
+	</div>
+<script>
+	//var shipping_method_changed=-1; //khac phuc tren IE khi change phai click 2 lan` moi ajax
+	var delivery_changed='now';	//default input- now selected
+	$MW_Onestepcheckout("input[name=deliverydate]").click(function(){
+					if(this.value !=delivery_changed){
+						$MW_Onestepcheckout('#delivery-timerange').addClass('validate-select');
+						$MW_Onestepcheckout('#deliveryshow').css('display','block');
+					}
+					else{
+						$MW_Onestepcheckout('#delivery-timerange').removeClass('validate-select');
+						$MW_Onestepcheckout('#deliveryshow').css('display','none');
+					}
+	});
+</script>

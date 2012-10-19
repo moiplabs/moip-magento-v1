@@ -1,0 +1,518 @@
+<?php if(Mage::getStoreConfig('onestepcheckout/config/enabled')):?>
+<?php
+/*
+	$currentCustomer = Mage::getSingleton('customer/session')->getCustomer();
+
+	echo $currentCustomer->getEmail();
+	$addresses = $currentCustomer->getAddresses();
+	$currentAddr = "";
+	$carray= count($addresses);//tinh do dai mang
+	var_dump($addresses);exit;
+	//$currentAddr = $addresses[1];
+	//if($carray){
+		//foreach($addresses as $key=>$address)
+		//{
+			//echo $key."=>".$address."<br>";
+			//echo get_class($address)."<br>";
+			//$currentAddr = $address;
+			//break;
+	//	}
+	//}
+	//echo "<br>Contry: ".$currentAddr->getcountryid."<br>";
+	//var_dump($currentAddr->getData());
+	//exit;
+*/
+?>
+<?php 
+	/*
+	$day="";
+	//$day=Mage::getStoreConfig('onestepcheckout/deliverydate/weekend');
+	//$weekday=explode(",",$day);	//find weekday
+	
+	//var_dump($arrayday);die();
+	//deliverydate
+
+	$str_nationaldays=Mage::getStoreConfig('onestepcheckout/deliverydate/disableday');
+	$nationaldays=explode(",",$str_nationaldays);	//find national days
+	//var_dump($nationaldays);die();
+	$str_additionaldays=Mage::getStoreConfig('onestepcheckout/deliverydate/enableday');
+	$str_additionaldays=explode(",",$str_additionaldays);	//find additional days
+	
+	$time=Mage::getStoreConfig('onestepcheckout/deliverydate/addtimerange');	//kq:  string(85) "a:1:{s:18:"_1289468104191_191";a:2:{s:6:"regexp";s:4:"6:20";s:5:"value";s:4:"8:20";}}" 
+	$arraytime=unserialize($time);
+	*/
+	
+	//var_dump($arraytime);die();
+	//$slotime = array();
+//	foreach($arraytime as $timeslot=>$timerange){
+//		$slotime[] = implode(" - ",$timerange);
+//	}
+	//var_dump($slotime);die();
+	
+	
+	//echo "<pre>";var_dump(unserialize($time));
+	//foreach()
+	
+?>
+<script type="text/javascript">
+var message_payment = "<?php echo Mage::helper('onestepcheckout')->__('Please select a payment method for your order!');?>";//giup dua cac' chuoi~ nay` vao file .csv
+var message_ship = "<?php echo Mage::helper('onestepcheckout')->__('Please select a shipping method for your order!');?>";
+
+function updateShippingMethod()	//update review order khi click shipping method
+{
+	urls= '<?php echo Mage::getUrl('onestepcheckout/index/updateshippingmethod') ?>';
+<?php
+ /*	//alert(urls);
+	//msg = "Loadding ...";
+	//$MW_Onestepcheckout('#checkout-review-load').html(msg);
+*/
+ ?>
+	$MW_Onestepcheckout('#message-box').html('');
+	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+	$MW_Onestepcheckout('#loading-mask').css('display','block');
+	$MW_Onestepcheckout.ajax({
+	   type: "POST",
+	   url: urls,
+	   data: "shipping_method="+$MW_Onestepcheckout('input[name=shipping_method]:checked').val(),
+	   success: function(msg){
+		   msg=msg.replace("[]","");
+		$MW_Onestepcheckout('#checkout-review-load').html(msg);
+		$MW_Onestepcheckout('#loading-mask').css('display','none');
+		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+	   }
+	});
+}
+function updatePaymentMethod(value)	//update review order khi click payment method
+{
+	//msg = "Loadding ...";
+	//$MW_Onestepcheckout('#checkout-review-load').html(msg);	// #checkout-review-load: id cua? bang? tong? tie`n, lenh .html(msg) cho phep gi lai. noi dung cua id voi'noi dung chua' trong bien $msg
+	$MW_Onestepcheckout('#message-box').html('');
+	$MW_Onestepcheckout('#loading-mask').css('display','block');
+	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+	$MW_Onestepcheckout.ajax({
+	   type: "POST",
+	   url: "<?php echo Mage::getUrl('onestepcheckout/index/updatepaymentmethod')?>",
+	   data: "payment%5Bmethod%5D="+value,
+	   success: function(msg){
+		if(msg.search("<script")!=0){
+		//alert(msg.search("<script"));
+		$MW_Onestepcheckout('#checkout-review-load').html(msg);
+		}
+		//else
+		//	$MW_Onestepcheckout('#checkout-review-load').append(msg);	//message thong bao info payment method ko hop le
+		$MW_Onestepcheckout('#loading-mask').css('display','none');
+		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+	   }
+	 });
+}
+function updateCoupon(code,isremove){		//update review order va tab coupon khi nhap coupon
+	$MW_Onestepcheckout('#message-box').html('');
+	$MW_Onestepcheckout('#loading-mask').css('display','block');
+	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+	$MW_Onestepcheckout.ajax({
+	   type: "POST",
+	   url: "<?php echo Mage::getUrl('onestepcheckout/index/updatecoupon')?>",
+	   data: "coupon_code="+code+"&remove="+isremove,
+	   success: function(msg){
+		str=jQuery.parseJSON(msg);
+		//console.debug(str.coupon);
+		//console.debug(str.view);
+		$MW_Onestepcheckout('#tab-coupon').html(str.coupon);
+		$MW_Onestepcheckout('#checkout-review-load').html(str.view);
+		$MW_Onestepcheckout('#loading-mask').css('display','none');
+		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+	   }
+	});	
+}
+function updateQtyProduct(){	//update review order khi click update cart
+	qtydata=$MW_Onestepcheckout("input[name^='cart\[']"); //selector all element have name ~ cart[
+	//console.debug(qtydata.length);
+	str='';
+	for(var i=0;i< qtydata.length;i++){
+		//console.debug(qtydata[i]);
+		str_escape=escape(qtydata[i].name)+"="+qtydata[i].value;
+		str+=str_escape;
+		if(i!=qtydata.length-1){str+="&"}
+	}
+	//str_escape=escape(str);
+	//console.debug(str_escape);
+	$MW_Onestepcheckout('#message-box').html('');
+	$MW_Onestepcheckout('#loading-mask').css('display','block');
+	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+	$MW_Onestepcheckout.ajax({
+	   type: "POST",
+	   url: "<?php echo Mage::getUrl('onestepcheckout/index/updateqty')?>",
+	   data: str,
+	   success: function(msg){
+		str=jQuery.parseJSON(msg);
+
+		if(str.view.search("<script")!=0){
+		//alert(msg.search("<script"));
+		$MW_Onestepcheckout('#checkout-review-load').html(str.view);
+		}
+		else
+			$MW_Onestepcheckout('#checkout-review-load').append(str.view);
+		$MW_Onestepcheckout('#loading-mask').css('display','none');
+		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+	   }
+	});		
+}
+function removeProduct(id){		//update review order khi remove product
+	//kiem tra xem co block gift message
+	hasgift=(typeof($MW_Onestepcheckout('#allow-gift-message-container'))!='undefined')?1:0;
+	//alert(typeof($MW_Onestepcheckout('#allow-gift-message-container')));
+	//console.debug($hasgift);
+	$MW_Onestepcheckout('#message-box').html('');
+	$MW_Onestepcheckout('#loading-mask').css('display','block');
+	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+	$MW_Onestepcheckout.ajax({
+		type: "POST",
+		url: "<?php echo Mage::getUrl('onestepcheckout/index/removeproduct')?>",
+		data: "id="+id+'&hasgiftbox='+hasgift,
+		success: function(msg){
+		str=jQuery.parseJSON(msg);
+
+		if(str.view.search("<script")!=0){
+			if(str.giftbox){
+				$MW_Onestepcheckout('#checkout-review-load').html(str.view);
+				$MW_Onestepcheckout('#onepage-checkout-shipping-method-additional-load').html(str.giftbox);
+			}else{
+				$MW_Onestepcheckout('#checkout-review-load').html(str.view);
+			}
+		}
+		else{
+			$MW_Onestepcheckout('#checkout-review-load').append(str.view);			
+		}
+		$MW_Onestepcheckout('#loading-mask').css('display','none');
+		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+	   }
+	});	
+}
+<?php
+/* moved top.phtml
+function logined()
+{
+	//alert("bbb");
+	//var login=0;
+	<?php	if(Mage::getSingleton('customer/session')->isLoggedIn()):?>
+	return 1;
+	<?php endif?>
+	return 0;
+}
+*/
+?>
+// chay khi onload song trang
+$MW_Onestepcheckout(function(){
+	//add fancybox 
+	
+	<?php if(!Mage::getStoreConfig('onestepcheckout/config/is_disable')):?>
+		<?php  if(Mage::getStoreConfig('onestepcheckout/addfield/zip') !=2):?>	// neu config field postcode la khac' required , remove required-entry field postcode
+			$MW_Onestepcheckout('#billing\\:postcode').removeClass('required-entry');	//required - entry dc them toi field postcode khi onestepcheckout run
+			$MW_Onestepcheckout('#shipping\\:postcode').removeClass('required-entry');
+		<?php endif?>
+		<?php  if(Mage::getStoreConfig('onestepcheckout/addfield/state') !=2):?>  //tuong tu voi field region state
+			$MW_Onestepcheckout('#billing\\:region_id').removeClass('validate-select');
+			$MW_Onestepcheckout('#shipping\\:region_id').removeClass('validate-select');
+		<?php endif?>		
+	<?php endif?>
+	<?php if(Mage::getStoreConfig("onestepcheckout/config/default_shippingmethod")):?>	//neu config default shipping method cho checkout thi add checked cho input shipping method
+		var defaultshippingmethod = "<?php echo Mage::getStoreConfig("onestepcheckout/config/default_shippingmethod")?>";
+		var defaultshippingmethodId = "#s_method_"+defaultshippingmethod;
+		if(!$MW_Onestepcheckout(defaultshippingmethodId).checked)
+			$MW_Onestepcheckout(defaultshippingmethodId).attr('checked','checked');	//fix truong hop lan dau tien vao checkout thi shipping method khong dc check
+	<?php endif?>	
+	$MW_Onestepcheckout('#billing-new-address-form').clearForm(); //xoa du lieu tren form billing address neu' co du lieu san~ tren cac field input
+	// function clearForm() -> js.js line 288
+	
+	//add fancy box cho form click login, click forgot password
+		$MW_Onestepcheckout("#loginbox").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+		$MW_Onestepcheckout("#onestepcheckout-toc-link").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+		$MW_Onestepcheckout("#forgotpassword").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});
+		$MW_Onestepcheckout("#backlogin").fancybox({
+			'titlePosition'		: 'inside',
+			'transitionIn'		: 'none',
+			'transitionOut'		: 'none'
+		});	
+<?php
+/*	
+	///////////////////
+	//$MW_Onestepcheckout('.checkout-onepage-index').append('<div style="left: -2px; top: 0px; width: 1343px; height: 1422px; display: block;" id="loading-mask"><p id="loading_mask_loader" class="loader"><img alt="Loading..." src="http://127.0.0.1/magento324/skin/adminhtml/default/default/images/ajax-loader-tr.gif"><br>Please wait...</p></div>');
+	///
+	//var ship_type="";
+	//var str_value=",,,,,";
+	
+	//$MW_Onestepcheckout("#billing\\:country_id option:selected").removeAttr('selected');
+	//$MW_Onestepcheckout("#billing\\:country_id option[value='<?php echo Mage::getStoreConfig('onestepcheckout/config/default_country')?>']").attr("selected","selected");
+	// if($MW_Onestepcheckout("#billing\\:country_id option:selected").val()){		//neu tag select billing:country co 1 gia tri duoc select
+		// //ship_type=$MW_Onestepcheckout("#billing\\:country_id option:selected").val();	//gan gia tri
+		// str_value=$MW_Onestepcheckout("#billing\\:country_id option:selected").val();	//gan gia tri
+	// }
+*/
+?>
+	<?php
+	
+	// neu customer dang login ($islogin)va co thong tin cho address ($had_address)
+
+		$islogin=0;
+		if(Mage::getSingleton('customer/session')->isLoggedIn()){
+			$islogin=1;	//dang login
+		}
+		
+		// doan nay ko can thiet co the bo
+		//$countryid="";
+			// if(Mage::getSingleton('customer/session')->isLoggedIn()){
+				// if($_pAddsses = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling())		//lay thong tin customer login va` co address default
+				// //$country_id = Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getData('country_id');
+				// $countryid=Mage::getSingleton('customer/session')->getCustomer()->getAddressById($_pAddsses)->getData('country_id');
+				// $currentCustomer = Mage::getSingleton('customer/session')->getCustomer();
+				// $addresses = $currentCustomer->getAddresses();
+				// $has_address= count($addresses);	//co address
+				// // $currentAddr="";	
+				// // if($carray){
+					// // foreach($addresses as $key=>$address)
+					// // {
+						// // $currentAddr = $address;
+						// // break;
+					// // }
+					// // $countryid=$currentAddr->getData('country_id');
+				// // }
+				// //$countryid=$country_id;
+				// //echo "<br>Contry: ".$currentAddr->getData('country_id')."<br>";
+			// }
+		///////
+	?>	
+	
+	
+	var completeajax=1;
+	
+	if($MW_Onestepcheckout('input[name=shipping_method]:checked').val()){	//neu shipping method co ton tai 1 phuong thuc' duoc checked thi update view
+		$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+		$MW_Onestepcheckout.ajax({
+		   type: "POST",
+		   url:"<?php echo Mage::getUrl('onestepcheckout/index/updateshippingmethod')?>",
+		   data: "shipping_method="+$MW_Onestepcheckout('input[name=shipping_method]:checked').val(),
+		   success: function(msg){
+			   msg=msg.replace("[]","");
+			$MW_Onestepcheckout('#checkout-review-load').html(msg);
+			//$MW_Onestepcheckout('#loading-mask').css('display','none');
+			
+		   }
+		});
+	}
+	if($MW_Onestepcheckout("input[name=payment\[method\]]:checked").val() && payment_load()){ //neu payment method co ton tai 1 phuong thuc' duoc checked va config cho phep payment load thi update reiew
+		//updatePaymentMethod($MW_Onestepcheckout("input[name=payment\[method\]]:checked").val());
+		$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+		value=$MW_Onestepcheckout("input[name=payment\[method\]]:checked").val();
+		//$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
+		$MW_Onestepcheckout.ajax({
+		   type: "POST",
+		   url: "<?php echo Mage::getUrl('onestepcheckout/index/updatepaymentmethod')?>",
+		   data: "payment%5Bmethod%5D="+value,
+		   success: function(msg){
+			if(msg.search("<script")!=0){
+			//alert(msg.search("<script"));
+			$MW_Onestepcheckout('#checkout-review-load').html(msg);
+			}
+			else
+				$MW_Onestepcheckout('#checkout-review-load').append(msg);
+			//$MW_Onestepcheckout('#loading-mask').css('display','none');
+			//$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+		   }
+		 });
+	}
+	$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+		//valid form khi click nut PLACE ORDER
+		$MW_Onestepcheckout('.btn-checkout').click(function(e){
+				//	First validate the form
+					//$MW_Onestepcheckout('#onestep_form').submit();
+					//return true;
+					var form = new VarienForm('onestep_form');
+					var logic=true;
+					<?php if(Mage::helper('onestepcheckout')->onlyProductDownloadable()):?>
+							var notshipmethod=1;
+					<?php else:?>
+							var notshipmethod=$MW_Onestepcheckout("input[name=shipping_method]:checked").val();
+					<?php endif?>
+					if(!$MW_Onestepcheckout("input[name=payment[method]]:checked").val() || !notshipmethod){
+					logic=false;
+					}
+					if(!$MW_Onestepcheckout("input[name=payment[method]]:checked").val()){	//neu cac method payment chua duoc chon
+						if(!$MW_Onestepcheckout('#advice-required-entry_payment').length){	//neu' phan tu valid chua duoc hien len, thi` cho no hien len
+						$MW_Onestepcheckout('#checkout-payment-method-load').append('<dt><div class="validation-advice" id="advice-required-entry_payment" style="">'+message_payment+'</div></dt>');
+						//if($MW_Onestepcheckout('#advice-required-entry_payment').attr('display')!="none"){
+						//$MW_Onestepcheckout('#advice-required-entry_payment').css('display','block');
+						}
+					}
+					else
+					$MW_Onestepcheckout('#advice-required-entry_payment').remove();
+					//$MW_Onestepcheckout('#advice-required-entry_payment').css('display','none');
+					
+					if(!notshipmethod){
+						if(!$MW_Onestepcheckout('#advice-required-entry_shipping').length){
+						$MW_Onestepcheckout('#checkout-shipping-method-loadding').append('<dt><div class="validation-advice" id="advice-required-entry_shipping" style="">'+message_ship+'</div></dt>');
+						//if($MW_Onestepcheckout('#advice-required-entry_shipping').attr('display')!="none"){
+						//$MW_Onestepcheckout('#advice-required-entry_shipping').css('display','block');
+						}
+
+					}
+					else
+					$MW_Onestepcheckout('#advice-required-entry_shipping').remove();
+					//$MW_Onestepcheckout('#advice-required-entry_shipping').css('display','none');
+
+					if(!form.validator.validate())	{
+						val=$MW_Onestepcheckout('#billing\\:email').val();
+						emailvalidated=Validation.get('IsEmpty').test(val) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test(val);
+						//alert(emailvalidated);		//validate chi cho moi field email
+						if(val!="" && emailvalidated){
+							updateEmailmsg(val);
+						}
+						//alert(val1);
+						//val_emailbill_before=val;
+						Event.stop(e);				
+					}
+					else{
+						if(logined()!=1){
+							//$MW_Onestepcheckout('#billing\\:email').blur(function(event){
+							//val=this.value;
+							var msgerror=1;
+							val=$MW_Onestepcheckout('#billing\\:email').val();
+							emailvalidated=Validation.get('IsEmpty').test(val) || /^([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9,!\#\$%&'\*\+\/=\?\^_`\{\|\}~-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*@([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z0-9-]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*\.(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]){2,})$/i.test(val);
+							//alert(emailvalidated);		//validate chi cho moi field email
+							if(val!="" && emailvalidated){
+								msgerror=updateEmailmsg(val);
+							}
+							//val_emailbill_before=val;
+							if(msgerror==0){
+								//alert(msgerror);
+								return false;
+							}
+						}
+						
+						if(logic){
+						$MW_Onestepcheckout('#onestep_form').submit();
+						$MW_Onestepcheckout('#loading-mask').css('display','block');
+						$MW_Onestepcheckout('.btn-checkout').attr("disabled","disabled");
+						}
+						else {
+							return false;
+						}
+					}
+					return false;
+		});
+});
+</script>
+<?php
+/* 
+<script type="text/javascript">
+
+//countryRegions = {"US":{"1":{"code":"AL","name":"Alabama"},"2":{"code":"AK","name":"Alaska"},"3":{"code":"AS","name":"American Samoa"},"4":{"code":"AZ","name":"Arizona"},"5":{"code":"AR","name":"Arkansas"},"6":{"code":"AF","name":"Armed Forces Africa"},"7":{"code":"AA","name":"Armed Forces Americas"},"8":{"code":"AC","name":"Armed Forces Canada"},"9":{"code":"AE","name":"Armed Forces Europe"},"10":{"code":"AM","name":"Armed Forces Middle East"},"11":{"code":"AP","name":"Armed Forces Pacific"},"12":{"code":"CA","name":"California"},"13":{"code":"CO","name":"Colorado"},"14":{"code":"CT","name":"Connecticut"},"15":{"code":"DE","name":"Delaware"},"16":{"code":"DC","name":"District of Columbia"},"17":{"code":"FM","name":"Federated States Of Micronesia"},"18":{"code":"FL","name":"Florida"},"19":{"code":"GA","name":"Georgia"},"20":{"code":"GU","name":"Guam"},"21":{"code":"HI","name":"Hawaii"},"22":{"code":"ID","name":"Idaho"},"23":{"code":"IL","name":"Illinois"},"24":{"code":"IN","name":"Indiana"},"25":{"code":"IA","name":"Iowa"},"26":{"code":"KS","name":"Kansas"},"27":{"code":"KY","name":"Kentucky"},"28":{"code":"LA","name":"Louisiana"},"29":{"code":"ME","name":"Maine"},"30":{"code":"MH","name":"Marshall Islands"},"31":{"code":"MD","name":"Maryland"},"32":{"code":"MA","name":"Massachusetts"},"33":{"code":"MI","name":"Michigan"},"34":{"code":"MN","name":"Minnesota"},"35":{"code":"MS","name":"Mississippi"},"36":{"code":"MO","name":"Missouri"},"37":{"code":"MT","name":"Montana"},"38":{"code":"NE","name":"Nebraska"},"39":{"code":"NV","name":"Nevada"},"40":{"code":"NH","name":"New Hampshire"},"41":{"code":"NJ","name":"New Jersey"},"42":{"code":"NM","name":"New Mexico"},"43":{"code":"NY","name":"New York"},"44":{"code":"NC","name":"North Carolina"},"45":{"code":"ND","name":"North Dakota"},"46":{"code":"MP","name":"Northern Mariana Islands"},"47":{"code":"OH","name":"Ohio"},"48":{"code":"OK","name":"Oklahoma"},"49":{"code":"OR","name":"Oregon"},"50":{"code":"PW","name":"Palau"},"51":{"code":"PA","name":"Pennsylvania"},"52":{"code":"PR","name":"Puerto Rico"},"53":{"code":"RI","name":"Rhode Island"},"54":{"code":"SC","name":"South Carolina"},"55":{"code":"SD","name":"South Dakota"},"56":{"code":"TN","name":"Tennessee"},"57":{"code":"TX","name":"Texas"},"58":{"code":"UT","name":"Utah"},"59":{"code":"VT","name":"Vermont"},"60":{"code":"VI","name":"Virgin Islands"},"61":{"code":"VA","name":"Virginia"},"62":{"code":"WA","name":"Washington"},"63":{"code":"WV","name":"West Virginia"},"64":{"code":"WI","name":"Wisconsin"},"65":{"code":"WY","name":"Wyoming"}},"CA":{"66":{"code":"AB","name":"Alberta"},"67":{"code":"BC","name":"British Columbia"},"68":{"code":"MB","name":"Manitoba"},"69":{"code":"NF","name":"Newfoundland"},"70":{"code":"NB","name":"New Brunswick"},"71":{"code":"NS","name":"Nova Scotia"},"72":{"code":"NT","name":"Northwest Territories"},"73":{"code":"NU","name":"Nunavut"},"74":{"code":"ON","name":"Ontario"},"75":{"code":"PE","name":"Prince Edward Island"},"76":{"code":"QC","name":"Quebec"},"77":{"code":"SK","name":"Saskatchewan"},"78":{"code":"YT","name":"Yukon Territory"}},"DE":{"79":{"code":"NDS","name":"Niedersachsen"},"80":{"code":"BAW","name":"Baden-W\u00fcrttemberg"},"81":{"code":"BAY","name":"Bayern"},"82":{"code":"BER","name":"Berlin"},"83":{"code":"BRG","name":"Brandenburg"},"84":{"code":"BRE","name":"Bremen"},"85":{"code":"HAM","name":"Hamburg"},"86":{"code":"HES","name":"Hessen"},"87":{"code":"MEC","name":"Mecklenburg-Vorpommern"},"88":{"code":"NRW","name":"Nordrhein-Westfalen"},"89":{"code":"RHE","name":"Rheinland-Pfalz"},"90":{"code":"SAR","name":"Saarland"},"91":{"code":"SAS","name":"Sachsen"},"92":{"code":"SAC","name":"Sachsen-Anhalt"},"93":{"code":"SCN","name":"Schleswig-Holstein"},"94":{"code":"THE","name":"Th\u00fcringen"}},"AT":{"95":{"code":"WI","name":"Wien"},"96":{"code":"NO","name":"Nieder\u00f6sterreich"},"97":{"code":"OO","name":"Ober\u00f6sterreich"},"98":{"code":"SB","name":"Salzburg"},"99":{"code":"KN","name":"K\u00e4rnten"},"100":{"code":"ST","name":"Steiermark"},"101":{"code":"TI","name":"Tirol"},"102":{"code":"BL","name":"Burgenland"},"103":{"code":"VB","name":"Voralberg"}},"CH":{"104":{"code":"AG","name":"Aargau"},"105":{"code":"AI","name":"Appenzell Innerrhoden"},"106":{"code":"AR","name":"Appenzell Ausserrhoden"},"107":{"code":"BE","name":"Bern"},"108":{"code":"BL","name":"Basel-Landschaft"},"109":{"code":"BS","name":"Basel-Stadt"},"110":{"code":"FR","name":"Freiburg"},"111":{"code":"GE","name":"Genf"},"112":{"code":"GL","name":"Glarus"},"113":{"code":"GR","name":"Graub\u00fcnden"},"114":{"code":"JU","name":"Jura"},"115":{"code":"LU","name":"Luzern"},"116":{"code":"NE","name":"Neuenburg"},"117":{"code":"NW","name":"Nidwalden"},"118":{"code":"OW","name":"Obwalden"},"119":{"code":"SG","name":"St. Gallen"},"120":{"code":"SH","name":"Schaffhausen"},"121":{"code":"SO","name":"Solothurn"},"122":{"code":"SZ","name":"Schwyz"},"123":{"code":"TG","name":"Thurgau"},"124":{"code":"TI","name":"Tessin"},"125":{"code":"UR","name":"Uri"},"126":{"code":"VD","name":"Waadt"},"127":{"code":"VS","name":"Wallis"},"128":{"code":"ZG","name":"Zug"},"129":{"code":"ZH","name":"Z\u00fcrich"}},"ES":{"130":{"code":"A Coru\u0441a","name":"A Coru\u00f1a"},"131":{"code":"Alava","name":"Alava"},"132":{"code":"Albacete","name":"Albacete"},"133":{"code":"Alicante","name":"Alicante"},"134":{"code":"Almeria","name":"Almeria"},"135":{"code":"Asturias","name":"Asturias"},"136":{"code":"Avila","name":"Avila"},"137":{"code":"Badajoz","name":"Badajoz"},"138":{"code":"Baleares","name":"Baleares"},"139":{"code":"Barcelona","name":"Barcelona"},"140":{"code":"Burgos","name":"Burgos"},"141":{"code":"Caceres","name":"Caceres"},"142":{"code":"Cadiz","name":"Cadiz"},"143":{"code":"Cantabria","name":"Cantabria"},"144":{"code":"Castellon","name":"Castellon"},"145":{"code":"Ceuta","name":"Ceuta"},"146":{"code":"Ciudad Real","name":"Ciudad Real"},"147":{"code":"Cordoba","name":"Cordoba"},"148":{"code":"Cuenca","name":"Cuenca"},"149":{"code":"Girona","name":"Girona"},"150":{"code":"Granada","name":"Granada"},"151":{"code":"Guadalajara","name":"Guadalajara"},"152":{"code":"Guipuzcoa","name":"Guipuzcoa"},"153":{"code":"Huelva","name":"Huelva"},"154":{"code":"Huesca","name":"Huesca"},"155":{"code":"Jaen","name":"Jaen"},"156":{"code":"La Rioja","name":"La Rioja"},"157":{"code":"Las Palmas","name":"Las Palmas"},"158":{"code":"Leon","name":"Leon"},"159":{"code":"Lleida","name":"Lleida"},"160":{"code":"Lugo","name":"Lugo"},"161":{"code":"Madrid","name":"Madrid"},"162":{"code":"Malaga","name":"Malaga"},"163":{"code":"Melilla","name":"Melilla"},"164":{"code":"Murcia","name":"Murcia"},"165":{"code":"Navarra","name":"Navarra"},"166":{"code":"Ourense","name":"Ourense"},"167":{"code":"Palencia","name":"Palencia"},"168":{"code":"Pontevedra","name":"Pontevedra"},"169":{"code":"Salamanca","name":"Salamanca"},"170":{"code":"Santa Cruz de Tenerife","name":"Santa Cruz de Tenerife"},"171":{"code":"Segovia","name":"Segovia"},"172":{"code":"Sevilla","name":"Sevilla"},"173":{"code":"Soria","name":"Soria"},"174":{"code":"Tarragona","name":"Tarragona"},"175":{"code":"Teruel","name":"Teruel"},"176":{"code":"Toledo","name":"Toledo"},"177":{"code":"Valencia","name":"Valencia"},"178":{"code":"Valladolid","name":"Valladolid"},"179":{"code":"Vizcaya","name":"Vizcaya"},"180":{"code":"Zamora","name":"Zamora"},"181":{"code":"Zaragoza","name":"Zaragoza"}},"FR":{"182":{"code":"01","name":"Ain"},"183":{"code":"02","name":"Aisne"},"184":{"code":"03","name":"Allier"},"185":{"code":"04","name":"Alpes-de-Haute-Provence"},"186":{"code":"05","name":"Hautes-Alpes"},"187":{"code":"06","name":"Alpes-Maritimes"},"188":{"code":"07","name":"Ard\u00e8che"},"189":{"code":"08","name":"Ardennes"},"190":{"code":"09","name":"Ari\u00e8ge"},"191":{"code":"10","name":"Aube"},"192":{"code":"11","name":"Aude"},"193":{"code":"12","name":"Aveyron"},"194":{"code":"13","name":"Bouches-du-Rh\u00f4ne"},"195":{"code":"14","name":"Calvados"},"196":{"code":"15","name":"Cantal"},"197":{"code":"16","name":"Charente"},"198":{"code":"17","name":"Charente-Maritime"},"199":{"code":"18","name":"Cher"},"200":{"code":"19","name":"Corr\u00e8ze"},"201":{"code":"2A","name":"Corse-du-Sud"},"202":{"code":"2B","name":"Haute-Corse"},"203":{"code":"21","name":"C\u00f4te-d'Or"},"204":{"code":"22","name":"C\u00f4tes-d'Armor"},"205":{"code":"23","name":"Creuse"},"206":{"code":"24","name":"Dordogne"},"207":{"code":"25","name":"Doubs"},"208":{"code":"26","name":"Dr\u00f4me"},"209":{"code":"27","name":"Eure"},"210":{"code":"28","name":"Eure-et-Loir"},"211":{"code":"29","name":"Finist\u00e8re"},"212":{"code":"30","name":"Gard"},"213":{"code":"31","name":"Haute-Garonne"},"214":{"code":"32","name":"Gers"},"215":{"code":"33","name":"Gironde"},"216":{"code":"34","name":"H\u00e9rault"},"217":{"code":"35","name":"Ille-et-Vilaine"},"218":{"code":"36","name":"Indre"},"219":{"code":"37","name":"Indre-et-Loire"},"220":{"code":"38","name":"Is\u00e8re"},"221":{"code":"39","name":"Jura"},"222":{"code":"40","name":"Landes"},"223":{"code":"41","name":"Loir-et-Cher"},"224":{"code":"42","name":"Loire"},"225":{"code":"43","name":"Haute-Loire"},"226":{"code":"44","name":"Loire-Atlantique"},"227":{"code":"45","name":"Loiret"},"228":{"code":"46","name":"Lot"},"229":{"code":"47","name":"Lot-et-Garonne"},"230":{"code":"48","name":"Loz\u00e8re"},"231":{"code":"49","name":"Maine-et-Loire"},"232":{"code":"50","name":"Manche"},"233":{"code":"51","name":"Marne"},"234":{"code":"52","name":"Haute-Marne"},"235":{"code":"53","name":"Mayenne"},"236":{"code":"54","name":"Meurthe-et-Moselle"},"237":{"code":"55","name":"Meuse"},"238":{"code":"56","name":"Morbihan"},"239":{"code":"57","name":"Moselle"},"240":{"code":"58","name":"Ni\u00e8vre"},"241":{"code":"59","name":"Nord"},"242":{"code":"60","name":"Oise"},"243":{"code":"61","name":"Orne"},"244":{"code":"62","name":"Pas-de-Calais"},"245":{"code":"63","name":"Puy-de-D\u00f4me"},"246":{"code":"64","name":"Pyr\u00e9n\u00e9es-Atlantiques"},"247":{"code":"65","name":"Hautes-Pyr\u00e9n\u00e9es"},"248":{"code":"66","name":"Pyr\u00e9n\u00e9es-Orientales"},"249":{"code":"67","name":"Bas-Rhin"},"250":{"code":"68","name":"Haut-Rhin"},"251":{"code":"69","name":"Rh\u00f4ne"},"252":{"code":"70","name":"Haute-Sa\u00f4ne"},"253":{"code":"71","name":"Sa\u00f4ne-et-Loire"},"254":{"code":"72","name":"Sarthe"},"255":{"code":"73","name":"Savoie"},"256":{"code":"74","name":"Haute-Savoie"},"257":{"code":"75","name":"Paris"},"258":{"code":"76","name":"Seine-Maritime"},"259":{"code":"77","name":"Seine-et-Marne"},"260":{"code":"78","name":"Yvelines"},"261":{"code":"79","name":"Deux-S\u00e8vres"},"262":{"code":"80","name":"Somme"},"263":{"code":"81","name":"Tarn"},"264":{"code":"82","name":"Tarn-et-Garonne"},"265":{"code":"83","name":"Var"},"266":{"code":"84","name":"Vaucluse"},"267":{"code":"85","name":"Vend\u00e9e"},"268":{"code":"86","name":"Vienne"},"269":{"code":"87","name":"Haute-Vienne"},"270":{"code":"88","name":"Vosges"},"271":{"code":"89","name":"Yonne"},"272":{"code":"90","name":"Territoire-de-Belfort"},"273":{"code":"91","name":"Essonne"},"274":{"code":"92","name":"Hauts-de-Seine"},"275":{"code":"93","name":"Seine-Saint-Denis"},"276":{"code":"94","name":"Val-de-Marne"},"277":{"code":"95","name":"Val-d'Oise"}}}
+//countryRegions=<?php echo $this->helper('directory')->getRegionJson() ?>; 
+
+</script>
+*/
+?>
+	<hidden value="Welcome to One Step Checkout Pro"></hidden>
+	<hidden value="Please enter your details below to complete your purchase."></hidden>
+	<h1><?php echo $this->__(Mage::getStoreConfig('onestepcheckout/config/page_title'))?></h1>
+	<p><?php echo $this->__(Mage::getStoreConfig('onestepcheckout/config/page_content'))?></p>
+	<div id="message-box">
+		<?php echo $this->getMessagesBlock()->getGroupedHtml() //cho phep' dua ra cac thong bao' khi ton tai addError?>	
+	</div>
+	<?php	if(!$islogin):?>
+		<?php if(Mage::getStoreConfig('onestepcheckout/config/enable_quicklogin')):?>
+		<a id="loginbox" href="#inline1" title=""><?php echo $this->__('Already registered? Click here to login.');?></a>
+		<?php endif?>
+	<?php endif?>
+
+	<div class="onestepcheckout-threecolumns checkoutcontainer onestepcheckout-skin-generic">
+		<form id="onestep_form" action="<?php echo $this->getUrl('onestepcheckout/index/updateordermethod') ?>" method="POST">
+
+			<div class="onestepcheckout-column-left">	
+				<p class="onestepcheckout-numbers onestepcheckout-numbers-1"><?php echo $this->__('Billing address');?></p>
+				<div>
+				<?php echo $this->getChildHtml('billing');?>
+				</div>
+				<br>
+			<?php if(!Mage::helper('onestepcheckout')->onlyProductDownloadable()):?>
+			<?php if(Mage::getStoreConfig('onestepcheckout/config/allowshippingotheraddress')):?> 
+				<div style="display:none;" id="shipping_show">
+				<p class="onestepcheckout-numbers"><?php echo $this->__('Shipping address');?></p>
+				<?php echo $this->getChildHtml('shipping');?>
+				</div>
+			<?php endif;?>
+			<?php endif;?>
+			</div>
+			<div class="onestepcheckout-column-2">
+				<div id="onestepcheckout-column-container">
+				<?php if(!Mage::helper('onestepcheckout')->onlyProductDownloadable()):?>
+					<div class="onestepcheckout-column-middle">	
+						<p class="onestepcheckout-numbers onestepcheckout-numbers-2"><?php echo $this->__('Shipping method');?></p>
+						<div>
+						<?php echo $this->getChildHtml('shipping_method');?>
+						</div>
+					</div>
+				<?php endif?>
+					<div class="onestepcheckout-column-right">
+						<p class="onestepcheckout-numbers onestepcheckout-numbers-3"><?php echo $this->__('Payment method');?></p>
+						<div>
+						<?php echo $this->getChildHtml('payment');?>
+						</div>
+					</div>
+					<div class="clear_both">&nbsp;</div>
+				</div>
+				<div class="review">
+						<p class="onestepcheckout-numbers onestepcheckout-numbers-4"><?php echo $this->__('Review your order');?></p>
+						<div>
+						<?php echo $this->getChildHtml('review');?>
+						</div>	
+				</div>
+			</div>
+			<div class="clear_both">&nbsp;</div>			
+		</form>
+		<?php if(version_compare(Mage::getVersion(),'1.4.0.1','>='))://fix cho magento 1.3?>
+				<div style="display: none;">
+					<div id="inline1" style="width:400px;height:235px;overflow:auto;">
+						<?php echo $this->getChildHtml('login');?>	
+					</div>
+					<div id="inline3" style="width:440px;height:190px;overflow:auto;">
+						<?php echo $this->getChildHtml('forgotpassword');?>	
+					</div>
+					<div id="inline2" style="width:<?php echo Mage::getStoreConfig('onestepcheckout/termcondition/boxwidth')?>;height:<?php echo Mage::getStoreConfig('onestepcheckout/termcondition/boxheight')?>;overflow:auto;">
+						<h1><?php echo $this->__('Terms and Conditions');?> </h1>
+						<br>
+						<?php echo $this->__(Mage::getStoreConfig('onestepcheckout/termcondition/content_options'));?>
+					</div>
+				</div>	
+		<?php else:?>
+				<div style="display: none;">
+					<div id="inline1" style="width:435px;height:240px;overflow:auto;">
+						<?php echo $this->getChildHtml('login');?>	
+					</div>
+					<div id="inline3" style="width:445px;height:205px;overflow:auto;">
+						<?php echo $this->getChildHtml('forgotpassword');?>	
+					</div>
+					<div id="inline2" style="width:<?php echo Mage::getStoreConfig('onestepcheckout/termcondition/boxwidth')?>;height:<?php echo Mage::getStoreConfig('onestepcheckout/termcondition/boxheight')?>;overflow:auto;">
+						<h1><?php echo $this->__('Terms and Conditions');?> </h1>
+						<br>
+						<?php echo $this->__(Mage::getStoreConfig('onestepcheckout/termcondition/content_options'));?>
+					</div>
+				</div>	
+		<?php endif;?>
+		</div>
+	<div class="clear_both">&nbsp;</div>
+<div style="left: -2px; width: 1200px; min-height: 710px; display: none;top:51%;" id="loading-mask">
+    <p id="loading_mask_loader" class="loader"><img alt="Loading..." src="<?php echo $this->getSkinUrl('mw_onestepcheckout/images/ajax-loader-tr.gif')?>"><br>Please wait...</p>
+</div>
+<?php endif?>

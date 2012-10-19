@@ -1,0 +1,65 @@
+<?php if(Mage::getStoreConfig('onestepcheckout/config/allowcoupon')):?>	
+		<div id="tab-coupon">
+			<?php echo $this->getChildHtml('coupon');?>
+		</div>
+<?php endif;?>
+<?php if(Mage::getStoreConfig('onestepcheckout/config/enable_messagetosystem')):?>	
+<div class="onestepcheckout-comments">
+		<label for="id_comments"><?php echo $this->__('Comments');?></label><br/>
+		<textarea id="id_comments" name="onestepcheckout_comments" cols="40" rows="4"></textarea>
+</div>
+<?php endif;?>
+<br>
+<!--bo sung -->
+<?php if(Mage::getStoreConfig('onestepcheckout/config/enable_giftmessage')):?>			
+<div class="onestepcheckout-giftmessagecontainer">
+	<div class="onestepcheckout-giftmessages">
+		<div id="onepage-checkout-shipping-method-additional-load">
+			<?php echo $this->getChildHtml('additional') ?>
+		</div>
+		<!--
+		<div class="inner-box">
+			<div class="input-checkbox">
+				<input type="checkbox" name="allow_gift_messages" id="allow_gift_messages" value="1" />
+				<label for="allow_gift_messages">Add a gift message to my order</label>
+
+			</div>
+		</div>
+		<div class="gift-box" id="allow-gift-message-container" style="display:none;">
+			<div class="scroll-box">
+				<fieldset class="group-select">
+					<input type="hidden" name="giftmessage[12694][type]"  value="quote" />
+					<ul class="no-padding">
+						<li>
+							<div class="input-box">
+
+								<label for="gift-message-whole-from">From</label><br />
+								<input type="text" name="giftmessage[12694][from]" id="gift-message-whole-from" title="From"  value=" " class="input-text validation-passed" />
+							</div>
+							<div class="input-box input-box-last">
+								<label for="gift-message-whole-to">To</label><br />
+								<input type="text" name="giftmessage[12694][to]" id="gift-message-whole-to" title="To" value=" " class="input-text validation-passed" />
+							</div>
+						</li>
+
+						<li>
+							<label for="gift-message-whole-message">Message</label>
+							<br/>
+							<textarea id="gift-message-whole-message" class="input-text validation-passed giftmessage-area" name="giftmessage[12694][message]" title="Message" rows="5" cols="40"></textarea>
+						</li>
+					</ul>
+
+				 </fieldset>
+
+			</div>
+		</div>
+		-->
+	</div>			
+</div>
+<?php endif?>		
+<?php if(Mage::getStoreConfig('onestepcheckout/termcondition/allow_options')):?>
+	<div class="onestepcheckout-enable-terms">
+		<input class="required-entry" type="checkbox" id="id_accept_terms" name="accept_terms" value="1"  />
+		<label for="id_accept_terms"><?php echo $this->__('I accept the');?> <a id="onestepcheckout-toc-link" target="_blank" href="#inline2"><?php echo $this->__('Terms and Conditions');?></a></label>
+	</div>
+<?php endif ?>
