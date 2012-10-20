@@ -14,16 +14,11 @@ $dn =  Mage::getSingleton('customer/session')->getCustomer()->getdob();
 $dn = date("d/m/Y", strtotime($dn));
 ?>
             <?php if (in_array("CartaoCredito", $standad->getFormasPagamento()) ): ?>
-                        <label style="float:left;margin-bottom: 25px;"><input type="radio"  alt="Cartão de Crédito"  border="0"  <input  onclick="if (!document.getElementById('shipping:firstname').value && !document.getElementById('billing:firstname').value) {
- document.getElementById('moip_o2preencha').style.display = 'block';
- document.getElementById('moip_boleto').style.display = 'none';
- document.getElementById('moip_debito').style.display = 'none';
-} else{
+                        <label style="float:left;margin-bottom: 25px;"><input type="radio"  alt="Cartão de Crédito"  border="0"  onclick="
  document.getElementById('moip_credito').style.display = 'block';
  document.getElementById('moip_o2preencha').style.display = 'none';
  document.getElementById('moip_boleto').style.display = 'none';
  document.getElementById('moip_debito').style.display = 'none';
-}
 if (!document.getElementById('shipping:firstname').value) {
  document.getElementById('credito_portador_nome').value = document.getElementById('billing:firstname').value + ' ' + document.getElementById('billing:lastname').value;
  document.getElementById('credito_portador_telefone').value = document.getElementById('billing:telephone').value;
@@ -171,8 +166,7 @@ echo "Pagável em qualquer agência bancária ou casas lotéricas.";
 	   </li>
         <?php endif; ?>
 </div>
-<div  style="width:300px; float:left; margin-top:15px;"><label><input type="radio"   border="0"  onclick="document.getElementById('formcli').style.display='block';" style="margin-right: 10px;" />Alterar dados do Titular do cartão</label></div>
-<div id="formcli" style="display:none;width:300px; float:left; margin-top:15px;">
+<div id="formcli" style="width:300px; float:left; margin-top:15px;">
     <h3>Dados do Titular</h3>
    
    <li style="list-style:none; padding-top:10px;float:left">
