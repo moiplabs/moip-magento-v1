@@ -5,37 +5,24 @@ $api->setContaMoip($standad->getConfigData('conta_moip'));
 $api->setAmbiente($standad->getConfigData('ambiente'));
 $pgdireto = $api->hasPagamentoDireto();
 ?>
-<a href="https://www.moip.com.br" target="_blank"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/logomoipck.png');?>" style="margin-top:15px;" border="0"></a>
-<ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;margin-left: 10px;margin-top: 25px;float: left;width: 300px;">
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('o2ti_moip/js/formulario.js'); ?>"></script>
+<ul id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;margin-left: 10px;margin-top: 15px;float: left;width: 300px;">
            
 <?php
+$nome =  Mage::getSingleton('customer/session')->getCustomer()->getName();
+$telefone =  Mage::getSingleton('customer/session')->getCustomer()->getTelephone();
 $cpf =  Mage::getSingleton('customer/session')->getCustomer()->getTaxvat();
 $dn =  Mage::getSingleton('customer/session')->getCustomer()->getdob();
 $dn = date("d/m/Y", strtotime($dn));
 ?>
             <?php if (in_array("CartaoCredito", $standad->getFormasPagamento()) ): ?>
-                        <label style="float:left;margin-bottom: 25px;"><input type="radio"  alt="Cartão de Crédito"  border="0"  onclick="
- document.getElementById('moip_credito').style.display = 'block';
- document.getElementById('moip_o2preencha').style.display = 'none';
- document.getElementById('moip_boleto').style.display = 'none';
- document.getElementById('moip_debito').style.display = 'none';
-if (!document.getElementById('shipping:firstname').value) {
- document.getElementById('credito_portador_nome').value = document.getElementById('billing:firstname').value + ' ' + document.getElementById('billing:lastname').value;
- document.getElementById('credito_portador_telefone').value = document.getElementById('billing:telephone').value;
- document.getElementById('credito_portador_cpf').value = document.getElementById('billing:taxvat').value;
- document.getElementById('credito_portador_nascimento').value = document.getElementById('billing:day').value + '/' + document.getElementById('billing:month').value + '/' + document.getElementById('billing:year').value
-} else {
- document.getElementById('credito_portador_nome').value = document.getElementById('shipping:firstname').value + ' ' + document.getElementById('shipping:lastname').value;
- document.getElementById('credito_portador_telefone').value = document.getElementById('shipping:telephone').value;
- document.getElementById('credito_portador_cpf').value = document.getElementById('<?php echo $cpf; ?>').value;
- document.getElementById('credito_portador_nascimento').value = document.getElementById('billing:day').value + '/' + document.getElementById('billing:month').value + '/' + document.getElementById('billing:year').value
-}" type="radio" id="forma_pagamento" name="payment[forma_pagamento]" title="<?php echo Mage::helper('payment')->__("forma_pagamento") ?>" value="CartaoCredito" class="radio payment_method_handle validation-passed" style="display: none;"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/abacartao.png'); ?>"  alt="Boleto Bancário"  style="cursor:pointer;margin-botton:25px;"></label>
+                        <label style="float:left;margin-bottom: 25px;"><input type="radio"  alt="Cartão de Crédito"  border="0"   onclick="cartao()" type="radio" id="forma_pagamento" name="payment[forma_pagamento]" title="<?php echo Mage::helper('payment')->__("forma_pagamento") ?>" value="CartaoCredito" class="radio payment_method_handle validation-passed" style="display: none;"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/abacartao.png'); ?>" id="imagemcartao" alt="Cartão de Crédito"  style="cursor:pointer;margin-botton:25px;"></label>
             <?php endif; ?>
             <?php if (in_array("BoletoBancario", $standad->getFormasPagamento()) ): ?>
-                <label style="float:left;margin-bottom: 25px;"> <input onclick="document.getElementById('moip_debito').style.display='none';document.getElementById('moip_o2preencha').style.display='none';document.getElementById('moip_boleto').style.display='block';document.getElementById('moip_credito').style.display='none'" type="radio" id="forma_pagamento" name="payment[forma_pagamento]" title="<?php echo Mage::helper('payment')->__("forma_pagamento") ?>" value="BoletoBancario" class="radio payment_method_handle validation-passed"  style="display: none;" /> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/ababoleto.png'); ?>"  style="cursor:pointer;margin-botton:25px;" alt="Boleto Bancário" ></label>
+                <label style="float:left;margin-bottom: 25px;"> <input onclick="boleto()" type="radio" id="forma_pagamento" name="payment[forma_pagamento]" title="<?php echo Mage::helper('payment')->__("forma_pagamento") ?>" value="BoletoBancario" class="radio payment_method_handle validation-passed"  style="display: none;" /> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/ababoleto.png'); ?>"  style="cursor:pointer;margin-botton:25px;" id="imageboleto" alt="Boleto Bancário" ></label>
            <?php endif; ?>
             <?php if (in_array("DebitoBancario", $standad->getFormasPagamento()) ): ?>
-                    <label style="float:left;margin-bottom: 25px;"><input onclick="document.getElementById('moip_debito').style.display='block';document.getElementById('moip_o2preencha').style.display='none';document.getElementById('moip_boleto').style.display='none';document.getElementById('moip_credito').style.display='none'" type="radio" id="forma_pagamento" name="payment[forma_pagamento]" title="<?php echo Mage::helper('payment')->__("forma_pagamento") ?>" value="DebitoBancario"  class="radio payment_method_handle validation-passed"  style="display: none;" /> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/abatransf.png'); ?>"  style="cursor:pointer;margin-botton:25px;" alt="Transferência Bancária" ></label>
+                    <label style="float:left;margin-bottom: 25px;"><input onclick="transf()" type="radio" id="forma_pagamento" name="payment[forma_pagamento]" title="<?php echo Mage::helper('payment')->__("forma_pagamento") ?>" value="DebitoBancario"  class="radio payment_method_handle validation-passed"  style="display: none;" /> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/abatransf.png'); ?>"  style="cursor:pointer;margin-botton:25px;" id="imagemtrans" alt="Transferência Bancária" ></label>
             <?php endif; ?> 
             
             
@@ -44,15 +31,40 @@ if (!document.getElementById('shipping:firstname').value) {
 <?php if (in_array("DebitoBancario", $standad->getFormasPagamento()) ): ?>
                     <div id="moip_debito" style="display:none;float:left;width:300px;margin-bottom:25px;">
 <h3>Transferência Bancária</h3>
+<div id="pagdebito" style="display:none;">
+<ul class="messages"><li class="success-msg"><ul><li>Após finalizar o pedido você será redirecionado ao site do seu banco..</li></ul></li></ul>
+</div>
                         <ul style="margin-left: 10px;" >
-                            <li style="display:block; float: left;width:150px;"><label><input type="radio" id="debito_instituicao" name="payment[debito_instituicao]" value="BancoDoBrasil"/> <img  src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/bb.png'); ?>" alt="Banco do Brasil" style="cursor:pointer;"></label></li>
-                            <li style="display:block; float: left;width:150px;"><label><input type="radio" id="debito_instituicao" name="payment[debito_instituicao]" value="Bradesco"/> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/bradesco.png'); ?>"   style="cursor:pointer;" alt="Bradesco"> </label></li>
-                            <li style="display:block; float: left;width:150px;"><label><input type="radio" id="debito_instituicao" name="payment[debito_instituicao]"  value="Itau" /> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/itau.png'); ?>"  alt="Itaú" style="cursor:pointer;" > </label></li>
-                            <li style="display:block; float: left;width:150px;"><label><input type="radio" id="debito_instituicao" name="payment[debito_instituicao]" value="Banrisul" /> <img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/banrisul.png'); ?>"  alt="Banrisul" style="cursor:pointer;">
-</label></li>
+                            <li style="display:block; float: left;">
+<label>
+<input type="radio" id="debito_instituicao" name="payment[debito_instituicao]" onclick="bb()" value="BancoDoBrasil" style="display:none;"/> 
+<img  src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/bb.png'); ?>" alt="Banco do Brasil" id="debbb" style="cursor:pointer;"></label>
+</li>
+                            <li style="display:block; float: left;">
+<label>
+<input type="radio" id="debito_instituicao" name="payment[debito_instituicao]" onclick="bradesco()" value="Bradesco" style="display:none;"/>
+<img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/bradesco.png'); ?>"  id="debbradesco"   style="cursor:pointer;" alt="Bradesco">
+</label>
+</li>
+                            <li style="display:block; float: left;">
+<label>
+<input type="radio" id="debito_instituicao" name="payment[debito_instituicao]" onclick="itau()" style="display:none;" value="Itau" />
+<img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/itau.png'); ?>"  id="debitau"  alt="Itaú" style="cursor:pointer;" >
+</label>
+</li>
+                            <li style="display:block; float: left;">
+<label>
+<input type="radio" id="debito_instituicao" name="payment[debito_instituicao]"   onclick="banrisul()" value="Banrisul" style="display:none;"/>
+<img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/banrisul.png'); ?>"  id="Banrisul"  alt="Banrisul" style="cursor:pointer;">
+</label>
+</li>
                         </ul>
-<div id="checkout-payment-o2ti-deb"><div class="validation-advice" id="advice-required-entry_payment_o2ti" style="">Selecione o banco</div></div>
-                    </div>
+
+<div id="checkout-payment-o2ti-deb">
+<div class="validation-advice" id="advice-required-entry_payment_o2ti" style="">Selecione o banco</div>
+</div>
+
+</div>
  <?php endif; ?>
 <?php if (in_array("BoletoBancario", $standad->getFormasPagamento()) ): ?>
                 <div id="moip_boleto" style="display:none;float: left;width:300px;margin-bottom:25px;">
@@ -166,12 +178,13 @@ echo "Pagável em qualquer agência bancária ou casas lotéricas.";
 	   </li>
         <?php endif; ?>
 </div>
-<div id="formcli" style="width:300px; float:left; margin-top:15px;">
+<div  style="width:300px; float:left; margin-top:15px;"><label><input type="radio"   border="0"  onclick="document.getElementById('formcli').style.display='block';" style="margin-right: 10px;" />Alterar dados do Titular do cartão</label></div>
+<div id="formcli" style="display:none;width:300px; float:left; margin-top:15px;">
     <h3>Dados do Titular</h3>
    
    <li style="list-style:none; padding-top:10px;float:left">
 <label style="float:left; width:100px; font-size:12px;">Nome no cartão:</label>
-<input type="text" name="payment[credito_portador_nome]" class="required-entry"  id="credito_portador_nome" autocomplete="off" />
+<input type="text" name="payment[credito_portador_nome]" value="<?php echo $nome; ?>"  class="required-entry"  id="credito_portador_nome" autocomplete="off" />
    </li>
    <li style="list-style:none; padding-top:10px;float:left">
 <label style="float:left; width:100px; font-size:12px;">CPF:</label>
@@ -187,7 +200,7 @@ echo "Pagável em qualquer agência bancária ou casas lotéricas.";
    </li>
    <li style="list-style:none; padding-top:10px;float:left">
 <label style="float:left; width:100px; font-size:12px;">Telefone:</label>
-         <input type="text" name="payment[credito_portador_telefone]" id="credito_portador_telefone" onkeypress="return txtBoxFormat(this, '(99)9999-9999', event);" maxlength="14" placeholder="Ex. (19)9999-9999" class="required-entry"  autocomplete="off" />
+         <input type="text" name="payment[credito_portador_telefone]" id="credito_portador_telefone" onkeypress="return txtBoxFormat(this, '(99)9999-9999', event);" maxlength="14" value="<?php echo $telefone; ?>" placeholder="Ex. (19)9999-9999" class="required-entry"  autocomplete="off" />
    </li>
    <li style="list-style:none; padding-top:10px;float:left">
 <label style="float:left; width:100px; font-size:12px;">Data nascimento:</label>
@@ -197,7 +210,7 @@ echo "Pagável em qualquer agência bancária ou casas lotéricas.";
             <?php endif; ?>
  
 </ul>
+<a href="https://www.moip.com.br" target="_blank"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/logomoipck.png');?>" style="margin-top:15px;" border="0"></a>
 <div id="moip_o2preencha" style="display:none;float:left;width:300px;margin-bottom:25px;">Por favor, primeiro preencha o endereço de cobrança!</div>
 <div id="checkout-payment-o2ti"></div>
-
 </br></br>
