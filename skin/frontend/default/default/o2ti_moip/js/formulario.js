@@ -1,3 +1,14 @@
+$(document).ready(function(){
+if (!document.getElementById('shipping:firstname').value) {
+ 		document.getElementById('credito_portador_nome').value = document.getElementById('billing:firstname').value + ' ' + document.getElementById('billing:lastname').value;
+ 		document.getElementById('credito_portador_telefone').value = document.getElementById('billing:telephone').value;
+		document.getElementById('credito_portador_cpf').value = document.getElementById('billing:taxvat').value;
+		document.getElementById('credito_portador_nascimento').value = document.getElementById('billing:day').value + '/' + document.getElementById('billing:month').value + '/' + document.getElementById('billing:year').value
+} else {
+ 		document.getElementById('credito_portador_nome').value = document.getElementById('shipping:firstname').value + ' ' + document.getElementById('shipping:lastname').value;
+ 		document.getElementById('credito_portador_telefone').value = document.getElementById('shipping:telephone').value;
+}
+});
 cartao = function(){
     document.getElementById('imagemcartao').style.opacity='1';
     document.getElementById('imagemtrans').style.opacity='0.4';
@@ -13,15 +24,6 @@ cartao = function(){
 		 document.getElementById('moip_boleto').style.display = 'none';
 		 document.getElementById('moip_debito').style.display = 'none';
 		}
-	if (!document.getElementById('shipping:firstname').value) {
- 		document.getElementById('credito_portador_nome').value = document.getElementById('billing:firstname').value + ' ' + document.getElementById('billing:lastname').value;
- 		document.getElementById('credito_portador_telefone').value = document.getElementById('billing:telephone').value;
-		document.getElementById('credito_portador_cpf').value = document.getElementById('billing:taxvat').value;
-		document.getElementById('credito_portador_nascimento').value = document.getElementById('billing:day').value + '/' + document.getElementById('billing:month').value + '/' + document.getElementById('billing:year').value
-} else {
- 		document.getElementById('credito_portador_nome').value = document.getElementById('shipping:firstname').value + ' ' + document.getElementById('shipping:lastname').value;
- 		document.getElementById('credito_portador_telefone').value = document.getElementById('shipping:telephone').value;
-}
   };
 boleto = function(){
 				document.getElementById('moip_debito').style.display='none';
