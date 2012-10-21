@@ -359,13 +359,15 @@ if($MW_Onestepcheckout("input[name=payment[method]]:checked").val() == "o2ti_moi
 if(!$MW_Onestepcheckout("input[name=payment[forma_pagamento]]:checked").val()){	
 						if(!$MW_Onestepcheckout('#advice-required-o2ti').length){
 logic=false;	
-						$MW_Onestepcheckout('#checkout-payment-o2ti').append('<dt><div class="validation-advice" id="advice-required-entry_payment_o2ti" style="">Selecione a forma de pagamento.</div></dt>');
+						$MW_Onestepcheckout('#checkout-payment-o2ti').append('<dt><div class="validation-advice" id="advice-required-entry_payment_o2ti" style=""><ul class="messages"><li class="error-msg"><ul><li>Selecione a forma de pagamento.</li></ul></li></ul></div></dt>');
 						}
 					}
 else
 
 					$MW_Onestepcheckout('#advice-required-entry_payment_o2ti').remove();
 }
+                
+
 					else
 					$MW_Onestepcheckout('#advice-required-entry_payment').remove();
 					if(!notshipmethod){
