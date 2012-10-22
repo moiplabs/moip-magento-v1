@@ -148,10 +148,10 @@ echo "Pagável em qualquer agência bancária ou casas lotéricas.";
     <select name="payment[credito_parcelamento]" id="credito_parcelamento" class="required-entry" >
                                 <?php
                                     $data = $standad->getQuote()->getShippingAddress();
-                                    $parcelamento = $data->getGrandTotal();
+                                    $parcelamento = $api->getParcelamento($data->getGrandTotal());
 
                                     foreach ($parcelamento as $k => $v): ?>
-                                             <option value="<?php echo $k ?>"><?php echo $k . "x R$ " .  $v['valor'] . " | No total de R$ " .$v['total'] ?></option>
+                                        <option value="<?php echo $k ?>"><?php echo $k . "x R$ " . number_format($v['valor'], "2", ",", ".") . " | Total: R$ " . number_format($v['total'], "2", ",", "."); $v['juros'] ?></option>
                                 <?php endforeach; ?>
                                     </select>
     
