@@ -151,7 +151,7 @@ echo "Pagável em qualquer agência bancária ou casas lotéricas.";
                                     $parcelamento = $api->getParcelamento($data->getGrandTotal());
 
                                     foreach ($parcelamento as $k => $v): ?>
-                                        <option value="<?php echo $k ?>"><?php echo $k . "x R$ " . number_format($v['valor'], "2", ",", ".") . " | Total: R$ " . number_format($v['total'], "2", ",", "."); $v['juros'] ?></option>
+                                        <option value="<?php echo $k ?>"><?php echo $k . "x R$ " .$v['valor']. " | Total: R$ " .$v['total']; $v['juros'] ?></option>
                                 <?php endforeach; ?>
                                     </select>
     
