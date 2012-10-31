@@ -52,21 +52,26 @@
 	
 	//echo "<pre>";var_dump(unserialize($time));
 	//foreach()
-	
+	$standad = Mage::getSingleton('moip/standard');
+$api = Mage::getSingleton('moip/api');
+$api->setContaMoip($standad->getConfigData('conta_moip'));
+$api->setAmbiente($standad->getConfigData('ambiente'));$data = $standad->getQuote()->getShippingAddress();
+$valuegetGrandTotal = $data->getGrandTotal();
+
 ?>
 <script type="text/javascript">
 var message_payment = "<?php echo Mage::helper('onestepcheckout')->__('Please select a payment method for your order!');?>";//giup dua cac' chuoi~ nay` vao file .csv
 var message_ship = "<?php echo Mage::helper('onestepcheckout')->__('Please select a shipping method for your order!');?>";
-
-function updateShippingMethod()	//update review order khi click shipping method
-{
-	urls= '<?php echo Mage::getUrl('onestepcheckout/index/updateshippingmethod') ?>';
 <?php
  /*	//alert(urls);
 	//msg = "Loadding ...";
 	//$MW_Onestepcheckout('#checkout-review-load').html(msg);
 */
  ?>
+
+function updateShippingMethod()	//update review order khi click shipping method
+{
+	urls= '<?php echo Mage::getUrl('onestepcheckout/index/updateshippingmethod') ?>';
 	$MW_Onestepcheckout('#message-box').html('');
 	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
 	$MW_Onestepcheckout('#loading-mask').css('display','block');
@@ -76,16 +81,26 @@ function updateShippingMethod()	//update review order khi click shipping method
 	   data: "shipping_method="+$MW_Onestepcheckout('input[name=shipping_method]:checked').val(),
 	   success: function(msg){
 		   msg=msg.replace("[]","");
-		$MW_Onestepcheckout('#checkout-review-load').html(msg);
-		$MW_Onestepcheckout('#loading-mask').css('display','none');
-		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
+		$MW_Onestepcheckout('#checkout-review-load').html(msg);		
+		$MW_Onestepcheckout.ajax({
+					type: "POST",
+					url: "<?php echo Mage::getUrl('onestepcheckout/index/updatepaymenttype')?>",
+					//data: "str_value="+str_value,
+					data:$MW_Onestepcheckout("#onestep_form").serialize(),
+					success: function(msg){
+							$MW_Onestepcheckout('#checkout-payment-method-load').html(msg);							
+							$MW_Onestepcheckout('#loading-mask').css('display','none');
+							$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');						
+						}
+					});	
 	   }
 	});
 }
-function updatePaymentMethod(value)	//update review order khi click payment method
-{
 	//msg = "Loadding ...";
 	//$MW_Onestepcheckout('#checkout-review-load').html(msg);	// #checkout-review-load: id cua? bang? tong? tie`n, lenh .html(msg) cho phep gi lai. noi dung cua id voi'noi dung chua' trong bien $msg
+
+function updatePaymentMethod(value)	//update review order khi click payment method
+{
 	$MW_Onestepcheckout('#message-box').html('');
 	$MW_Onestepcheckout('#loading-mask').css('display','block');
 	$MW_Onestepcheckout('.btn-checkout').attr('disabled','disabled');
@@ -95,11 +110,8 @@ function updatePaymentMethod(value)	//update review order khi click payment meth
 	   data: "payment%5Bmethod%5D="+value,
 	   success: function(msg){
 		if(msg.search("<script")!=0){
-		//alert(msg.search("<script"));
 		$MW_Onestepcheckout('#checkout-review-load').html(msg);
 		}
-		//else
-		//	$MW_Onestepcheckout('#checkout-review-load').append(msg);	//message thong bao info payment method ko hop le
 		$MW_Onestepcheckout('#loading-mask').css('display','none');
 		$MW_Onestepcheckout('.btn-checkout').removeAttr('disabled');
 	   }
@@ -366,7 +378,30 @@ else
 
 					$MW_Onestepcheckout('#advice-required-entry_payment_o2ti').remove();
 }
-                
+if($MW_Onestepcheckout("input[name=payment[forma_pagamento]]:checked").val() == "CartaoCredito"){
+
+if(!$MW_Onestepcheckout("input[name=payment[credito_instituicao]]:checked").val()){	
+						if(!$MW_Onestepcheckout('#advice-required-o2ti').length){
+logic=false;	
+						$MW_Onestepcheckout('#checkout-payment-bandeira').append('<dt><div class="validation-advice" id="advice-required-entry_payment_o2ti" style=""><ul class="messages"><li class="error-msg"><ul><li>Selecione a bandeira do cartão.</li></ul></li></ul></div></dt>');
+						}
+					}
+else
+
+					$MW_Onestepcheckout('#advice-required-entry_payment_bandeira').remove();
+}
+if($MW_Onestepcheckout("input[name=payment[forma_pagamento]]:checked").val() == "DebitoBancario"){
+
+if(!$MW_Onestepcheckout("input[name=payment[debito_instituicao]]:checked").val()){	
+						if(!$MW_Onestepcheckout('#advice-required-o2ti').length){
+logic=false;	
+						$MW_Onestepcheckout('#checkout-payment-banco').append('<dt><div class="validation-advice" id="advice-required-entry_payment_o2ti" style=""><ul class="messages"><li class="error-msg"><ul><li>Selecione o seu banco.</li></ul></li></ul></div></dt>');
+						}
+					}
+else
+
+					$MW_Onestepcheckout('#advice-required-entry_payment_banco').remove();
+}            
 
 					else
 					$MW_Onestepcheckout('#advice-required-entry_payment').remove();
