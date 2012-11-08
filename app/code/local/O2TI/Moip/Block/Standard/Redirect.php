@@ -165,7 +165,7 @@ var erroValidacao = function(data) {
 };
 </script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('o2ti_moip/js/bootstrap.min.js'); ?>"></script>
-<div id="MoipWidget" data-token="<? echo $url ?>" callback-method-error="erroValidacao" callback-method-success="sucesso"  ></div>
+<div id="MoipWidget" data-token="<?php echo $url ?>" callback-method-error="erroValidacao" callback-method-success="sucesso"  ></div>
 
 <h2>Transação realizada via Moip S/A</h2>
 <a href="https://www.moip.com.br" target="_blank"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/logomoip.png'); ?>" border="0" style="float: right;"></a>
@@ -180,7 +180,7 @@ Seu pedido está quase concluído, por favor clique no link abaixo para ser redi
 
 <?php if($opcaopg == "BoletoBancario"){?>
 </br>Clique no link abaixo para imprimir o seu boleto e concluir seu pedido.</br></br>
-<div id="pgboletoedeb" disabled="true" ><a href="https://www.moip.com.br/Instrucao.do?token=<? echo $url ?>" target="_blank"><button type="button" title="Imprimir Boleto" class="button btn-checkout"><span style="_position:fixed;"><span style="_position:fixed;">Imprimir Boleto</span></span></button></a></div>
+<div id="pgboletoedeb" disabled="true" ><a href="https://www.moip.com.br/Instrucao.do?token=<?php echo $url ?>" target="_blank"><button type="button" title="Imprimir Boleto" class="button btn-checkout"><span style="_position:fixed;"><span style="_position:fixed;">Imprimir Boleto</span></span></button></a></div>
 <?php } ?>
 
 
@@ -197,7 +197,6 @@ Seu pedido está quase concluído, por favor clique no link abaixo para ser redi
 <?php } ?>
 
    <?php
-            ob_flush();
             } else {
 
                 if ($status_pgdireto <> "Cancelado")
