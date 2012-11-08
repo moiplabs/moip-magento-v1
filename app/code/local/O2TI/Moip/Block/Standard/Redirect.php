@@ -173,7 +173,7 @@ var erroValidacao = function(data) {
 <div id="Errocartao"></div>
 <?php if($opcaopg == "DebitoBancario"){?>
 Seu pedido está quase concluído, por favor clique no link abaixo para ser redirecionado ao seu banco.</br></br>
-<div id="pgboletoedeb" disabled="true" ><a href="https://www.moip.com.br/Instrucao.do?token=<? echo $url ?>"><button type="button" title="Ir ao Banco" class="button btn-checkout"><span style="_position:fixed;"><span style="_position:fixed;">Ir ao Banco</span></span></button></a></div>
+<div id="pgboletoedeb" disabled="true" ><a href="https://www.moip.com.br/Instrucao.do?token=<?php echo $url ?>"><button type="button" title="Ir ao Banco" class="button btn-checkout"><span style="_position:fixed;"><span style="_position:fixed;">Ir ao Banco</span></span></button></a></div>
 <?php } ?>
 
 
