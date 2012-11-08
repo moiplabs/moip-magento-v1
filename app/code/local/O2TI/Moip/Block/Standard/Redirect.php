@@ -22,11 +22,13 @@ class O2TI_Moip_Block_Standard_Redirect extends Mage_Core_Block_Abstract {
 			$shippingId = $order->getShippingAddress()->getId();
 			$address = Mage::getModel('sales/order_address')->load($shippingId);
        ?>
+
+<?php //Full Analytics by Ecomm Solutions uma empresa parceira O2TI ?>
 <script type="text/javascript">
 	var _gaq = _gaq || [];
-	_gaq.push(['_setAccount', 'UA-xxxxxxxx-1']);
-	_gaq.push(['_setDomainName', 'seusite.com.br']);
-	_gaq.push(['_addIgnoreRef', 'seusite.com.br']);
+	_gaq.push(['_setAccount', 'UA-xxxxxxxx-1']);//google account
+	_gaq.push(['_setDomainName', 'seusite.com.br']);//dominio
+	_gaq.push(['_addIgnoreRef', 'seusite.com.br']);//dominio para evitar duplicidade
 	_gaq.push(['_trackPageview']);
 	_gaq.push(['_addTrans',
 		'<?php echo $order->getId() ?>',           // order ID - required
