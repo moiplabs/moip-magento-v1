@@ -2,7 +2,7 @@ cartao = function(){
     document.getElementById('imagemcartao').style.opacity='1';
     document.getElementById('imagemtrans').style.opacity='0.4';
     document.getElementById('imageboleto').style.opacity='0.4';
-	if (!document.getElementById('shipping:firstname').value && !document.getElementById('billing:firstname').value)
+	if (!document.getElementById('shipping:firstname').value || !document.getElementById('billing:firstname').value)
 		{
  		document.getElementById('moip_o2preencha').style.display = 'block';
  $MW_Onestepcheckout('#moip_o2preencha').hide();
