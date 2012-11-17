@@ -1,12 +1,24 @@
+
 cartao = function(){
     document.getElementById('imagemcartao').style.opacity='1';
     document.getElementById('imagemtrans').style.opacity='0.4';
     document.getElementById('imageboleto').style.opacity='0.4';
-	 $MW_Onestepcheckout("#moip_credito").show("slow");
+	if (!document.getElementById('shipping:firstname').value && !document.getElementById('billing:firstname').value)
+		{
+ 		document.getElementById('moip_o2preencha').style.display = 'block';
+ $MW_Onestepcheckout('#moip_o2preencha').hide();
+				 $MW_Onestepcheckout("#moip_o2preencha").show("slow");
+		document.getElementById('moip_boleto').style.display = 'none';
+		document.getElementById('moip_debito').style.display = 'none';
+		} else{
+		 document.getElementById('moip_credito').style.display = 'block';
+$MW_Onestepcheckout('#moip_credito').hide();
+				 $MW_Onestepcheckout("#moip_credito").show("slow");
 		 document.getElementById('moip_o2preencha').style.display = 'none';
 		 document.getElementById('moip_boleto').style.display = 'none';
 		 document.getElementById('moip_debito').style.display = 'none';
 $MW_Onestepcheckout('#advice-required-entry_payment_o2ti').remove();
+		}
 	if (!document.getElementById('shipping:firstname').value) {
  		document.getElementById('credito_portador_nome').value = document.getElementById('billing:firstname').value + ' ' + document.getElementById('billing:lastname').value;
  		document.getElementById('credito_portador_telefone').value = document.getElementById('billing:telephone').value;
@@ -148,3 +160,5 @@ manter = function(){
 	document.getElementById('formcli').style.display='none';
 	document.getElementById('alterar').style.display='block';
 	};
+
+ 

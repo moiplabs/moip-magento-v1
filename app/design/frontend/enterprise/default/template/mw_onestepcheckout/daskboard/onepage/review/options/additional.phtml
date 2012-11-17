@@ -25,5 +25,7 @@
  */
 ?>
 <?php if (!$this->getQuote()->isVirtual()): ?>
-    <?php echo $this->helper('giftmessage/message')->getInline('onepage_checkout', $this->getQuote(), $this->getDontDisplayContainer()) ?>
+	<div class="mw-osc-ct-giftmessage">
+		<?php echo $this->helper('giftmessage/message')->getInline('onepage_checkout', $this->getQuote(), $this->getDontDisplayContainer()) ?>
+	</div>
 <?php endif; ?>

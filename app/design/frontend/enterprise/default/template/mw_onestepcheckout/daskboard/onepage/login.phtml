@@ -28,7 +28,7 @@
 		<div class="col2-set">
 			<?php echo $this->getChildHtml('login_before')?>
 			<div class="col-2">
-				<div>
+				<div class="mw-osc-title-login">
 				<h1><?php echo $this->__('Login') ?></h1>
 				</div>
 				<!--<h2 style="font-size:12px;">Please login with your email address and password.</h2>-->
@@ -36,8 +36,7 @@
 				<form id="login-form" method="post">
 				<fieldset>
 					<div class="fieldset">
-						<h2 class="legend"><?php echo $this->__('Input your email and password here') ?></h2>
-						<p><?php echo $this->__('Please login with your email address and password..') ?></p>
+						<p><?php echo $this->__('If you have an account with us, please log in.') ?></p>
 						<div id="errorlogin"><?php echo $this->__('Invalid email or password!');?></div>
 						<ul class="form-list">
 							<li>
@@ -55,7 +54,7 @@
 						</ul>
 					</div>
 					
-					<div class="col-2" style="width:390px;float:none;">
+					<div class="col-2" style="float:none;">
 						<div class="buttons-set">
 							<p class="required"><?php echo $this->__('* Required Fields') ?></p>
 							<?php

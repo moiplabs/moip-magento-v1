@@ -5,20 +5,20 @@ class MW_Onestepcheckout_Model_Customer_Customer extends Mage_Customer_Model_Cus
     {
         $errors = array();
         $customerHelper = Mage::helper('customer');
-		if(!Mage::getStoreConfig('onestepcheckout/config/is_disable')){
-			if(Mage::getStoreConfig('onestepcheckout/addfield/name')){
+		if(Mage::getStoreConfig('onestepcheckout/config/is_sort_add')){
+			//if(Mage::getStoreConfig('onestepcheckout/addfield/name')){
 				if (!Zend_Validate::is( trim($this->getFirstname()) , 'NotEmpty')) {
 					$errors[] = $customerHelper->__('The first name cannot be empty.');
 				}
 				if (!Zend_Validate::is( trim($this->getLastname()) , 'NotEmpty')) {
 					$errors[] = $customerHelper->__('The last name cannot be empty.');
 				}
-			}
-			if(Mage::getStoreConfig('onestepcheckout/addfield/email') ==2){
+			//}
+		//	if(Mage::getStoreConfig('onestepcheckout/addfield/email') ==2){
 				if (!Zend_Validate::is($this->getEmail(), 'EmailAddress')) {
 					$errors[] = $customerHelper->__('Invalid email address "%s".', $this->getEmail());
 				}
-			}
+			//}
 		}
 		else{
 			if (!Zend_Validate::is( trim($this->getFirstname()) , 'NotEmpty')) {
@@ -64,5 +64,6 @@ class MW_Onestepcheckout_Model_Customer_Customer extends Mage_Customer_Model_Cus
 			}
 			return $errors;
 		
+    	
     }
 }

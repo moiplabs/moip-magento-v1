@@ -1,6 +1,6 @@
-#checkouto2ti{float: left;width: 300px; padding-bottom:15px;}
+#checkouto2ti {float: left;width: 300px;padding-bottom: 15px;margin-left: -20px;}
 #payment_form_o2ti_moip_standard{margin: 0; margin-top: 0; margin-left:20px;float: left; width: 260px; list-style:none;}
-#forma_pagamento{ /* display:none; */  
+#forma_pagamento{ cursor:pointer;
  -moz-opacity:0;
 filter:alpha(opacity:0);
 opacity:0;
@@ -42,3 +42,24 @@ position: absolute;width:80px;height:50px;}
 #alterarin{margin-right: 10px;}
 #formcli{display:none;width:300px; float:left; margin-top:15px;}
 #dadoscliente{float:left; width:100px; font-size:12px;}
+
+.tooltip {
+			color: #000000; outline: none;
+			cursor: help; text-decoration: none;
+			position: relative;
+		}
+		.tooltip span {
+			margin-left: -999em;
+			position: absolute;padding: 10px;
+		}
+		.tooltip:hover span {
+			border-radius: 5px 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; 
+			font-family: Calibri, Tahoma, Geneva, sans-serif;
+			position: absolute; left: 1em; top: 2em; z-index: 99;
+			margin-left: 0; width: 200px;
+		}
+		.tooltip:hover em {
+			font-family: Candara, Tahoma, Geneva, sans-serif; font-size: 1.2em; font-weight: bold;
+			display: block; padding: 0.2em 0 0.6em 0;
+		}
+		.help { background: #9FDAEE; border: 1px solid #2BB0D7;	}

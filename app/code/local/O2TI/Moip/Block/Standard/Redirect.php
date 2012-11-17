@@ -22,7 +22,6 @@ class O2TI_Moip_Block_Standard_Redirect extends Mage_Core_Block_Abstract {
 			$shippingId = $order->getShippingAddress()->getId();
 			$address = Mage::getModel('sales/order_address')->load($shippingId);
        ?>
-
 <?php //Full Analytics by Ecomm Solutions uma empresa parceira O2TI ?>
 <script type="text/javascript">
 	var _gaq = _gaq || [];
@@ -40,12 +39,8 @@ class O2TI_Moip_Block_Standard_Redirect extends Mage_Core_Block_Abstract {
 		'<?php echo $address->getRegion() ?>',     // state or province
 		'<?php echo $address->getCountry_id() ?>'// country
 	]);
-	// add item might be called for every item in the shopping cart
-	// where your ecommerce engine loops through each item in the cart and
-	// prints out _addItem for each
 	<?php $orderItems = $order -> getItemsCollection();
 	foreach ($orderItems as $item) {
-
 		$product_sku = $item -> sku;
 		$product_name = $item -> getName();
 		$_product = Mage::getModel('catalog/product') -> load($item->getProductId());
@@ -66,8 +61,6 @@ class O2TI_Moip_Block_Standard_Redirect extends Mage_Core_Block_Abstract {
 	}
 	?>
 	_gaq.push(['_trackTrans']);
-	//submits transaction to the Analytics servers
-
 	(function() {
 		var ga = document.createElement('script');
 		ga.type = 'text/javascript';
@@ -81,7 +74,6 @@ class O2TI_Moip_Block_Standard_Redirect extends Mage_Core_Block_Abstract {
 <script type='text/javascript' charset="ISO-8859-1" src='https://www.moip.com.br/transparente/MoipWidget-v2.js'></script>
 <script type="text/javascript">
 $(document).ready(function(){
-
 	$("#resultado").hide();
 	$("#token").val("<?php echo $url; ?>");
 	$("#boleto").ready(function(){
@@ -147,7 +139,6 @@ var sucesso = function(data){
 		}
 	}
 };
-
 var erroValidacao = function(data) {
 	for (i=0; i<data.length; i++) {
 		Moip = data[i];
@@ -166,26 +157,18 @@ var erroValidacao = function(data) {
 </script>
 <script type="text/javascript" src="<?php echo $this->getSkinUrl('o2ti_moip/js/bootstrap.min.js'); ?>"></script>
 <div id="MoipWidget" data-token="<?php echo $url ?>" callback-method-error="erroValidacao" callback-method-success="sucesso"  ></div>
-
 <h2>Transação realizada via Moip S/A</h2>
 <a href="https://www.moip.com.br" target="_blank"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/logomoip.png'); ?>" border="0" style="float: right;"></a>
 <div class="loader"/>Por favor, aguarde!</br><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/ajax-loader.gif'); ?>" border="0"></div>
 <div id="Errocartao"></div>
 <?php if($opcaopg == "DebitoBancario"){?>
 Seu pedido está quase concluído, por favor clique no link abaixo para ser redirecionado ao seu banco.</br></br>
-<div id="pgboletoedeb" disabled="true" ><a href="https://www.moip.com.br/Instrucao.do?token=<?php echo $url ?>"><button type="button" title="Ir ao Banco" class="button btn-checkout"><span style="_position:fixed;"><span style="_position:fixed;">Ir ao Banco</span></span></button></a></div>
+<button type="button" title="Finalizar compra" class="button btn-proceed-checkout btn-checkout" onclick="window.location='https://www.moip.com.br/Instrucao.do?token=<?php echo $url ?>'"><span><span>Ir ao Banco</span></span></button></a></div>
 <?php } ?>
-
-
-
 <?php if($opcaopg == "BoletoBancario"){?>
 </br>Clique no link abaixo para imprimir o seu boleto e concluir seu pedido.</br></br>
-<div id="pgboletoedeb" disabled="true" ><a href="https://www.moip.com.br/Instrucao.do?token=<?php echo $url ?>" target="_blank"><button type="button" title="Imprimir Boleto" class="button btn-checkout"><span style="_position:fixed;"><span style="_position:fixed;">Imprimir Boleto</span></span></button></a></div>
+<button type="button" title="Finalizar compra" class="button btn-proceed-checkout btn-checkout" onclick="window.location='https://www.moip.com.br/Instrucao.do?token=<?php echo $url ?>'"><span><span>Finalizar compra</span></span></button>
 <?php } ?>
-
-
-
-
 <?php if($opcaopg == "CartaoCredito"){?>
 </br></br>
 <div  id="pgcartao" disabled="true">
@@ -195,7 +178,6 @@ Seu pedido está quase concluído, por favor clique no link abaixo para ser redi
 <div id="idmoip"></div>
 </div>
 <?php } ?>
-
    <?php
             } else {
 
@@ -210,15 +192,11 @@ Seu pedido está quase concluído, por favor clique no link abaixo para ser redi
                     $html.= "O pagamento foi concluído com sucesso e a loja será notificada notificado";
                 else
                     $html.= "O pagamento foi autorizado, porém não foi confirmado por nossa equipe. Aguarde. Você receberá a confirmação do pagamento por e-mail.   ";
-
-                //$html.= $status_pgdireto;
             }
         } else {
 			 $html = "Erro durante o processamento. Tente novamente a operação.<br><br>
 					<b>Erro encontrado</b>: ".Mage::registry('erro');
         }
-
         return $html;
     }
-
 }

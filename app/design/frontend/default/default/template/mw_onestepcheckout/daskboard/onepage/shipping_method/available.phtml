@@ -1,3 +1,29 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
 <?php if (!($_shippingRateGroups = $this->getShippingRates())): ?>
     <p><?php echo $this->__('Sorry, no quotes are available for this order at this time.') ?></p>
 <?php else: ?>
@@ -9,7 +35,7 @@
             <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
                 <li>
                    <?php if ($_rate->getErrorMessage()): ?>
-                   
+                    
                    <?php else: ?>
                         <?php if ($_sole) : ?>
                         <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
@@ -23,7 +49,6 @@
                         <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
                             (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
                         <?php endif; ?>
-<input id="o2ti<?php echo $_rate->getCode() ?>" style="display:none;" value="<?php echo $_rate->getPrice(); ?>">
                         </label>
                    <?php endif ?>
                 </li>
@@ -39,32 +64,14 @@
 <script type="text/javascript">
 	var shipping_method_changed=-1; //khac phuc tren IE khi change phai click 2 lan` moi ajax
 	$MW_Onestepcheckout(".shipping_method_handle").click(function(){
-$MW_Onestepcheckout('#updatevalue').html('');
+		if(shipping_load())
+		{			
 				if(this.value != shipping_method_changed){
 					updateShippingMethod();
 					shipping_method_changed = this.value;
-					elisei = $MW_Onestepcheckout('#o2ti'+this.value).val();
-					$MW_Onestepcheckout('#updatevalue').html(elisei);				
-		
 				}
+		}		
 	});
 
-<?php
- /*	
-			//dua tat ca code javascript vao file js rieng, rui` update vao layout 
-	// function updateShippingMethod(value)
-	// {
-		// urls= $MW_Onestepcheckout('#geturlid').text()//lay noi dung cua the? div
-		// msg = "Loadding ...";
-		// $MW_Onestepcheckout('#checkout-review-load').html(msg);
-		// $MW_Onestepcheckout.ajax({
-		   // type: "POST",
-		   // url: urls,
-		   // data: "shipping_method="+value,
-		   // success: function(msg){
-			// $MW_Onestepcheckout('#checkout-review-load').html(msg);
-		   // }
-		 // });
-	// }
-*/?>
+
 </script>

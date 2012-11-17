@@ -1,4 +1,5 @@
 <?php 
+
 $name='';$company='';$email='';$street='';$city='';$state='';$zipcode='';$country='';$telephone='';$fax='';
 $name=$this->getLayout()->createBlock('customer/widget_name')->setTemplate('mw_onestepcheckout/name.phtml')->setObject($this->getAddress())->setFieldIdFormat('shipping:%s')->setFieldNameFormat('shipping[%s]')->toHtml();
 
@@ -24,16 +25,29 @@ if(version_compare(Mage::getVersion(),'1.4.0.1','>=')){
 										<li class="wide">
 											<label for="shipping:street1" class="required"><em>'.$this->isstar('street').'</em>'.$this->__('Address').'</label>
 											<div class="input-box">
-												<input type="text" title="'.$this->__('Street Address').'" name="shipping[street][]" id="shipping:street1" value="'.$this->htmlEscape($this->getAddress()->getStreet(1)).'" class="input-text inputtext  '.$this->isrequired('street').'" />
+												<input type="text" title="'.$this->__('Street Address').'" name="shipping[street][]" id="shipping:street1" value="'.$this->htmlEscape($this->getAddress()->getStreet(1)).'"  class="input-text inputtext  '.$this->isrequired('street').'" />
 											</div>
-										</li>';
-					for ($_i=2, $_n=$this->helper('customer/address')->getStreetLines(); $_i<=$_n; $_i++){
-							$street=$street.'<li class="wide">
+										</li>
+										<li class="wide">
+											<label for="shipping:street2" class="required"><em>'.$this->isstar('street').'</em>'.$this->__('Número').'</label>
 											<div class="input-box">
-												<input type="text" title="'.$this->__('Street Address %s', $_i).'" name="shipping[street][]" id="shipping:street'.$_i.'" value="'.$this->htmlEscape($this->getAddress()->getStreet($_i)).'" class="input-text inputtext" />
+												<input type="text" title="Street Address 2" style="width: 45px;"  name="shipping[street][]" id="shipping:street2" value="'.$this->htmlEscape($this->getAddress()->getStreet(2)).'" class="input-text inputtext  required-entry">
 											</div>
-										</li>';
-							}
+										</li>
+										<li class="wide">
+											<label for="shipping:street3" class="required">'.$this->__('Complemento').'</label>
+											<div class="input-box">
+												<input type="text" title="Complemento" style="width: 101px;"  name="shipping[street][]" id="shipping:street3" value="'.$this->htmlEscape($this->getAddress()->getStreet(3)).'" class="input-text inputtext">
+											</div>
+										</li>
+										<li class="wide">
+											<label for="shipping:street4" class="required"><em>'.$this->isstar('street').'</em>'.$this->__('Bairro').'</label>
+											<div class="input-box">
+												<input type="text" title="Bairro" style="width: 101px;" name="shipping[street][]" id="shipping:street4" value="'.$this->htmlEscape($this->getAddress()->getStreet(4)).'" class="input-text inputtext required-entry">
+											</div>
+										</li>
+										
+										';
 					$street=$street.'</ul></div>';
 					
 					$city='<div class="field">
@@ -46,7 +60,7 @@ if(version_compare(Mage::getVersion(),'1.4.0.1','>=')){
 					$state=	'<div class="field">
 								<label for="shipping:region_id" class="required"><em>'.$this->isstar('state').'</em>'.$this->__('State/Province').'</label>
 								<div class="input-box">
-									<select id="shipping:region_id" name="shipping[region_id]" title="'.$this->__('State/Province').'" class="validate-select" style="display:none;">
+									<select id="shipping:region_id" name="shipping[region_id]" title="'.$this->__('State/Province').'" '.((Mage::getStoreConfig("onestepcheckout/addfield/state")==1) ?  'class=\""validate-select\""' : " " ).' style="display:none;">
 										<option value="">'.$this->__('Please select region, state or province').'</option>
 									</select>
 									<script type="text/javascript">
@@ -54,18 +68,23 @@ if(version_compare(Mage::getVersion(),'1.4.0.1','>=')){
 										$("shipping:region_id").setAttribute("defaultValue",  "'.$this->getAddress()->getRegionId().'");
 									//]]>
 									</script>
-									<input type="text" id="shipping:region" name="shipping[region]" value="'.$this->htmlEscape($this->getAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="input-text inputtext  '.$this->isrequired('state').'" style="display:none;" />
+									<input type="text" id="shipping:region" name="shipping[region]" maxlength="2" value="'.$this->htmlEscape($this->getAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="input-text inputtext  '.$this->isrequired('state').'" style="display:none;" />
 								</div>
 							</div>';
 					
 					$zipcode='<div class="field">
 									<label for="shipping:postcode" class="required"><em>'.$this->isstar('zip').'</em>'.$this->__('Zip/Postal Code').'</label>
 									<div class="input-box">
-										<input type="text" title="'.$this->__('Zip/Postal Code').'" name="shipping[postcode]" id="shipping:postcode" value="'.$this->htmlEscape($this->getAddress()->getPostcode()).'" class="input-text inputtext validate-zip-international  '.$this->isrequired('zip').'" />
+										<input type="text" title="'.$this->__('Zip/Postal Code').'" name="shipping[postcode]" id="shipping:postcode" value="'.$this->htmlEscape($this->getAddress()->getPostcode()).'" class="input-text inputtext validate-zip-international  '.$this->isrequired('zip').' o2tizip" placeholder="99999-999" onchange="javascript: buscarEndereco(\'shipping\');"  onkeypress="return txtBoxFormat(this, \'99999-999\', event);" maxlength="9" />
+									</div>
+								</div>
+								<div class="field">
+									<div class="input-box" style="margin-top:20px">
+									<a id="correio" href="#inlinecorreio" title="">Pesquise seu CEP?</a>
 									</div>
 								</div>';
-					$country='<div class="field">
-									<label for="shipping:country_id" class="required"><em>*</em>'.$this->__('Country').'</label>
+					$country='<div class="field" '.((Mage::getStoreConfig("onestepcheckout/addfield/country")==0 ) ? "style=\"display:none\"" : "").'>
+									<label for="shipping:country_id" class="required"><em>'.$this->isstar('country').'</em>'.$this->__('Country').'</label>
 									<div class="input-box">
 										'.$this->getCountryHtmlSelect('shipping').'
 									</div>
@@ -74,13 +93,13 @@ if(version_compare(Mage::getVersion(),'1.4.0.1','>=')){
 					$telephone=	'<div class="field">
 									<label for="shipping:telephone" class="required"><em>'.$this->isstar('telephone').'</em>'.$this->__('Telephone').'</label>
 									<div class="input-box">
-										<input type="text" name="shipping[telephone]" value="'.$this->htmlEscape($this->getAddress()->getTelephone()).'" title="'.$this->__('Telephone').'" class="input-text inputtext  '.$this->isrequired('telephone').'" id="shipping:telephone" />
+										<input type="text" name="shipping[telephone]" value="'.$this->htmlEscape($this->getAddress()->getTelephone()).'" title="'.$this->__('Telephone').'" class="input-text inputtext  '.$this->isrequired('telephone').'" id="shipping:telephone" placeholder="(99)9999-9999"  onkeypress="return txtBoxFormat(this, \'(99)9999-9999\', event);" maxlength="14"/>
 									</div>
 								</div>';
 					$fax=	'<div class="field">
 									<label for="shipping:fax" class="required"><em>'.$this->isstar('fax').'</em>'.$this->__('Fax').'</label>
 									<div class="input-box">
-										<input type="text" name="shipping[fax]" value="'.$this->htmlEscape($this->getAddress()->getFax()).'" title="'.$this->__('Fax').'" class="input-text inputtext  '.$this->isrequired('fax').'" id="shipping:fax" />
+										<input type="text" name="shipping[fax]" value="'.$this->htmlEscape($this->getAddress()->getFax()).'" title="'.$this->__('Fax').'" class="input-text inputtext  '.$this->isrequired('fax').'" id="shipping:fax" placeholder="(99)9999-9999"  onkeypress="return txtBoxFormat(this, \'(99)9999-9999\', event);" maxlength="14"/>
 									</div>
 							</div>';
 }
@@ -97,16 +116,16 @@ else{	//for magento 1.3x
 					}
 					$street=$street.'</ul></div>';
 					$city='<div class="input-box"><label for="shipping:city">'.$this->__('City').'<em>'.$this->isstar('city').'</em></label><br /><input type="text" title="'.$this->__('City').'" name="shipping[city]" value="'.$this->htmlEscape($this->getAddress()->getCity()).'" class="input-text  '.$this->isrequired('city').'" id="shipping:city " /></div>';
-					$state='<div class="input-box"><label for="shipping:region">'.$this->__('State/Province').'<span class="required">*</span><em>'.$this->isstar('state').'</em></label><br/><select id="shipping:region_id" name="shipping[region_id]" title="'.$this->__('State/Province').'" class="validate-select" style="display:none"><option value="">'.$this->__('Please select region, state or province').'</option></select><script type="text/javascript">$("shipping:region_id").setAttribute("defaultValue",  "'.$this->getAddress()->getRegionId().'");</script><input type="text" id="shipping:region" name="shipping[region]" value="'.$this->htmlEscape($this->getAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="input-text  '.$this->isrequired('state').'" style="display:none" /></div>';
+					$state='<div class="input-box"><label for="shipping:region">'.$this->__('State/Province').'<span class="required">*</span><em>'.$this->isstar('state').'</em></label><br/><select id="shipping:region_id" name="shipping[region_id]" title="'.$this->__('State/Province').'" '.((Mage::getStoreConfig("onestepcheckout/addfield/state")==1 ) ?  'class=\""validate-select\""' : " " ).' style="display:none"><option value="">'.$this->__('Please select region, state or province').'</option></select><script type="text/javascript">$("shipping:region_id").setAttribute("defaultValue",  "'.$this->getAddress()->getRegionId().'");</script><input type="text" id="shipping:region" name="shipping[region]" value="'.$this->htmlEscape($this->getAddress()->getRegion()).'"  title="'.$this->__('State/Province').'" class="input-text  '.$this->isrequired('state').'" style="display:none" /></div>';
 					$zipcode='<div class="input-box"><label for="shipping:postcode">'.$this->__('Zip/Postal Code').'<span class="required">'.$this->isstar('zip').'</span></label><br /><input type="text" title="'.$this->__('Zip/Postal Code').'" name="shipping[postcode]" id="shipping:postcode" value="'.$this->htmlEscape($this->getAddress()->getPostcode()).'" class="validate-zip-international input-text  '.$this->isrequired('zip').'" /></div>';
-					$country='<div class="input-box"><label for="shipping:country_id">'.$this->__('Country').'<span class="required">*</span></label><br />'.$this->getCountryHtmlSelect('shipping').'</div>';
+					$country='<div class="input-box" '.((Mage::getStoreConfig("onestepcheckout/addfield/country")==0 ) ? "style=\"display:none\"" : "").'><label for="shipping:country_id">'.$this->__('Country').'<span class="required">*</span></label><br />'.$this->getCountryHtmlSelect('shipping').'</div>';
 					$telephone='<div class="input-box"><label for="shipping:telephone">'.$this->__('Telephone').'<span class="required">'.$this->isstar('telephone').'</span></label><br/><input type="text" name="shipping[telephone]" value="'.$this->htmlEscape($this->getAddress()->getTelephone()).'" title="'.$this->__('Telephone').'" class="input-text  '.$this->isrequired('telephone').'" id="shipping:telephone" /></div>';
 					$fax='<div class="input-box"><label for="shipping:fax">'.$this->__('Fax').'<span class="required">'.$this->isstar('fax').'</span></label><br/><input type="text" name="shipping[fax]" value="'.$this->htmlEscape($this->getAddress()->getFax()).'" title="'.$this->__('Fax').'" class="input-text  '.$this->isrequired('fax').'" id="shipping:fax" /></div>';
 }
 
-$type_address=array('name','company','street','city','state','zip','country','telephone','fax');
+$type_address=array('company','street','city','state','zip','country','telephone','fax');
 
-$block=array("","","","","","","","","","");
+$block=array("","","","","","","","");
 
 //var_dump($block);die();
 $temp=array();
@@ -131,8 +150,7 @@ for($i=0;$i<count($filter);$i++){
 $temp[]=Mage::getStoreConfig('onestepcheckout/options_sort/sort_name');
 //$temp[]=Mage::getStoreConfig('onestepcheckout/options_sort/sort_street');
 //var_dump($temp);die();
-$nameinputs=array(
-		'name'=>$name,
+$nameinputs=array(	
 		'company'=>$company,
 		//'email'=>$email,
 		'street'=>$street,
@@ -156,8 +174,8 @@ $nameinputs=array(
 				$block[Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd)]=$block[Mage::getStoreConfig('onestepcheckout/options_sort/sort_'.$nameadd)].$blockitem;
 		}		
 	}
-
-$str='';
+$str = '<script type="text/javascript" src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS).'mw_onestepcheckout/shipping.js'.'"></script>';
+$str =$str.'<li>'.$name.'</li>';
 //var_dump($street);die();
 foreach($block as $blockitem){
 	if($blockitem ==""){
@@ -167,10 +185,23 @@ foreach($block as $blockitem){
 	$str=$str.'<li class="fields">'.$blockitem.'</li>';
 	}
 	else{
-	$str=$str.'<li>'.$blockitem.'</li>';	
-		
+	$str=$str.'<li>'.$blockitem.'</li>';
 	}
 }
+if(!Mage::getStoreConfig("onestepcheckout/addfield/country"))
+$str =$str.'<li class="fields">'.$country.'</li>';
 if($this->isdisable($nametype))
 	$str=$str.'<div style="display:none;"><select id="shipping:region_id" name="shipping[region_id]" ></select></div>';
+
+	$str = $str.'<script type="text/javascript">
+	$MW_Onestepcheckout(function(){			
+			$MW_Onestepcheckout("#shipping-new-address-form").show();
+	});
+	//<![CDATA[
+    var shipping = new Shipping("co-shipping-form", "'.$this->getUrl("checkout/onepage/getAddress").'address/"'.', "'.$this->getUrl("checkout/onepage/saveShipping").'","'.$this->getUrl("checkout/onepage/shippingMethod").'");
+    var shippingForm = new VarienForm("co-shipping-form");
+    shippingForm.extraChildParams = " onchange=\'shipping.setSameAsBilling(false);\'";   
+    var shippingRegionUpdater = new RegionUpdater("shipping:country_id", "shipping:region", "shipping:region_id", countryRegions, undefined, "shipping:postcode");
+	//]]>
+</script>';
 echo $str;

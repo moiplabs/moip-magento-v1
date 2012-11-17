@@ -313,4 +313,52 @@ class MW_Onestepcheckout_Helper_Data extends Mage_Core_Helper_Abstract
 			return false;
 		}
 	}
+	
+	// check show address book
+	public function showAddressBook()
+	{
+		if (Mage::getStoreConfig('onestepcheckout/addfield/addressbook'))
+			return true;
+		return false;
+	}
+	
+	public function showEditCartLink()
+	{
+		if(Mage::getStoreConfig('onestepcheckout/addfield/editcartlink') )
+			return true;
+		return false;
+	}
+	
+	public function showComment()
+	{
+		if(Mage::getStoreConfig('onestepcheckout/addfield/enable_messagetosystem'))
+			return true;
+		return false;
+	}
+	
+	// default cupon is disable
+	public function showCouponCode()
+	{
+		if(Mage::getStoreConfig('onestepcheckout/addfield/allowcoupon') )
+			return true;
+		return false;
+	}
+	
+	//default showimageproduct is disable
+	public function showImageProduct()
+	{
+		if(Mage::getStoreConfig('onestepcheckout/addfield/showimageproduct') )
+			return true;
+		return false;
+	}
+	
+	
+   //default enable_giftmessage is disable
+	public function enableGiftMessage()
+	{
+		if(Mage::getStoreConfig('onestepcheckout/addfield/enable_giftmessage'))
+			return true;
+		return false;
+	}
+	
 }
