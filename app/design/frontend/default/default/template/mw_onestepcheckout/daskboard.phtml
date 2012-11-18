@@ -455,8 +455,8 @@ if(Mage::getStoreConfig('onestepcheckout/config/style_color')!= ""):
 <div class="mw-osc-title-login">
 				<h1>Busque seu CEP</h1>
 				</div>
-               
-                 <form action="http://elisei.o2ti.com/buscacep.php" id="searchForm" style="text-align:left;padding:10px">
+               <?php $urldosite = Mage::getBaseUrl('web', true);?>
+                 <form action="<?php echo $urldosite?>/buscacep.php" id="searchForm" style="text-align:left;padding:10px">
                   <p style="text-align:left;padding:10px">Digite o endereço a baixo para pesquisar o seu Cep.</p>
                   <input type="text" name="s"  placeholder="Digite o endereço..." />
                    <input type="submit" value="Buscar" style="background: #337BAA;border: 1px solid #337BAA;color: white;border-radius: 2px;height: 19px;padding: 0 8px;cursor:pointer" />
