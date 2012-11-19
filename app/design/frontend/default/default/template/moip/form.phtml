@@ -117,7 +117,7 @@ $data->getGrandTotal();
  
                       $parcelamento = $api->getParcelamento($data->getGrandTotal());
                   foreach ($parcelamento as $k => $v): ?>
-                      <option value=" <option value="<?php echo $k ?>"><?php echo $k . "x R$ " . $v['valor']. " | No total de R$ " . $v['total'];  ?></option>
+                      <option value="<option value="<?php echo $k ?>"><?php echo $k . "x R$ " . $v['valor']. " | No total de R$ " . $v['total'];  ?></option>
                  <?php endforeach; ?>
             </select>
             <?php endif; ?>
