@@ -109,17 +109,14 @@ $data->getGrandTotal();
             <?php if ($standad->getConfigData('parcelamento')): ?>
             <label id="dadoscartaoopc">Opções de pagamento:</label>
             <select name="payment[credito_parcelamento]" id="credito_parcelamento" class="required-entry" >
-                 <?php
-                      $data = $standad->getQuote()->getShippingAddress();
-$data = $standad->getQuote()->getShippingAddress();
-$data->getGrandTotal();
-/*alteracao minha bruno elisei. not! $parcelamento = $api->getParcelamento("<div id=\"updatevalue\">1000<\div>");*/
- 
-                      $parcelamento = $api->getParcelamento($data->getGrandTotal());
-                  foreach ($parcelamento as $k => $v): ?>
-                      <option value="<option value="<?php echo $k ?>"><?php echo $k . "x R$ " . $v['valor']. " | No total de R$ " . $v['total'];  ?></option>
-                 <?php endforeach; ?>
-            </select>
+                                <?php
+                                    $data = $standad->getQuote()->getShippingAddress();
+                                    $parcelamento = $api->getParcelamento($data->getGrandTotal());
+
+                                    foreach ($parcelamento as $k => $v): ?>
+                                        <option value="<?php echo $k ?>"><?php echo $k . "x R$ " . $v['valor'] . " | Total: R$ " .$v['total']."" ?></option>
+                                <?php endforeach; ?>
+                                    </select>
             <?php endif; ?>
             <div id="addparcelas">
                                             <?php
