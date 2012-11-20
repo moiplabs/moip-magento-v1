@@ -148,6 +148,7 @@ class O2TI_Moip_StandardController extends Mage_Core_Controller_Front_Action {
                 $comment .= $this->getStatusPagamentoMoip($data['status_pagamento']);
 				$comment .= " ID MOIP " .$data['cod_moip'];
 				$comment .= " Motivo: ".utf8_encode($data['classificacao']);
+		$order->cancel();
                 break;
             case 6:
                 $state = Mage_Sales_Model_Order::STATE_HOLDED;
