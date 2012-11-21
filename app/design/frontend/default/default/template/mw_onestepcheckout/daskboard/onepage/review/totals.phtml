@@ -28,7 +28,7 @@
 <tfoot>
 	<?php 
 		$numcol=3;
-		if(Mage::getStoreConfig("onestepcheckout/config/showimageproduct"))
+		if(Mage::helper('onestepcheckout')->showImageProduct())
 			$numcol=$numcol+1;
 		if(Mage::getStoreConfig("onestepcheckout/config/allowremoveproduct"))
 			$numcol=$numcol+1;
@@ -39,9 +39,14 @@
 		<button class="button" title="<?php echo $this->__('Update Shopping Cart')?>" type="button" onclick="updateQtyProduct();return false;"><span><span>Update Cart</span></span></button>
 		</td>
 	</tr>
+	<?php
+	/*
 	<tr>
 		<td class="a-right" colspan="<?php echo $numcol+1?>" id="td-space"></td>
 	</tr>
+	*/
+	?>
+	
 	<?php endif?>
     <?php //$_colspan = $this->helper('tax')->displayCartBothPrices() ? 5 : 3; ?>
 	<?php $_colspan = $this->helper('tax')->displayCartBothPrices() ? 5 : $numcol; ?>

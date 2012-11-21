@@ -11,19 +11,12 @@ class MW_Onestepcheckout_Block_Adminhtml_Onestepcheckout_Sales_Order_Grid extend
     // }
     protected function _prepareCollection()
     {
+	$collect= Mage::getModel('customer/customer')->getCollection();	
 	if(version_compare(Mage::getVersion(),'1.4.1.0','>=')){
-	
-			$collection1 = Mage::getModel('customer/customer')->getCollection();
-			//Zend_debug::dump($collection1->getTable('mw_onestepcheckout'));die;
-			  $collection = Mage::getResourceModel('sales/order_grid_collection');
-			//$collection->getSelect()->joinleft(array('one_step'=>'mw_onestepcheckout'),'one_step.sales_order_id=main_table.entity_id');
-        $collection->getSelect()->joinleft(array('one_step'=> $collection1->getTable('mw_onestepcheckout')),'one_step.sales_order_id=main_table.entity_id',array('mw_deliverydate_date','mw_customercomment_info','mw_deliverydate_time'));
-		//bi loi khi ko in ra duoc status la` pending hay process cua? bang? sales/flat/order/grid,ma` lai in ra status cua bang? one_step
-		//var_dump ($collection->getData());die(); var_dump($collection->getData('entity_id'));die();
+        $collection = Mage::getResourceModel('sales/order_grid_collection');
+        $collection->getSelect()->joinleft(array('one_step'=>$collect->getTable('mw_onestepcheckout')),'one_step.sales_order_id=main_table.entity_id',array('mw_deliverydate_date','mw_customercomment_info','mw_deliverydate_time'));		
         $this->setCollection($collection);
-	   	//echo $collection->getSelect();die();
-
-	}
+		}
 	else{
 	        //TODO: add full name logic
 	        $collection = Mage::getResourceModel('sales/order_collection')
@@ -37,31 +30,14 @@ class MW_Onestepcheckout_Block_Adminhtml_Onestepcheckout_Sales_Order_Grid extend
 	                array('billing_firstname', 'billing_lastname'))
 	            ->addExpressionAttributeToSelect('shipping_name',
 	                'CONCAT({{shipping_firstname}}, " ", {{shipping_lastname}})',
-	                array('shipping_firstname', 'shipping_lastname'));
-			//$collection->joinTable('onestepcheckout/onestepcheckout','entity_id=sales_order_id');
+	                array('shipping_firstname', 'shipping_lastname'));			
 			$collection->getSelect()->joinleft(			//array(	'one_step'=>'mw_onestepcheckout'),
-														array('one_step'=>$onstepcheckout->getTable('onestepcheckout')),
+														array('one_step'=>$collect->getTable('mw_onestepcheckout')),
 														'one_step.sales_order_id=e.entity_id',
 														array('mw_deliverydate_date','mw_customercomment_info','mw_deliverydate_time')
-												);			//$collection->getSelect()->join('onestepcheckout/mw_onestepcheckout',"'sales/order'.entity_id='onestepcheckout/mw_onestepcheckout'.sales_order_id");
+												);			
 	        $this->setCollection($collection);
-			//echo "aaaaaaaaaa";die();
-			///////////////////////
-			//var_dump();die();
-			// $collect = Mage::getModel('onestepcheckout/onestepcheckout');
-			// echo "<pre>";var_dump($collect->getCollection()->getData());die();
-			//echo $collection->getMwCustomercomment();die();
-			//$collection = Mage::getModel('rewardpoints/customer')->getCollection();
-			//$collection->join('customer/entity','`customer/entity`.entity_id = `main_table`.customer_id');
-			//echo $collection->getSelect();exit;	//lay ra chuoi select cua doi tuong collection
-			//cach 1: $collection->getSelect()->join(array('faqcat' => $this->getTable('faqcat/faqcat')),'faqcat.faqcat_id=faq.faqcat_id' , array('faqcat.*'));
-			//cach 2: $collection->getSelect()->join($this->getTable('faqcat/faqcat'), "faqcat.faqcat_id = main_table.faqcat_id", array(faqcat.*));
-			// $collect = Mage::getModel('sales/order')->getCollection();
-			// $collect->getSelect()->joinleft(array('one_step'=>'mw_onestepcheckout'),
-			// 'one_step.sales_order_id=e.entity_id');	//join cho phep nhap 2 table lai theo dieu kien loc, joinleft cho phep nhap 2 table lai voi dieu kien loc nhung lay them tat ca record ko theo dk loc	
-			//echo"<pre>";var_dump($collect->getData());die();
-			//return parent::_prepareCollection(); //sort order nhung vi parent sort nen sort tang dan
-		}
+			}
 		return Mage_Adminhtml_Block_Widget_Grid::_prepareCollection();	//goi _prepareCollection(); cua cap ong cho phep sort giam dan ->dung muc dich
     }
 	

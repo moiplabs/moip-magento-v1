@@ -1,7 +1,7 @@
 <?php
 class MW_Onestepcheckout_Block_Checkout_Onepage_Shipping_Sortshipping extends MW_Onestepcheckout_Block_Checkout_Onepage_Shipping
 {
-	protected $type_address=array('company','email','street','city','state','zip','country','telephone','fax');
+	protected $type_address=array('company','street','city','state','zip','country','telephone','fax');
 	public function isrequired($name_address){
 		$status=Mage::getStoreConfig('onestepcheckout/addfield/'.$name_address);
 		//$status=Mage::getStoreConfig('onestepcheckout/addfield/city');

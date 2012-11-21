@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS `mw_onestepcheckout` (
+  `mw_onestepcheckout_date_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sales_order_id` int(11) unsigned NOT NULL,
+  `mw_customercomment_info` varchar(255) DEFAULT '',
+  `mw_deliverydate_date` varchar(15) DEFAULT '',
+  `mw_deliverydate_time` varchar(10) DEFAULT '',
+  `status` smallint(6) DEFAULT '0',
+  `created_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`mw_onestepcheckout_date_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

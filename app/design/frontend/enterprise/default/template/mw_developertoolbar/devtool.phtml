@@ -1,0 +1,273 @@
+<?php
+	$active = Mage::getStoreConfig("dev/offline/mwdevtoolbar");
+	$helper = Mage::helper('developertoolbar/data');
+    if($helper->checkAllowsIps() == 0){
+    	$active = 0;
+    }
+?>
+	<link href="<?php echo $this->getSkinUrl('mw_developertoolbar/css/general.css')?>" type="text/css" rel="stylesheet" />
+	<div id="mw_devtoolbar">
+	<div id= "title_devtool" style="cursor: pointer;">
+		<ul id="func_devtoolbar">
+
+			<li id="hide_toolbar"><a class="min" title="Hide this window">Hide</a></li>
+			<li id="show_toolbar" style="display: none;"><a class="max" title="Show this window">Show</a></li>
+<!--  
+			<li id="hide_toolbar"></li>
+			<li id="show_toolbar" style="display: none;"></li>
+-->	
+			<li id="close_toolbar"><a class="close" title="Close this window">Close</a></li>
+		</ul>
+		<!--  
+		<a id="popupContactClose"><span></span></a>
+		<a id="popupContactShow"><span></span></a>
+		-->
+		<h1><span><?php echo $this->__('DEVERLOPER TOOLBAR')?></span></h1>
+	</div>
+					
+		<?php
+		///////////////////////////////////////////////////////////
+		// content in popup
+		///////////////////////////////////////////////////////////
+		
+		?>
+		<input type="hidden" name="activemddev" value="<?php echo $active?>" id="active_devtool"/>
+
+	<div class="content_toolbar">	 
+	
+		<span id="bar_content">
+		<?php if(count($this->getStores())>1): ?>
+		<div class="seperate_vertical_devtool">
+		    <label style="margin-right:5px;" for="select-language"><?php echo $this->__('Select Store View:') ?></label>
+		    <select id="select-language" title="<?php echo $this->__('Select Store View') ?>" onchange="window.location.href=this.value">
+		    <?php foreach ($this->getStores() as $_lang): ?>
+		        <?php $_selected = ($_lang->getId() == $this->getCurrentStoreId()) ? ' selected="selected"' : '' ?>
+		        <option value="<?php echo $_lang->getCurrentUrl() ?>"<?php echo $_selected ?>><?php echo $this->htmlEscape($_lang->getName()) ?></option>
+		    <?php endforeach; ?>
+		    </select>
+		</div>
+		<?php endif; ?>
+		
+		<!-- template cache -->
+		<?php 
+		$dem = 0;
+		$res = Mage::app()->getCacheInstance();
+     	$cache = Mage::getModel('core/cache')->getTypes();
+     	foreach ($cache as $value) {
+     		$res = $value->getData();
+     		if($res['status'] == 0) {$dem++;break;}
+     	}
+		?>
+		<div class="clear_both"><span></span></div>
+		<div class="store_all">
+		<span class ="seperate_vertical_devtool">Cache:</span>
+		<?php  if ($dem>0) { //neu enabled?>					
+			<span class="en_dis">Disabled</span>		
+			<span class="en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/encache') ?>">Enable</a>)</span>
+		<?php } if ($dem == 0) { //neu disabled?>	
+			<span class="en_dis">Enabled</span>	
+			<span class="en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/discache') ?>">Disable</a> / <a href="<?php echo $this->getUrl('developertoolbar/index/refresh') ?>">Refresh</a>)</span>
+			
+		<?php }?>
+		
+		</div>	
+		<div><span class ="seperate_vertical_flush">+ <a href="<?php echo $this->getUrl('developertoolbar/index/flushcachedata'); ?> ">Flush Magento Cache</a></span></div>
+		<div><span class ="seperate_vertical_flush">+ <a href="<?php echo $this->getUrl('developertoolbar/index/flushcachestorage'); ?> ">Flush Cache Storage</a></span></div>
+		<div><span class ="seperate_vertical_flush">+ <a href="<?php echo $this->getUrl('developertoolbar/index/flushcachejs'); ?> ">Flush Catalog Images Cache</a></span></div>
+		<div><span class ="seperate_vertical_flush">+ <a href="<?php echo $this->getUrl('developertoolbar/index/flushcacheimage'); ?> ">Flush JavaScript/CSS Cache</a></span></div>
+		
+		<div class="clear_both"><span></span></div>
+		<!-- template Profiler -->
+		<?php  if (Mage::getStoreConfig('dev/debug/profiler') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Profiler:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class="en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/profiler/enabled/'.(Mage::getStoreConfig('dev/debug/profiler')!='1'?1:0)) ?>">Enable</a>)</span>	
+			</div >	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Profiler:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class="en_dis">(<a  href="<?php echo $this->getUrl('developertoolbar/index/profiler/enabled/'.(Mage::getStoreConfig('dev/debug/profiler')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>
+		
+		<!-- template path hint -->
+		<span class="seperate_vertical_devtool">Template Path Hints</span>
+		<?php  if (Mage::getStoreConfig('dev/debug/template_hints') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool_plus">+ Frontend:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/hints/enabled/'.(Mage::getStoreConfig('dev/debug/template_hints')!='1'?1:0).'/type/front') ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool_plus">+ Frontend:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/hints/enabled/'.(Mage::getStoreConfig('dev/debug/template_hints')!='1'?1:0).'/type/front') ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>
+		
+		<!-- template backend hint -->
+		<?php  if (Mage::getStoreConfig('dev/debug/template_hints', 0) != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool_plus">+ Backend:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/hints/enabled/'.(Mage::getStoreConfig('dev/debug/template_hints', 0)!='1'?1:0).'/type/back') ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool_plus">+ Backend:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/hints/enabled/'.(Mage::getStoreConfig('dev/debug/template_hints', 0)!='1'?1:0).'/type/back') ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>	
+		
+		<!-- template logs hint -->
+		<?php  if (Mage::getStoreConfig('dev/log/active') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Logs:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/log/enabled/'.(Mage::getStoreConfig('dev/log/active')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Logs:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/log/enabled/'.(Mage::getStoreConfig('dev/log/active')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>	
+		
+		<!-- template allow symplink -->
+		<?php  if (Mage::getStoreConfig('dev/template/allow_symlink') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Allow Symlinks:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/symlink/enabled/'.(Mage::getStoreConfig('dev/template/allow_symlink')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Allow Symlinks:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a  href="<?php echo $this->getUrl('developertoolbar/index/symlink/enabled/'.(Mage::getStoreConfig('dev/template/allow_symlink')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>
+		
+		<!-- template Translate Inline -->
+		<span class="seperate_vertical_devtool">Translate Inline</span>
+		<div class="clear_both"><span></span></div>
+		<?php  if (Mage::getStoreConfig('dev/translate_inline/active') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool_plus">+ Frontend:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/translate/enabled/'.(Mage::getStoreConfig('dev/translate_inline/active')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool_plus">+ Frontend:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/translate/enabled/'.(Mage::getStoreConfig('dev/translate_inline/active')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>	
+		
+		<!-- template marge js -->
+		<?php  
+			if (Mage::getStoreConfig('dev/js/merge_files') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Merge JavaScript Files</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/js/enabled/'.(Mage::getStoreConfig('dev/js/merge_files')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Merge JavaScript Files</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/js/enabled/'.(Mage::getStoreConfig('dev/js/merge_files')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>	
+		
+		<!-- template CSS Settings -->
+		<?php  if (Mage::getStoreConfig('dev/css/merge_css_files') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Merge CSS Files:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/css/enabled/'.(Mage::getStoreConfig('dev/css/merge_css_files')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Merge CSS Files:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/css/enabled/'.(Mage::getStoreConfig('dev/css/merge_css_files')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>
+		
+		<!-- template seo url -->
+		<?php  if (Mage::getStoreConfig('web/seo/use_rewrites') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">URL Rewrite:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/seo/enabled/'.(Mage::getStoreConfig('web/seo/use_rewrites')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">URL Rewrite:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/seo/enabled/'.(Mage::getStoreConfig('web/seo/use_rewrites')!='1'?1:0))?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>	
+		
+		<!-- template store code url -->
+		<?php  if (Mage::getStoreConfig('web/url/use_store') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Add Store Code to Urls:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/url/enabled/'.(Mage::getStoreConfig('web/url/use_store')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Add Store Code to Urls:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/url/enabled/'.(Mage::getStoreConfig('web/url/use_store')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>	
+
+		<!-- template store offline -->
+		<?php  if (Mage::getStoreConfig('dev/offline/enable') != '1') {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Store Offline:</span>
+			<span class = "en_dis">Disabled</span>
+			<span class = "en_dis">(<a href="<?php echo $this->getUrl('developertoolbar/index/storeoffline/enabled/'.(Mage::getStoreConfig('dev/offline/enable')!='1'?1:0)) ?>">Enable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php } else {?>
+			<div class="store_all">
+			<span class ="seperate_vertical_devtool">Store Offline:</span>
+			<span class = "en_dis">Enabled</span>
+			<span class = "en_dis">(<a  href="<?php echo $this->getUrl('developertoolbar/index/storeoffline/enabled/'.(Mage::getStoreConfig('dev/offline/enable')!='1'?1:0)) ?>">Disable</a>)</span>
+			</div>	
+			<div class="clear_both"><span></span></div>
+		<?php }?>
+			<div id="close_devtoolbar" class="bottom_devtoolbar">Powered by </span><a href="http://www.mage-world.com/">Mage-World.com</a></div>
+			</span>
+		</div>		
+	</div>

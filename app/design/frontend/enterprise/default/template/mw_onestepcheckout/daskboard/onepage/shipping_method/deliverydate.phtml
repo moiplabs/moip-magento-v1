@@ -1,15 +1,41 @@
-	<div class="shipping-option">
-		<p>--------------</p>
-		<p style="font-weight:bold;"><?php echo $this->__('Delivery Time');?></p>
+<div class="shipping-option">
+	<div class="mw-osc-block-title">
+		<p class="onestepcheckout-numbers onestepcheckout-numbers-3" id='mw-osc-p3'>
+			<?php echo $this->__('Delivery Time');?>
+		</p>		
+	</div>
+	<div class="mw-osc-block-content">
 		<ul>
+			<?php
+			 if(Mage::getStoreConfig('onestepcheckout/deliverydate/asa_option'))
+			 {			
+			?>
 			<li style="margin-bottom:10px;">
 				<label>
 					<input type="radio" name="deliverydate" value="now" checked style="margin-right:5px;"><span><?php echo $this->__('As soon as possible');?></span>
 				</label>
 			</li>
+			<?php
+			 } 
+			?>
 			<li>
 				<label style="margin-right:5px;"><!--float:left;-->
-					<input type="radio" name="deliverydate" value="late" style="margin-right:5px;"><span>Later</span>
+					<?php
+			 if(Mage::getStoreConfig('onestepcheckout/deliverydate/asa_option'))
+			 {			
+			?>
+				<input type="radio" name="deliverydate" value="late" style="margin-right:5px;">
+			<?php 
+			 }
+			  else 
+			 {
+			 	?>
+			 	<input type="hidden" name="deliverydate" value="late">
+			 	<?php 
+			 }
+			 ?>
+			 
+			<span><?php echo $this->__('Select preferred time');?></span>
 				</label>
 				<div id="deliveryshow"> <!--  background-color:rgb(181,182,154);">-->
 					<div id="datex">
@@ -17,25 +43,8 @@
 							<span><?php echo $this->__('Date:');?> </span>
 							
 							<span id="date" style="text-align:left;">
-								<?php 
-									//$listweekendDays=Mage::getStoreConfig("onestepcheckout/deliverydate/weekend");
-									//$weekendDays=explode(",",$listweekendDays);
-									//$nationalDays=
-									//$mydate="";
-									$mytime=date('h:i a', Mage::getModel('core/date')->timestamp(time()));			
-									//$now = date("d-m-Y", Mage::getModel('core/date')->timestamp(time()));
-									//$a = date("D");//now ==week
-									//$a = date("w");
-									//if($weekendDays.join(" ").indexOf($a)<0)
-										//if($a.)
-									//echo $a;die();
-									//if($a==6){
-										//$mydate= date('m/d/Y', strtotime('+1 day', time()));
-									//}
-									//else{
-										//$mydate= date("m/d/Y", Mage::getModel('core/date')->timestamp(time()));
-									//}	
-									//echo $mydate;					
+								<?php 									
+									$mytime=date('h:i a', Mage::getModel('core/date')->timestamp(time()));
 								?>
 							</span>
 						</div>
@@ -61,7 +70,7 @@
 											$slotime[] = implode("-",$timerange);
 										}
 									}
-									//var_dump($slotime);die();
+									
 								?>
 								<div style="width:95px;margin-left:5px;float:left;">
 									<select id="delivery-timerange" size="1" name="delivery-timerange" >
@@ -80,9 +89,24 @@
 			</li>
 		</ul>
 	</div>
+</div>
 <script>
 	//var shipping_method_changed=-1; //khac phuc tren IE khi change phai click 2 lan` moi ajax
 	var delivery_changed='now';	//default input- now selected
+	<?php
+	if(!Mage::getStoreConfig('onestepcheckout/deliverydate/asa_option'))
+	{ 
+	?>	
+		if($MW_Onestepcheckout("input[name=deliverydate]").value !=delivery_changed)
+		{
+		$MW_Onestepcheckout('#delivery-timerange').addClass('validate-select');
+		$MW_Onestepcheckout('#deliveryshow').css('display','block');
+		}	
+	<?php 
+	}
+	else 
+	{
+	?>
 	$MW_Onestepcheckout("input[name=deliverydate]").click(function(){
 					if(this.value !=delivery_changed){
 						$MW_Onestepcheckout('#delivery-timerange').addClass('validate-select');
@@ -93,4 +117,7 @@
 						$MW_Onestepcheckout('#deliveryshow').css('display','none');
 					}
 	});
+	<?php
+	 } 
+	?>
 </script>

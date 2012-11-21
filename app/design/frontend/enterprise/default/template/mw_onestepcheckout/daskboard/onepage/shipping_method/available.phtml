@@ -64,28 +64,14 @@
 <script type="text/javascript">
 	var shipping_method_changed=-1; //khac phuc tren IE khi change phai click 2 lan` moi ajax
 	$MW_Onestepcheckout(".shipping_method_handle").click(function(){
+		if(shipping_load())
+		{			
 				if(this.value != shipping_method_changed){
 					updateShippingMethod();
 					shipping_method_changed = this.value;
 				}
+		}		
 	});
 
-<?php
- /*	
-			//dua tat ca code javascript vao file js rieng, rui` update vao layout 
-	// function updateShippingMethod(value)
-	// {
-		// urls= $MW_Onestepcheckout('#geturlid').text()//lay noi dung cua the? div
-		// msg = "Loadding ...";
-		// $MW_Onestepcheckout('#checkout-review-load').html(msg);
-		// $MW_Onestepcheckout.ajax({
-		   // type: "POST",
-		   // url: urls,
-		   // data: "shipping_method="+value,
-		   // success: function(msg){
-			// $MW_Onestepcheckout('#checkout-review-load').html(msg);
-		   // }
-		 // });
-	// }
-*/?>
+
 </script>

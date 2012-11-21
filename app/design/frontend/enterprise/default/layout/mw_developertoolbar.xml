@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>  	
+    	<reference name="head">
+            <action method="addJs"><script>mw_js/jquery.js</script></action>
+            <action method="addJs"><script>mw_js/jquery_noconflict.js</script></action>
+            <action method="addJs"><script>mw_developertoolbar/popupdevtool.js</script></action>
+        </reference>
+        <reference name="content">
+	        <block type="developertoolbar/switch" name="developertoolbar" template="mw_developertoolbar/devtool.phtml" />
+        </reference>
+    </default>
+</layout> 
