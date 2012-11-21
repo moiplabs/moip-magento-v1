@@ -26,13 +26,15 @@
 ?>
 
 <div id="co-shipping-method-form" >
-    <div id="checkout-shipping-method-load">
+    <div id="checkout-shipping-method-load" class="mw-osc-block-content"> 
         <?php echo $this->getChildHtml('available') ?>
     </div>
 <!--////////////////////////////////-->
 <?php if(Mage::getStoreConfig("onestepcheckout/deliverydate/allow_options")):?>
 	<?php 
+			
 			echo $this->getChildHtml('deliverydate')
+			
 	?>
 <?php endif?>	
 <!--//////////////////////////-->

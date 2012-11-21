@@ -27,23 +27,56 @@
 <?php if(version_compare(Mage::getVersion(),'1.4.0.1','>='))://fix cho magento 1.3?>
 		<div id="checkout-review-load">
 			<?php echo $this->getChildHtml('info') ?>
+			
 		</div>
 		<div id="checkout-review-options">
 			<?php echo $this->getChildHtml('options') ?>
-		</div>
+			
+		</div>		
+		
 		<div id="checkout-review-submit">
 			<?php echo $this->getChildHtml('agreements') ?>
-			<div class="buttons-set" id="review-buttons-container" style="margin:1em 0 0;">
-				<p class="f-left"><?php echo $this->__('Forgot an Item?') ?> <a href="<?php echo $this->getUrl('checkout/cart') ?>"><?php echo $this->__('Edit Your Cart') ?></a></p>
-				<button type="button" title="<?php echo $this->__('Place Order') ?>" class="button btn-checkout" ><span style="_position:fixed;"><span style="_position:fixed;"><?php echo $this->__('Place Order') ?></span></span></button><!--da xoa onclick="review.save();"-->
+			<div class="buttons-set" id="review-buttons-container">
+			<?php if(Mage::getStoreConfig('onestepcheckout/termcondition/allow_options')):?>
+				<div class="onestepcheckout-enable-terms">
+					<input class="required-entry" type="checkbox" id="id_accept_terms" name="accept_terms" value="1"  />
+					<label for="id_accept_terms"><?php echo $this->__('I accept the');?> <a id="onestepcheckout-toc-link" target="_blank" href="#inline2"><?php echo $this->__('Terms and Conditions');?></a></label>
+				</div>
+			<?php endif ?>
+			
+			<div id="onestepcheckout_place_order_button">
+			<button type="button" style="*margin-bottom:20px;" title="<?php echo $this->__('Place Order') ?>" class="button btn-checkout" ><span style="_position:fixed;"><span style="_position:fixed;"><?php echo $this->__('Place Order') ?></span></span></button><!--da xoa onclick="review.save();"-->
+				<br/><?php				 
+						// Subscribe Enable & Checked
+						 if(Mage::getStoreConfig('onestepcheckout/addfield/allowsubscribenewsletter')==2):?>	
+							<?php if(Mage::helper('onestepcheckout')->issubscribed()):?>
+							
+							<input type="checkbox" name="subscribe_newsletter"  value="1" checked="checked" title="<?php echo $this->__('Subscribe newsletter') ?>" id="subscribe_newsletter" class="checkbox"> <label for="subscribe_newsletter" style="float:none;"><?php echo $this->__('Subscribe newsletter') ?></label>
+							
+							<?php endif?>
+						<?php endif?>
+					
+					<?php 
+						// Subscribe Enable & Unchecked
+						if(Mage::getStoreConfig('onestepcheckout/addfield/allowsubscribenewsletter')==1):?>	
+							<?php if(Mage::helper('onestepcheckout')->issubscribed()):?>
+							
+							<input type="checkbox" name="subscribe_newsletter" value="0" title="<?php echo $this->__('Subscribe newsletter') ?>" id="subscribe_newsletter" class="checkbox"> <label for="subscribe_newsletter" style="float:none;"><?php echo $this->__('Subscribe newsletter') ?></label>
+							
+							<?php endif?>
+						<?php endif ?>
+			
+									
+			</div>
+				
 				<span class="please-wait" id="review-please-wait" style="display:none;">
 					<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo $this->__('Submitting order information...') ?>" title="<?php echo $this->__('Submitting order information...') ?>" class="v-middle" /> <?php echo $this->__('Submitting order information...') ?>
 				</span>
 			</div>
-
 		</div>
+		
 <?php else:?>
-		<div id="checkout-review-load" class="default-box">
+		<div id="checkout-review-load" class="default-box mw-osc-block-content">
 			<?php echo $this->getChildHtml('info') ?>
 		</div>
 		<div id="checkout-review-options">

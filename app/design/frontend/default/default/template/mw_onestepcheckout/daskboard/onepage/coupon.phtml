@@ -26,21 +26,19 @@
 
 <form id="discount-coupon-form" action="<?php echo $this->getUrl('checkout/cart/couponPost') ?>" method="post">
  */?>
- <div class='cart'>
-	 <div id='discount-coupon-form'>
-		<div class="discount" style="width:100%;height:auto !important;min-height:45px;margin:0;padding:0;">
+ <div class="cart">
+	 <div id="discount-coupon-form">
+		<div class="discount">
 		   <?php /* <h2><?php echo $this->__('Discount Codes') ?></h2>*/?>
-			<div class="discount-form" style="margin-top: 10px; margin-left: 10px;">
-				<div style="float:left;margin-right:10px;">
-					 <h2 style="margin-top:3px"> <?php echo $this->__('Discount Codes') ?></h2>
-				</div>
+			<div class="discount-form">
+				<h2 style="margin-top:3px"> <?php echo $this->__('Discount Codes') ?></h2>
 			   <?php /*<label for="coupon_code"><?php echo $this->__('Enter your coupon code if you have one.') ?></label>*/?>
 				<input type="hidden" name="remove" id="remove-coupone" value="0" />
-				<div class="input-box" style="float:left;padding:0;margin:0;width:160px">
-					<input class="input-text" style="width:140px;" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" />
+				<div class="input-box">
+					<input class="input-text" id="coupon_code" name="coupon_code" value="<?php echo $this->htmlEscape($this->getCouponCode()) ?>" />
 				</div>
 				
-				<div class="buttons-set" style="float:left;padding:0;margin:0;clear:none;">
+				<div class="buttons-set">
 				<?php /*    <button type="button" title="<?php echo $this->__('Apply Coupon') ?>" class="button" onclick="discountForm.submit(false)" value="<?php echo $this->__('Apply Coupon') ?>"><span><span><?php echo $this->__('Apply Coupon') ?></span></span></button>*/?>
 					<button type="button" title="<?php echo $this->__('Apply Coupon') ?>" class="button" onclick="if(!$('coupon_code').value){alert('Please enter coupon code.')}else{updateCoupon($('coupon_code').value,0);}" value="<?php echo $this->__('Apply Coupon') ?>"><span><span><?php echo $this->__('Apply Coupon') ?></span></span></button>			
 					<?php if(strlen($this->getCouponCode())): ?>

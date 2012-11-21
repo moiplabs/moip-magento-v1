@@ -1,0 +1,103 @@
+#mw_devtoolbar{
+display:none;
+position:fixed;
+_position:absolute; /* hack for internet explorer 6*/
+height:auto;
+background:#FFFFFF;
+z-index:999;
+padding: 6px 9px 5px 12px;
+font-size:12px;
+border-top: 2px solid #000000;
+border-right: 1px solid #F0F0F0;
+box-shadow: 0 4px 10px #666666;
+width: 245px; 
+}
+
+#func_devtoolbar{position:relative;}
+#hide_toolbar{position:absolute; right:16px; top:0;}
+#show_toolbar{position:absolute; right:16px; top:2px;}
+
+#func_devtoolbar li a{text-indent:-999em; width:13px; height:13px; display: block;}
+
+#func_devtoolbar li a.min{background: url(../images/show.gif) center center no-repeat;}
+
+#func_devtoolbar li a.max{background: url(../images/hide.gif) center center no-repeat; margin-top: -2px;}
+#func_devtoolbar li a.min:hover{background: url(../images/hide.gif) center center no-repeat;}
+#func_devtoolbar li a.max:hover{background: url(../images/show.gif) center center no-repeat;}
+
+#mw_devtoolbar h1{
+text-align:left;
+color:#777777;
+font-size:12px;
+font-weight:700;
+border-bottom:1px dotted #D3D3D3;
+padding-bottom:6px;
+line-height:12px;
+}
+
+#close_toolbar{
+font-size:14px;
+line-height:14px;
+right:0;
+top:0;
+position:absolute;
+color:#6fa5fd;
+font-weight:700;
+display:block;
+height:13px;
+width:13px;
+}
+
+#close_toolbar a.close{text-indent: -9999; background: url(../images/close_window.gif) center center no-repeat;
+display: block;
+text-indent: -9999em;
+}
+
+.content_toolbar{
+	line-height:17px;
+	margin-top:5px;
+	margin-bottom:2px;
+	text-align:left;
+	font-weight: bold;
+}
+
+.content_toolbar .en_dis{
+	font-weight: normal;
+	padding-left: 3px;
+}
+.clear_both{
+	clear:both;
+	height:1px;
+	display:block;
+	overflow: hidden;
+}
+
+.seperate_vertical_devtool {
+ color:#777777;
+}
+
+.mw_devtoolbar .menu_bottom{
+	margin-top:12px;
+}
+.store_all{line-height:22px;}
+.store_all .en_dis{color:#000;}
+#mw_devtoolbar .a{color:#000;}
+.seperate_vertical_devtool_plus{color:#777777;}
+
+.seperate_vertical_flush{
+	color:#777777;
+	margin-left:35px;
+	font-weight: normal;
+}
+
+
+.bottom_devtoolbar{
+    border-top: 1px dotted #D3D3D3;
+    font-size: 11px;
+    line-height: 22px;
+    margin-bottom: -2px;
+    margin-top: 4px;
+    text-align: right;
+    width: 100%;
+	
+}

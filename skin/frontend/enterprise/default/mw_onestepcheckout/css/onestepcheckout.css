@@ -1,505 +1,236 @@
-*{
-	margin:0;
-	padding:0;
-}
-div.checkoutcontainer{
-	border-top:1px solid #D8D2C7;
-	/*min-height:33em;*/
-	/*overflow:hidden;*/
-	position:relative;
-}
-form#onestep_form{
-	display:inline;
-	*+display:block;	/* fix only IE7*/
-}
-div.onestepcheckout-threecolumns{
-	margin-top:10px;
-	/*padding:0 20px;*/
-}
-/*box login*/
-
-div#fancybox-wrap .col2-set .col-2{
-	width:100%;text-align:left;float:right;
-}
-
-div#fancybox-wrap .col2-set .col-2  >div{
-	border: 0px none; margin: 0pt 0pt 10px;text-align:center;
-}
-div#fancybox-wrap .col2-set .col-2  >div h1{
-	font-size:20px;font-weight:normal;color:#0A263C;line-height:1.35;margin:0 0 5px;
-}
-
-div#fancybox-wrap .col2-set .col-2 #login-form  fieldset{
-	border:0 none;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form  fieldset div.fieldset{
-	padding:15px 0px 0px; margin:0px;background:none repeat scroll 0 0 #FBFAF6;border:1px solid #BBAFA0;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset h2.legend{
-	margin: -25px 0pt 0pt 25px; background: none repeat scroll 0pt 0pt rgb(249, 243, 227); color: rgb(231, 98, 0); float: left; font-size: 13px; font-weight: bold; padding: 0pt 8px; border: 1px solid rgb(241, 153, 0);
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset p{
-	margin-left: 0.8em;text-align:left;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset #errorlogin{
-	color:#DF280A;font-weight:bold;display:none;margin-left:0.8em;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list{
-	list-style:none outside none;margin-bottom:15px;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li:first-child {
-	margin-bottom:5px;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  #login-email {
-	width:170px !important;padding:2px;background:none repeat scroll 0 0 #FFFFFF;background:none repeat scroll 0 0 #FFFFFF;border:1px solid #B6B6B6;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  #login-password {
-	width:170px !important;padding:2px;background:none repeat scroll 0 0 #FFFFFF;border:1px solid #B6B6B6;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li+li  {
-	margin-bottom:0px;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  label.required {
-	width:120px;text-align:left;margin-left:0.8em;color:#666666;float:left;font-weight:bold;z-index:0;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  label.required  em{
-	position:static;float:none;color:#EB340A;font-style:normal;right:-8px;top:0;
-}
-
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li:first-child .input-box {
-	text-align:left;width:250px;display:block;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li+li .input-box {
-	text-align:left;width:180px;display:block;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set{
-	text-align:left;margin:0;border-top:1px solid #E4E4E4;clear:both;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set p.required{
-	margin:0px;color:#EB340A;font-size:11px;text-align:right;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set #forgotpassword{
-	float:left !important;color:#1E7EC8;text-decoration:underline;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set #login-please-wait{
-	display: none;float:right;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set #login-please-wait img{
-	vertical-align:middle;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set button{
-	float:right;margin-left:5px;background:none repeat scroll 0 0 transparent;border:0 none;cursor:pointer;margin:0;overflow:visible;padding:0;width:auto;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set button span{
-	background:none repeat scroll 0 0 #F18200;border:1px solid #DE5400;color:#FFFFFF;display:block;font:bold 12px/19px Arial,Helvetica,sans-serif;height:19px;padding:0 8px;text-align:center;white-space:nowrap;cursor:pointer;
-}
-div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set button span span{
-	border:0 none;padding:0;background:none repeat scroll 0 0 #F18200;color:#FFFFFF;display:block;font:bold 12px/19px Arial,Helvetica,sans-serif;height:19px;text-align:center;white-space:nowrap;
-}
-/*box forgot*/
-div#fancybox-wrap  .page-title{
-	margin:0px 0px 10px;border:0px;overflow:hidden;width:100%;
-}
-div#fancybox-wrap  .page-title h1{
-	color:#0A263C;font-size:20px;margin:0;font-weight:normal;line-height:1.35;
-}
-div#fancybox-wrap  #form-validate{
-	display:inline;
-}
-div#fancybox-wrap  #form-validate .fieldset{
-	padding:15px 0px 0px; margin:0px;background:none repeat scroll 0 0 #FBFAF6;border:1px solid #BBAFA0;
-}
-div#fancybox-wrap  #form-validate  .fieldset .legend{
-	margin:-25px 0 0 25px;background:none repeat scroll 0 0 #F9F3E3;border:1px solid #F19900;color:#E76200;float:left;font-size:13px;font-weight:bold;padding:0 8px;line-height:1.35;
-}
-div#fancybox-wrap  #form-validate .fieldset p{
-	margin-left: 0.8em;text-align:left;margin:0 0 10px;padding-left:15px;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list{
-	list-style:none outside none;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list li{
-	margin:0 0 8px;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list li label.required{
-	margin-left: 0.8em;width:100px;color:#666666;float:left;font-weight:bold;z-index:0;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list li label.required em{
-	position:static;float:none;color:#EB340A;font-style:normal;right:-8px;top:0;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list li .input-box{
-	float:left;text-align:left;display:block;width:260px;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list li .input-box input#email_address{
-	width: 200px !important;padding:2px;background:none repeat scroll 0 0 #FFFFFF;border:1px solid #B6B6B6;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;
-}
-div#fancybox-wrap  #form-validate .fieldset .form-list li .input-box #errorforgotpass{
-	display: none;no-repeat scroll 2px 0 transparent;clear:both;color:#EB340A;font-size:11px;font-weight:bold;line-height:13px;margin:3px 0 0;min-height:13px;padding-left:17px;
-}
-div#fancybox-wrap  #form-validate div.buttons-set{
-	margin:0px;border-top:1px solid #E4E4E4;clear:both;padding:8px 0 0;text-align:right;
-}
-div#fancybox-wrap  #form-validate div.buttons-set p.required{
-	margin:0px;color:#EB340A;font-size:11px;text-align:right;
-}
-div#fancybox-wrap  #form-validate div.buttons-set p.back-link{
-	float:left;margin:0;
-}
-div#fancybox-wrap  #form-validate div.buttons-set p.back-link a#backlogin{ 
-	color:#1E7EC8;text-decoration:underline;
-}
-div#fancybox-wrap  #form-validate div.buttons-set p.back-link a#backlogin small{ 
-	font-size:1em;
-}
-div#fancybox-wrap  #form-validate div.buttons-set span#forgotpass-please-wait{
-	display: none;float:right;
-}
-div#fancybox-wrap  #form-validate div.buttons-set span#forgotpass-please-wait ing.v-middle{
-	vertical-align:middle;border:0 none;
-}
-div#fancybox-wrap  #form-validate div.buttons-set #btforgotpass{
-	float:right;margin-left:5px;background:none repeat scroll 0 0 transparent;border:0 none;cursor:pointer;margin:0;overflow:visible;padding:0;width:auto;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;
-}
-div#fancybox-wrap  #form-validate div.buttons-set #btforgotpass span{
-	background:none repeat scroll 0 0 #F18200;border:1px solid #DE5400;color:#FFFFFF;display:block;font:bold 12px/19px Arial,Helvetica,sans-serif;height:19px;padding:0 8px;text-align:center;white-space:nowrap;
-}
-div#fancybox-wrap  #form-validate div.buttons-set #btforgotpass span span{
-	border:0 none;padding:0;background:none repeat scroll 0 0 #F18200;color:#FFFFFF;display:block;font:bold 12px/19px Arial,Helvetica,sans-serif;height:19px;text-align:center;white-space:nowrap;
-}
-div.onestepcheckout-column-left{
-	background:url("../images/line-gradient.gif") no-repeat scroll right top transparent;
-	float:left;
-	margin-right:15px;
-	padding-top:15px;
-	width:32%;
-}
-div.onestepcheckout-column-2{
-	float:left;
-	width:65%;
-}
-div.onestepcheckout-column-middle{
-	background:url("../images/line-gradient.gif") no-repeat scroll right top transparent;
-	float:left;
-	margin-right:15px;
-	/*padding-right:15px;*/
-	padding-top: 15px;
-	width:46%;
-}
-div.onestepcheckout-column-right{
-	float:left;
-	padding-top:15px;
-	width:41%;
-}
-div.review{
-	padding-top:15px;
-}
-.onestepcheckout-threecolumns #onestep_form .onestepcheckout-column-left .input-text{
-	width:169px !important;
-}
-.onestepcheckout-threecolumns #onestep_form .onestepcheckout-column-left .widthfull .input-text{
-	width:245px;
-}
-.onestepcheckout-threecolumns #onestep_form .onestepcheckout-column-left  select{
-	width:175px ;
-}
-.onestepcheckout-threecolumns #onestep_form .onestepcheckout-column-left .widthfull select{
-	width:251px;
-}
-
-.onestepcheckout-comments textarea{
-	width:100%;
-	padding:0;
-}
-.gift-messages-form .form-list .input-box{
- width:400px !important;
-}
-.gift-messages-form .form-list .input-text{
-	width:100px !important;
-}
-.gift-messages-form .form-list .input-box textarea {
-	width:245px !important;
-	height:5em !important;
-}
-
-
-p.onestepcheckout-numbers{
-	background-repeat:no-repeat;
-	color:#404040;
-	font-size:15px;
-	font-weight:bold;
-	height:30px;
-	padding-left:40px;
-	padding-top:3px;
-	text-transform:uppercase;
-}
-p{
-	margin-bottom:0.8em;
-}
-p.onestepcheckout-numbers-1{
-	background-image:url("../images/demo-large_03.png");
-}
-p.onestepcheckout-numbers-2{
-	background-image:url("../images/demo-large_04.png");
-}
-p.onestepcheckout-numbers-3{
-	background-image:url("../images/demo-large_05.png");
-}
-p.onestepcheckout-numbers-4{
-	background-image:url("../images/demo-large_07.png");
-}
-li.wide{
-	width:282px;
-	padding-left: 12px;
-}
-#billing-address-select{
-	width:250px !important;
-}
-#shipping-address-select{
-	width:250px !important;
-}
-.checkout-onepage-index div.input-box{
-	clear:none;
-	float:right;
-	width:260px;
-}
-/* #allow-gift-messages-for-order-container .fieldset div.input-box {
-    clear: none;
-    float: right;
-    width: 260px;
-} */
-
-/*
-select{
-	width:107px !important;
-}
-#ccsave_cc_number{
-	width:218px !important;
-}
-ul#payment_form_ccsave li:first-child{
-	width:117px;
-	float:left;
-}
-ul#payment_form_ccsave li:first-child +li{
-	width:110px;
-	float:left;
-}
+/**{margin:0; padding:0;}
+input, select, textarea, button {color: #2F2F2F; font: 12px/15px Arial,Helvetica,sans-serif; vertical-align: middle;}
+.f-left, .left { float: left !important;}
+p {margin: 0 0 10px;}
+a {color: #1E7EC8; text-decoration: underline;}
+a :hover{color: #1E7EC8; text-decoration: none;}
+img{	vertical-align:middle;}
 */
-select option{
-	padding:0px;
-}
-div.col-main{
-	border: 1px solid rgb(187, 175, 160);
-	padding: 20px;
-
-}
-
-/*
-#authorizenet_cc_type{
-	width:223px !important;
-}
-#authorizenet_cc_number{
-	width:217px !important;
-}
-
-#co-payment-form .input-text{
-width: 217px !important;
-}
-#co-payment-form #ccsave_cc_type{
-width: 217px !important;
-}
-*/
-/*.form-list label{
-	float:none !important;
-}*/
-/* fix mageto1.3   */
-.group-select{
-	width:300px;
-}
-.onestepcheckout-column-left .group-select{
-	background:none;
-	margin:0;
-	border:0 none;
-	padding:0;
-}
-.onestepcheckout-column-left  .group-select li{
-	padding:0;
-	margin:0 0 8px;
-}
-.onestepcheckout-column-left  .group-select  li .input-box{
-	float:left;
-	width:145px;
-}
-.onestepcheckout-column-left  .form-list li.wide .input-box {
-	width:195px;
-}
-.onestepcheckout-column-left .form-list .input-box{
-	width:195px;
-}
-.onestepcheckout-column-left  .group-select  li .name-firstname{
-
-}
-#loginbox{
-padding-left:15px;
-}
-.review .content .a-center input{
- background-image:none;
-}
-.onestepcheckout-column-right .sp-methods select.month {
-margin-right:10px;
-width:154px;
-}
-.onestepcheckout-column-right .sp-methods select.year{
-width:96px;
-}
-input.input-text, textarea {
-	margin-bottom:0px;
-}
-.validation-advice{
-	margin-bottom:0px;
-}
-.content p.left{
-	float:left;
-}
-.content p {
-	float:right;
-}
-.review .content{
-	padding:12px 0 0 0;
-	margin-top:1em;
-}
-#loading-mask{
-	color:#D85909;
-	font-size:1.1em;
-	font-weight:bold;
-	opacity:0.8;
-	position:absolute;
-	text-align:center;
-	z-index:500;
-}
-p#loading_mask_loader{
-	background:none repeat scroll 0 0 #FFF4E9;
-	border:2px solid #F1AF73;
-	color:#D85909;
-	font-weight:bold;
-	left:43%;
-	/*margin-left:-60px;*/
-	padding:15px 30px;
-	position:fixed;
-	text-align:center;
-	top:45%;
-	width:120px;
-	z-index:1000;
-}
-.onestepcheckout-threecolumns #onestep_form .onestepcheckout-column-left label {
-	color:#666666;
-	float:left;
-	text-align: left;
-	font-weight:bold;
-	position:relative;
-	z-index:0;
-	width: 83px;
-	padding:0;
-}
-.billing-title-sellect {
-		width:255px !important;
-}
-.shipping-address-select{float:left !important;}
-.onestepcheckout-threecolumns #onestep_form .onestepcheckout-column-left em {
-	color:#EB340A;
-	float:left;	
-	font-style:normal;
-	position:absolute;
-	right:82px;
-	top:0; 
-}
-img{
-	vertical-align:middle;
-}
-div.field{
-	float:left;
-	width:282px !important;
-	padding-left: 12px !important;
-}
-.btn-checkout{
-	border:0;
-}
-.onestepcheckout-column-left fieldset{
-	
-	width:299px;
-	
-}
-div#co-shipping-form  ul.form-list{
-	width:290px;
-}
-.customer-name-prefix div{
-	float:left;
-}
-.btn-checkout{
-	border:0;
-}
-div#checkout-review-submit .buttons-set .btn-checkout{
-	background-position:right 50%;
-	padding-top:1px;
-}
-.btn-checkout span{
-	padding-left:0px;
-}
-.btn-checkout span span{
-	padding-left:10px;
-}
-.checkout-onepage-index .validation-advice{
-	margin-bottom:0px;
-	width:200px;
-}
-.checkout-onepage-index .onestepcheckout-column-left .validation-advice{
-	margin-bottom:0px;
-	width:115px;
-}
-#fancybox-inner .form-list .input-box{
-	clear:none;
-}
-.checkout-onepage-index .onestepcheckout-column-left div.fields{
-	width:282px;
-}
-.checkout-onepage-index .data-table tfoot tr.first td {
-	padding-bottom:5px;
-	padding-top:5px;
-	border-bottom:2px solid #D0CBC1;
-}
-.checkout-onepage-index .data-table tfoot td#td-space {
-	background-color:white;
-	height:10px;
-	border-bottom:2px solid #D0CBC1;
-}
-#deliveryshow{
-	vertical-align:middle;
-	padding: 5px 0px 10px 20px;
-	display:none;
-}
-#changedate{
-	float:left;
-}
-#datex{
-	margin-bottom:5px;
-}
-#timex  .validation-advice{
-	width:75px;
-} 
-div.blockdate{
-	width:115px;
-	float:left;
-}
-.cvv-what-is-this{
-	display:none;
-}
 .clear_both{clear:both;overflow: hidden;height:1px;}
-.none_email{ height:31px !important;padding-left: 12px;}
-.register_account {	margin-left:13px;}
-span.validation-passed, div.validation-passed {
-  padding:0;
+
+div.mw-osc{padding: 0px 20px 20px;}
+.mw-osc input.radio, 
+.mw-osc input.checkbox{margin-top: 0px; vertical-align: middle;}
+div.mw-osc-checkoutcontainer{position:relative;}
+form#onestep_form{display:inline; *+display:block;	/* fix only IE7*/}
+div.mw-osc-threecolumns{margin-top:10px; width: 100%; border: 0px none;}
+.mw-osc-threecolumns button.button{ background: none; border: 0 none; cursor: pointer; margin: 0; overflow: visible; padding: 0; width: auto;}
+.mw-osc-threecolumns button.button span{background:#337BAA; border: 1px solid #337BAA; color: #FFFFFF; display: block; font: bold 12px/19px Arial,Helvetica,sans-serif; height: 19px; padding: 0 8px; text-align: center; white-space: nowrap; text-transform: capitalize;}
+.mw-osc-threecolumns button.button span span{border: 0 none; padding: 0;}
+
+.mw-osc-threecolumns button.btn-checkout span {background: url("../images/btn_checkout.gif") no-repeat 0 0 !important; border: 0 none !important; color: #FFFFFF; font: bold 15px/40px Arial,Helvetica,sans-serif; height: 40px; padding: 0 0 0 9px; text-transform: capitalize;}
+.mw-osc-threecolumns button.btn-checkout span span {background-position: 100% 0 !important; padding: 0 25px 0 16px !important;}
+
+/*Box login =========================================*/
+#inline1{position: relative; width:435px; height:244px; overflow:auto;}
+div#fancybox-wrap .col2-set .col-2{width:100%;text-align:left;float:right;}
+div#fancybox-wrap .col2-set .col-2  >div{border: 0px none; margin: 0pt 0pt 10px;text-align:center;}
+div#fancybox-wrap .col2-set .col-2  >div h1{color: #FFFFFF; font-size: 15px; font-weight: normal; line-height: 1.35; margin: 0 0 5px;padding: 7px 10px; text-transform: uppercase;}
+div#fancybox-wrap .col2-set .col-2 #login-form  fieldset{border:0 none;}
+div#fancybox-wrap .col2-set .col-2 #login-form  fieldset div.fieldset{padding:0px; margin:0px 0px 10px 0px; background: none; border:0px none;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset h2.legend{margin: -25px 0pt 0pt 25px; background: none repeat scroll 0pt 0pt rgb(249, 243, 227); color: rgb(231, 98, 0); float: left; font-size: 13px; font-weight: bold; padding: 0pt 8px; border: 1px solid rgb(241, 153, 0);}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset p{margin: 0px 0px 7px 10px; text-align:left;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset #errorlogin{color:#DF280A; font-weight:bold; display:none; margin: 0px 0px 10px 10px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list{list-style:none outside none;margin-bottom:15px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li:first-child {	margin-bottom:10px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  #login-email {width:245px !important; padding:2px; background:#FFFFFF; border:1px solid #B6B6B6; color:#2F2F2F; font:12px/15px Arial,Helvetica,sans-serif; vertical-align:middle;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  #login-password {	width:245px !important; padding:2px; background:#FFFFFF; border:1px solid #B6B6B6; color:#2F2F2F; font:12px/15px Arial,Helvetica,sans-serif; vertical-align:middle;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li+li  {margin-bottom:0px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  label.required {width:120px;text-align:left;margin-left:0.8em;color:#666666;float:left;font-weight:bold;z-index:0; padding: 0px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li  label.required  em{position:static;float:none;color:#EB340A;font-style:normal;right:-8px;top:0;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li:first-child .input-box {text-align:left;width:250px;display:block;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .fieldset .form-list li+li .input-box {text-align:left;width:250px;display:block;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set{text-align:left; margin:0px; border-top:1px solid #E4E4E4; clear:both; padding: 10px; width: 380px; position: absolute; left: 0px; bottom: 8px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set p.required{color:#EB340A;font-size:11px;text-align:right; width: auto; padding: 0px; margin-bottom: 10px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set a#forgotpassword{float:left !important; color:#1E7EC8;text-decoration:underline;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set a#forgotpassword:hover{text-decoration: none;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set #login-please-wait{	display: none;float:right; margin: 0px 65px 0px 0px;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set #login-please-wait img{vertical-align:middle;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set button{	float:right;margin-left:5px;background:none repeat scroll 0 0 transparent;border:0 none;cursor:pointer; margin:0 65px 0 0; overflow:visible;padding:0;width:auto;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset .col-2 .buttons-set button span{background:#337BAA; border:1px solid #337BAA; color:#FFFFFF;display:block;font:bold 12px/19px Arial,Helvetica,sans-serif;height:19px;padding:0 8px;text-align:center;white-space:nowrap;cursor:pointer; text-transform: capitalize;}
+div#fancybox-wrap .col2-set .col-2 #login-form fieldset  .col-2 .buttons-set button span span{border:0 none; padding:0;}
+.mw-osc-title-login{background: #337BAA; -webkit-border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; border-radius:5px 5px 0px 0px;}
+
+/*Box forgot password ================================================================*/
+div#fancybox-wrap  .mw-osc-title-login h1{color: #FFFFFF; font-size: 15px; font-weight: normal; line-height: 1.35; margin: 0 0 5px;padding: 7px 10px; text-transform: uppercase;}
+div#fancybox-wrap  #form-validate{display:inline;}
+div#fancybox-wrap  #form-validate .fieldset{ background: none; border: 0 none; margin: 0; padding: 0;}
+div#fancybox-wrap  #form-validate  .fieldset .legend{margin:-25px 0 0 25px;background:none repeat scroll 0 0 #F9F3E3;border:1px solid #F19900;color:#E76200;float:left;font-size:13px;font-weight:bold;padding:0 8px;line-height:1.35;}
+div#fancybox-wrap  #form-validate .fieldset p{margin-left: 0.8em;text-align:left;margin:0 0 10px;padding-left:15px;}
+div#fancybox-wrap  #form-validate .fieldset .form-list{	list-style:none outside none;}
+div#fancybox-wrap  #form-validate .fieldset .form-list li{margin:0 0 8px;}
+div#fancybox-wrap  #form-validate .fieldset .form-list li label.required{margin-left: 0.8em;width:100px;color:#666666;float:left;font-weight:bold;z-index:0;}
+div#fancybox-wrap  #form-validate .fieldset .form-list li label.required em{position:static;float:none;color:#EB340A;font-style:normal;right:-8px;top:0;}
+div#fancybox-wrap  #form-validate .fieldset .form-list li .input-box{	float:left;text-align:left;display:block;width:260px;
 }
-.control{padding-left: 14px;}
-.control label{float:none !important;}
-#allow-gift-messages-for-order-container .form-list .fields  .field .input-box .input-text{width:278px;}
-#allow-gift-messages-for-order-container .form-list .fields  .field{width: 366px !important;}
-#allow-gift-messages-for-order-container .form-list  li  .input-box{float:left;}
+div#fancybox-wrap  #form-validate .fieldset .form-list li .input-box input#email_address{width: 254px; padding:2px;background:none repeat scroll 0 0 #FFFFFF;border:1px solid #B6B6B6;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle;}
+div#fancybox-wrap  #form-validate .fieldset .form-list li .input-box #errorforgotpass{	display: none;no-repeat scroll 2px 0 transparent;clear:both;color:#EB340A;font-size:11px;font-weight:bold;line-height:13px;margin:3px 0 0;min-height:13px;padding-left:17px;}
+div#fancybox-wrap  #form-validate div.buttons-set{border-top: 1px solid #E4E4E4; bottom: 8px; clear: both;  left: 0; margin: 0;    padding: 10px;  position: absolute; text-align: left; width: 420px;}
+div#fancybox-wrap  #form-validate div.buttons-set p.required{margin:0px 0px 10px 0px; color:#EB340A;font-size:11px;text-align:right; width: auto; padding: 0px; margin-bottom: 10px;}
+div#fancybox-wrap  #form-validate div.buttons-set p.back-link{float:left;margin:0;}
+div#fancybox-wrap  #form-validate div.buttons-set p.back-link a#backlogin{color:#1E7EC8;text-decoration:underline;}
+div#fancybox-wrap  #form-validate div.buttons-set p.back-link a#backlogin small{font-size:1em;}
+div#fancybox-wrap  #form-validate div.buttons-set span#forgotpass-please-wait{display: none;float:right;}
+div#fancybox-wrap  #form-validate div.buttons-set span#forgotpass-please-wait ing.v-middle{vertical-align:middle;border:0 none;}
+div#fancybox-wrap  #form-validate div.buttons-set #btforgotpass{	float:right;margin-left:5px;background:none repeat scroll 0 0 transparent;border:0 none;cursor:pointer; overflow:visible;padding:0;width:auto;color:#2F2F2F;font:12px/15px Arial,Helvetica,sans-serif;vertical-align:middle; margin: 0px 75px 0px 0px;}
+div#fancybox-wrap  #form-validate div.buttons-set #btforgotpass span{	background:#337BAA;border:1px solid #337BAA;color:#FFFFFF;display:block;font:bold 12px/19px Arial,Helvetica,sans-serif;height:19px;padding:0 8px;text-align:center;white-space:nowrap;}
+div#fancybox-wrap  #form-validate div.buttons-set #btforgotpass span span{	border: 0px none; padding: 0px;}
+
+div.mw-osc-block{}
+div.mw-osc-block-content{padding: 10px 15px; border: 1px solid #cbccc6; -webkit-border-radius:0px 0px 5px 5px; -moz-border-radius:0px 0px 5px 5px; border-radius:0px 0px 5px 5px; border-top: 0px none; margin-bottom: 15px; background: #fff;}
+div.mw-osc-block-title{background: #337baa; -webkit-border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; border-radius:5px 5px 0px 0px;}
+p.onestepcheckout-numbers{background-repeat:no-repeat; color:#fff; font-size:15px; font-weight:normal; line-height:28px; padding-left:40px; padding-top:3px;text-transform:uppercase; margin-bottom: 0px; background-position: 9px 6px; height: 30px;}
+p.onestepcheckout-numbers-1{background-image:url("../images/01.png");}
+p.onestepcheckout-numbers-2{background-image:url("../images/02.png");}
+p.onestepcheckout-numbers-3{background-image:url("../images/03.png");}
+p.onestepcheckout-numbers-4{background-image:url("../images/04.png");}
+p.onestepcheckout-numbers-5{background-image:url("../images/05.png");}
+p.onestepcheckout-numbers-6{background-image:url("../images/bkg-step-review.png");}
+
+div.mw-osc-column-left{float:left; margin-right:15px; width:32%;}
+div.mw-osc-column-2{float:right;	width:66%;}
+div.mw-osc-column-middle{float:left;	margin-right:15px; width:49%;}
+div.mw-osc-column-right{float:right;	width:48%;}
+div.review{}
+#checkout-review-submit .buttons-set{ margin: 0px; border-top: 0px none; clear: both; padding: 15px 0 0; text-align: right;}
+.onestepcheckout-enable-terms{float: left; text-align: left;}
+.mw-osc-ct-term{overflow: auto; padding: 0 10px; text-align: justify;}
+.mw-osc-threecolumns #onestep_form .mw-osc-column-left .input-text{width:100px;}
+.mw-osc-threecolumns #onestep_form .mw-osc-column-left .widthfull .input-text{	width:248px;}
+.mw-osc-threecolumns #onestep_form .mw-osc-column-left  select{	width:106px ;}
+.mw-osc-threecolumns #onestep_form .mw-osc-column-left .widthfull select{width:251px;}
+.onestepcheckout-comments textarea{width:100%;	padding:0;}
+
+.mw-osc-giftmessagecontainer{margin: 18px 0 12px;}
+.mw-osc-ct-giftmessage{padding: 0px 0px 10px 0px; border: 1px solid #cbccc6; -webkit-border-radius:0px 0px 5px 5px; -moz-border-radius:0px 0px 5px 5px; border-radius:0px 0px 5px 5px; border-top: 0px none;}
+.mw-osc-giftmessagecontainer .gift-messages h3{background-color: #337BAA; background-image: url("../images/bkg-giftmessage.png");    background-position: 9px 6px; background-repeat: no-repeat; border: 1px solid #337BAA; border-radius: 5px 5px 0 0; color: #FFFFFF;   font-size: 15px; font-weight: normal; height: 30px; left: -1px; line-height: 28px;  margin: 0; padding: 3px 0 0 40px;  position: relative; text-transform: uppercase; top: -3px; width: 93.4%;}
+.mw-osc-giftmessagecontainer .gift-messages-form h4{color: #337BAA;}
+.mw-osc-giftmessagecontainer .gift-messages p.control{padding: 10px 15px 0px; margin: 0px; color: #666666; font-weight: bold;}
+.mw-osc-giftmessagecontainer .gift-messages-form{padding: 10px 15px 0px; margin: 0px;}
+.mw-osc-ct-giftmessage .form-list .field{width: 49% !important;}
+.mw-osc-ct-giftmessage .form-list .field div.input-box{width: 95%;}
+.mw-osc-giftmessagecontainer .gift-messages-form .form-list .input-text{width:98% !important;}
+.mw-osc-giftmessagecontainer .gift-messages-form .form-list .input-box textarea {	width:99% !important;	height:5em !important;}
+
+.mw-osc-giftmessagecontainer .gift-messages-form ol li.item .form-list .input-text{width:210px !important;}
+.mw-osc-giftmessagecontainer .gift-messages-form ol li.item .form-list .input-box textarea{	width:442px !important;}
+
+.mw-osc-ct-giftmessage .add-gift-message{padding: 0px;}
+.mw-osc-giftmessagecontainer .add-gift-message h3{background-color: #337BAA; background-image: url("../images/bkg-giftmessage.png");   background-position: 9px 6px; background-repeat: no-repeat; border: 1px solid #337BAA; border-radius: 5px 5px 0 0; color: #FFFFFF;   font-size: 15px; font-weight: normal; height: 30px; left: -1px; line-height: 28px;  margin: 0; padding: 3px 0 0 40px;  position: relative; text-transform: uppercase; top: -3px; width: 93.4%;}
+.mw-osc-giftmessagecontainer .add-gift-message p{padding: 10px 15px 0px; margin: 0px; color: #666666; font-weight: bold; font-size: 12px;}
+.mw-osc-giftmessagecontainer .gift-message-form{background: none; border: 0px none;}
+.mw-osc-giftmessagecontainer .gift-message-form .inner-box{height: auto;}
+.mw-osc-giftmessagecontainer .gift-message-form .inner-box h5, 
+.mw-osc-giftmessagecontainer .gift-message-form .inner-box h4{padding: 0px 15px;}
+.mw-osc-giftmessagecontainer .gift-message-form .inner-box p{padding: 0px 15px;}
+.mw-osc-giftmessagecontainer .gift-options-for-order{padding: 0px 15px;}
+.mw-osc-giftmessagecontainer .gift-options-for-order .fieldset p{padding: 0px;}
+.mw-osc-giftmessagecontainer .form-list .input-box{float: none; width: auto;}
+.mw-osc .mw-osc-giftmessagecontainer .form-list li.fields .field{width: 50% !important;}
+.mw-osc-giftmessagecontainer .gift-options-for-order .fieldset label{width: auto;}
+.mw-osc-giftmessagecontainer .gift-options-for-order .fieldset .input-text{width: 98%;}
+.mw-osc-giftmessagecontainer .gift-options-for-order .fieldset textarea{width: 96.5%;}
+
+.mw-osc-giftmessagecontainer .gift-message-form .gift-item .fieldset{ width: 70%;}
+.mw-osc-giftmessagecontainer .gift-message-form .gift-item .fieldset p{padding: 0px;}
+.mw-osc-giftmessagecontainer .gift-message-form .fieldset .input-text{ width: 98%;}
+.mw-osc-giftmessagecontainer .gift-message-form .fieldset textarea{width: 96.5%;}
+.mw-osc-giftmessagecontainer .gift-message-form .gift-item .fieldset label{width: auto;}
+
+
+li.wide{width:265px;}
+#billing-address-select{width:250px !important;}
+#shipping-address-select{width:250px !important;}
+.checkout-onepage-index div.input-box{clear:none;	width:260px; float: none;}
+select option{padding:0px;}
+.mw-osc-block-content .sp-methods .form-list{padding: 5px 0px 0px 0px;}
+.mw-osc-block-content .form-list label.required{float: none;}
+
+/* fix mageto1.3n ============================================================================ */
+.group-select{width:300px;}
+.mw-osc-column-left .group-select{background:none; margin:0; border:0 none;	padding:0;}
+.mw-osc-column-left  .group-select li{padding:0; margin:0 0 8px;}
+.mw-osc-column-left  .group-select  li .input-box{float:left; width:145px;}
+.mw-osc-column-left  .form-list li.wide .input-box {	width:250px;}
+.mw-osc-column-left .form-list .input-box{width:105px;}
+.mw-osc-column-left  .group-select  li .name-firstname{}
+#loginbox{padding-left:15px;}
+.review .content .a-center input{background-image:none;}
+.mw-osc-column-right .sp-methods select.month {	margin-right:10px; width:154px;}
+.mw-osc-column-right .sp-methods select.year{width:96px;}
+input.input-text, textarea {	margin-bottom:0px;}
+.validation-advice{	margin-bottom:0px;}
+.content p.left{	float:left;}
+.content p {float:right;}
+.review .content{padding:12px 0 0 0; margin-top:1em;}
+#loading-mask{color:#333; font-size:1.1em; font-weight:bold;	/*opacity:0.8;*/ position:fixed; text-align:center; z-index:500; width: 100% !important; z-index: 10;}
+p#loading_mask_loader{background: #fff; border:1px solid #d4d4d4; color:#333;	font-weight:bold; left:43%;	padding:15px 30px;position:fixed; text-align:center; top:45%; z-index:1000; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;  box-shadow: 1px 2px 5px -1px #666666;}
+.mw-osc-threecolumns #onestep_form .mw-osc-column-left label {color:#666666; float:none; _float:left; font-weight:bold; position:relative; _position:static; z-index:0;	_width:100px; padding: 0px 3px 0px 0px;}
+.mw-osc-threecolumns #onestep_form .mw-osc-column-left em {color:#EB340A;	float:left;	_float:right; font-style:normal; position:absolute;	_position:static; right:-8px; top:0;}
+
+.mw-osc .form-list li.fields .field{clear: none; float:left; width:145px !important;}
+.mw-osc .form-list div.field{float:left; width:145px !important;}
+.btn-checkout{border:0;}
+.mw-osc-column-left fieldset{width:330px; _width:290px;}
+div#co-shipping-form  ul.form-list{width:290px;}
+.customer-name-prefix div{float:left;}
+.btn-checkout{border:0;}
+div#checkout-review-submit .buttons-set .btn-checkout{background-position:right 50%;	padding-top:1px;}
+.btn-checkout span{padding-left:0px;}
+.btn-checkout span span{padding-left:10px;}
+.checkout-onepage-index .validation-advice{margin-bottom:0px; width:200px;}
+.checkout-onepage-index .v-fix .validation-advice{width: 8em;}
+.checkout-onepage-index .mw-osc-column-left .validation-advice{margin-bottom:0px; width:115px;}
+#fancybox-inner .form-list .input-box{clear:none;}
+.checkout-onepage-index .mw-osc-column-left div.fields{width:145px;}
+.mw-osc-block .data-table{border: 1px solid #CBCCC6; margin-bottom: 0px;}
+.mw-osc-block .data-table thead th{background: #f8f8f8; border-bottom: 1px solid #E2E2E2; border-right: 1px solid #E2E2E2;}
+.mw-osc-block .data-table tfoot td{background: #f8f8f8; border-bottom: 0px none;}
+.checkout-onepage-index .data-table tfoot tr.first td {padding-bottom:5px;	padding-top:5px; border-bottom:1px solid #D0CBC1; background: #fff;}
+.checkout-onepage-index .data-table tfoot td#td-space {background-color:white; height:10px; border-bottom:2px solid #D0CBC1;}
+
+#tab-coupon{}
+#tab-coupon .cart{background: none;}
+#tab-coupon .cart .discount{ margin: 0 0 0px; padding: 0; background: none; border: 0px none;}
+#tab-coupon .cart .discount .buttons-set{margin: 0px;}
+#tab-coupon .cart .discount .messages{margin: 0 0 0 126px !important; width: auto;}
+#tab-coupon .cart .discount .messages .error-msg,
+#tab-coupon .cart .discount .messages .success-msg, 
+#tab-coupon .cart .discount .messages.note-msg, 
+#tab-coupon .cart .discount .messages.notice-msg{background: none !important;  border: 0 none !important; margin: 0 !important; padding: 0 !important;}
+#tab-coupon .cart .discount .messages .error-msg{background: url("../images/validation_advice_bg.gif") no-repeat  2px 0px  !important; padding: 0px 0px 0px 17px !important;}
+#tab-coupon .cart .discount .messages .error-msg ul{margin: 0px; padding: 0px;}
+.cart .discount h2{ background: none; color: #337BAA; font: bold 13px/16px Arial,Helvetica,sans-serif;  padding: 0px; text-transform: uppercase;}
+#tab-coupon .cart .discount h2{float: left; margin-right: 10px;}
+#tab-coupon .cart .discount .input-box {float: left;  margin: 0;  width: 260px; margin-right: 10px;}
+#tab-coupon .cart .discount .input-box input.input-text{ width: 254px;}
+#tab-coupon .cart .discount .buttons-set{clear: none;}
+#tab-coupon .cart .discount button{float: none;}
+/*#tab-coupon .cart .discount button span{background: #337BAA; border-color: #337BAA;}*/
+#tab-coupon .discount-form{background: #fff;}
+
+#deliveryshow{vertical-align:middle; padding: 5px 0px 10px 20px; display:none;}
+#changedate{float:left;}
+#datex{	margin-bottom:5px;}
+#timex  .validation-advice{width:75px;}
+div.blockdate{width:115px; float:left;}
+.cvv-what-is-this{}
+.tool-tip {background: #EAF6FF; border: 1px solid #7BA7C9; padding: 15px 20px; position: absolute; z-index: 9999;}
+.tool-tip .btn-close {margin: -9px -14px 0; text-align: right;}
+.tool-tip .btn-close a { background: url(../../images/btn_window_close.gif) no-repeat 100% 0; display: block; height: 15px; margin: 0 0 0 auto;  overflow: hidden; text-align: left; text-indent: -999em; width: 15px;}
+.tool-tip .tool-tip-content {padding: 5px;}
+
+.mw-osc-column-2  #onestepcheckout-column-container .mw-osc-column-right  label{	_position:static; _width:130px;}
+.mw-osc-column-2  #onestepcheckout-column-container .mw-osc-column-right  em{_position:static;}
+
+
+#onestepcheckout_place_order_button{width:150px; float:right; line-height:25px;}
+#billing-new-address-form{display:block!important;}
+#shipping-new-address-form{display:block!important;}
+.customer-dob{width:300px!important;}
+form-list .customer-dob .dob-day, .form-list .customer-dob .dob-month, .form-list .customer-dob .dob-year{	width:85px!important;}
+#co-shipping-method-form{margin-top: 0px !important;}
+
+.onestepcheckout-comments{}
+.onestepcheckout-comments label{color: #666666; float: none; font-weight: bold; position: relative;}
+#checkout-review-submit input.checkbox{margin-top: 0px; vertical-align: middle;}

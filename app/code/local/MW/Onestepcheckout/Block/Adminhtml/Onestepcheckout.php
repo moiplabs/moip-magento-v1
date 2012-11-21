@@ -6,7 +6,7 @@ class MW_Onestepcheckout_Block_Adminhtml_Onestepcheckout extends Mage_Adminhtml_
     $this->_controller = 'adminhtml_onestepcheckout';
     $this->_blockGroup = 'onestepcheckout';
     $this->_headerText = Mage::helper('onestepcheckout')->__('Item Manager');
-    $this->_addButtonLabel = Mage::helper('onestepcheckout')->__('Add Item');
+    $this->_addButtonLabel = Mage::helper('onestepcheckout')->__('Add Item');   
     parent::__construct();
   }
 }

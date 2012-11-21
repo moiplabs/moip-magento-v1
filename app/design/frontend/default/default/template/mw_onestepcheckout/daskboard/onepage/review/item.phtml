@@ -29,7 +29,7 @@
 	<?php if(Mage::getStoreConfig("onestepcheckout/config/allowremoveproduct")):?>
 		<td class="a-center"><a href="javascript:void(0);" title="<?php echo $this->__('Remove item')?>" class="btn-remove2" onclick="removeProductId('<?php echo $this->getItem()->getId()?>');"><?php echo $this->__('Remove item')?></a></td>
 	<?php endif?>	
-	<?php if(Mage::getStoreConfig("onestepcheckout/config/showimageproduct")):?>
+	<?php if(Mage::helper('onestepcheckout')->showImageProduct()):?>
 		<td><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" title="<?php echo $this->htmlEscape($this->getProductName()) ?>"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" width="75" height="75" alt="<?php echo $this->htmlEscape($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></td>
 	<?php endif?>
     <td><h3 class="product-name"><?php echo $this->htmlEscape($this->getProductName()) ?></h3>

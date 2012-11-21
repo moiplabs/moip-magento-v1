@@ -35,14 +35,14 @@
             <?php $_sole = $_sole && count($_rates) == 1; foreach ($_rates as $_rate): ?>
                 <li>
                    <?php if ($_rate->getErrorMessage()): ?>
-                    <ul class="messages"><li class="error-msg"><ul><li><?php echo $_rate->getErrorMessage() ?></li></ul></li></ul>
+                    
                    <?php else: ?>
                         <?php if ($_sole) : ?>
                         <span class="no-display"><input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" checked="checked" /></span>
                         <?php else: ?>
                         <input name="shipping_method" type="radio" value="<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>"<?php if($_rate->getCode()===$this->getAddressShippingMethod()) echo ' checked="checked"' ?> class="radio shipping_method_handle" />
                         <?php endif; ?>
-                        <label for="s_method_<?php echo $_rate->getCode() ?>"><?php echo $_rate->getMethodTitle() ?>
+                        <label for="s_method_<?php echo $_rate->getCode() ?>" id="s_method_<?php echo $_rate->getCode() ?>" value="<?php echo $_rate->getPrice() ?>"><img src="<?php echo $this->getSkinUrl('o2ti_moip/imagem/'); echo $_rate->getCode()?>.gif"  id="o2ti<?php echo $_rate->getCode() ?>.png" alt="<?php echo $_rate->getMethodTitle() ?>"><br /><?php echo $_rate->getMethodTitle() ?>
                         <?php $_excl = $this->getShippingPrice($_rate->getPrice(), $this->helper('tax')->displayShippingPriceIncludingTax()); ?>
                         <?php $_incl = $this->getShippingPrice($_rate->getPrice(), true); ?>
                         <?php echo $_excl; ?>
@@ -64,28 +64,14 @@
 <script type="text/javascript">
 	var shipping_method_changed=-1; //khac phuc tren IE khi change phai click 2 lan` moi ajax
 	$MW_Onestepcheckout(".shipping_method_handle").click(function(){
+		if(shipping_load())
+		{			
 				if(this.value != shipping_method_changed){
 					updateShippingMethod();
 					shipping_method_changed = this.value;
 				}
+		}		
 	});
 
-<?php
- /*	
-			//dua tat ca code javascript vao file js rieng, rui` update vao layout 
-	// function updateShippingMethod(value)
-	// {
-		// urls= $MW_Onestepcheckout('#geturlid').text()//lay noi dung cua the? div
-		// msg = "Loadding ...";
-		// $MW_Onestepcheckout('#checkout-review-load').html(msg);
-		// $MW_Onestepcheckout.ajax({
-		   // type: "POST",
-		   // url: urls,
-		   // data: "shipping_method="+value,
-		   // success: function(msg){
-			// $MW_Onestepcheckout('#checkout-review-load').html(msg);
-		   // }
-		 // });
-	// }
-*/?>
+
 </script>

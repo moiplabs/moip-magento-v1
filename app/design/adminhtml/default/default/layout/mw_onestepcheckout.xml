@@ -15,22 +15,13 @@
 			</reference>
 		
 	</adminhtml_sales_order_view>
-<!--	
-	<adminhtml_system_config_edit>
-		
+	
+	<adminhtml_system_config_edit>		
 			<reference name="head">
-			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery-1.4.2.min.js</name></action>
-			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery-ui-1.8.custom.min.js</name></action>
-			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/jquery-ui-timepicker-addon.min.js</name></action>
-			
-			
-			
-			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/admin_js.js</name></action>
-			
-			<action method="addItem"><type>skin_js</type><name>mw_onestepcheckout/js/noConflict.js</name></action>
-			<action method="addCss"><stylesheet>mw_onestepcheckout/css/jquery-ui-1.8.custom.css</stylesheet></action>	
-
+			<action method="addCss"><stylesheet>mw_onestepcheckout/css/colorpicker.css</stylesheet></action>
+    		<action method="addJs"><script>mw_js/jquery.js</script></action>    		
+    		<action method="addJs"><script>mw_onestepcheckout/colorpicker.js</script></action>
+    		<action method="addJs"><script>mw_onestepcheckout/validate.js</script></action>
 			</reference>
 	</adminhtml_system_config_edit>
--->	
 </layout>
